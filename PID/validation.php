@@ -1,8 +1,6 @@
 <?php
 function validation($id_response_simulation, $CCss, $WsuID)
 {
-	echo "<br><br><br><br>";
-	echo 2;
 	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
 	$pshealthid = '2854201475'; // Remplacez 'valeur_de_pshealthid' par la valeur réelle du pshealthid
 
@@ -149,17 +147,22 @@ function validation($id_response_simulation, $CCss, $WsuID)
 	$digestValue = $doc->getElementsByTagName('ds:DigestValue')->item(0);
 	$digestValue->nodeValue = base64_encode($digestBody);
 
+	echo "<br><br><br><br>";
+	echo 1;
 	$canonizedSignature = CanoniseSignedInfoValidation($digestBody);
 	openssl_sign($canonizedSignature, $signature1, $privateKey, OPENSSL_ALGO_SHA256 );
-
+	echo "<br><br><br><br>";
+	echo 2;
 	$SignatureValue = $doc->getElementsByTagName('ds:SignatureValue')->item(0);
 	$SignatureValue->nodeValue = base64_encode($signature1);
 	$doc->formatOutput = true;
 	$a = $doc->saveXML();
 
-
+	echo "<br><br><br><br>";
+	echo 3;
 	file_put_contents('logs/RequestBusinessValidate.xml',$a);
-
+	echo "<br><br><br><br>";
+	echo 4;
 	$ch = curl_init();
 	$soapActionHeaderValue = 'exchange';
 	$service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
@@ -180,7 +183,7 @@ function validation($id_response_simulation, $CCss, $WsuID)
 		)
 	);
 	echo "<br><br><br><br>";
-	echo 1;
+	echo 5;
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
 	$response = curl_exec($ch);
