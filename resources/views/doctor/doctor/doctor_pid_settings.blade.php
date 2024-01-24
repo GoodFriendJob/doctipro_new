@@ -109,9 +109,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6 form-group">
-                            <label for="service_date" class="col-form-label"> {{__('Service Start Date')}}</label>
+                            <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
                             <div class="d-flex">
-                                <input type="text" value="{{ date('Y-m-d') }}" id="service_date" name="service_date" class="form-control">
+                                <input type="text" value="1" id="act_number" name="act_number" class="form-control">
                             </div>
                         </div>
                     </div>

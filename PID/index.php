@@ -30,7 +30,7 @@ $code_prestataire="90813319";
 if (isset($_POST['act_code'])) $code_prestataire = $_POST['act_code'];
 
 $NombreActeMedical = '1';
-if (isset($_POST['NombreActeMedical'])) $NombreActeMedical = $_POST['NombreActeMedical'];
+if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
 
 $p12_password = '7v4DfRK,G0Y0=?Cc';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
