@@ -64,6 +64,7 @@
                 <input type="hidden" name="doctor_id" value={{$doctor->id}} />
                 <input type="hidden" name="psEHealthID" value={{$doctor->pshealthid}} />
                 <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
+                <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('Call Request')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
