@@ -208,11 +208,11 @@ function contestation($pshealthid_p12, $identifiantReponseSimulationVar,$CCss,$W
 		)
 	");
 
-	$req2->execute(array(
+	$req2->execute([
 		'validation_xml' => $a,
 		'validation_response_xml' => $response,
 		'pshealthid' => $pshealthid
-	));
+	]);
 
 }
 

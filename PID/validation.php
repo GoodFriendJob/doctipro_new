@@ -1,5 +1,5 @@
 <?php
-function validation($id_response_simulation,$CCss,$WsuID)
+function validation($id_response_simulation, $CCss, $WsuID)
 {
 	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
 	$pshealthid = '2854201475'; // Remplacez 'valeur_de_pshealthid' par la valeur réelle du pshealthid
@@ -218,7 +218,7 @@ function validation($id_response_simulation,$CCss,$WsuID)
 		)
 	");
 
-	$req2->execute(array(
+	$req2->execute([
 		'validation_xml' => $a,
 		'validation_response_xml' => $response,
 		'pshealthid' => $pshealthid,
@@ -226,7 +226,7 @@ function validation($id_response_simulation,$CCss,$WsuID)
 		'part_statutaire' => $montantPartStatutaire[0]->nodeValue,
 		'paye' => $montantPaye[0]->nodeValue,
 		'id_response_simulation' => $id_response_simulation
-	));
+	]);
 	
 	$queryString = $req2->queryString;
 	

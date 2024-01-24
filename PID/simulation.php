@@ -646,11 +646,11 @@ if ($lastInsertId) {
 // Effectuer la mise à jour en utilisant l'identifiant récupéré
 $req2 = $OPC->prepare("UPDATE doctor_pid SET authn_ccss_xml = :authn_ccss_xml,authn_ccss_date_added=NOW(),ccss_token=:ccss_token,ccss_token_date_added=NOW() WHERE pid_id = :lastInsertId");
 
-	$req2->execute(array(
+	$req2->execute([
 		'authn_ccss_xml' => $a,
 		'ccss_token' => $response,
 		'lastInsertId' => $lastInsertId
-	));
+	]);
 }
 
 $CCss  = extractBinarySecurityToken($response);
@@ -880,14 +880,14 @@ if ($nodes->length > 0) {
  if ($lastInsertId) {
 $req2 = $OPC->prepare("UPDATE doctor_pid SET simulation_xml = :simulation_xml,simulation_response_xml=:simulation_response_xml,id_memoire_honoraire=:id_memoire_honoraire,id_externe_prestation=:id_externe_prestation,id_response_simulation=:id_response_simulation,idresponsesimulation_xml_date_added=NOW() WHERE pid_id = :lastInsertId");
 
-$req2->execute(array(
+$req2->execute([
 	'simulation_xml' => $a,
 	'simulation_response_xml' => $response,
 	'id_memoire_honoraire' => $varIdMemoireHonoraire,
 	'id_response_simulation' => $id_response_simulation,
 	'id_externe_prestation' => $varIdentifiantExternePrestation,
 	'lastInsertId' => $lastInsertId
-));
+]);
 }
 
   $tableau = array(
