@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
@@ -25,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
+
 
 class DoctorController extends Controller
 {
@@ -361,8 +361,8 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
-            (new CustomController)->ext_deleteFile("/uploads/doctor/ehealth_p12/", $doctor->pshealthid_p12);
-            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/uploads/doctor/ehealth_p12/", $request->pshealthid_p12);
+            (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
+            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
         }
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)

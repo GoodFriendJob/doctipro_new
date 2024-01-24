@@ -47,11 +47,11 @@ class CustomController extends Controller
         }
     }
 
-    public function ext_fileUpload($path, $image)
+    public function ext_fileUpload($path, $image, $filename='')
     {
         $file = $image;
-        $fileName = uniqid() . '.' . $image->getClientOriginalExtension();
-        $path = public_path() . $path;
+        $fileName = $filename . '.' . $image->getClientOriginalExtension();
+        $path = $path;
         $file->move($path, $fileName);
         return $fileName;
     }
@@ -59,8 +59,8 @@ class CustomController extends Controller
     public function ext_deleteFile($path, $file_name)
     {
         if ($file_name != 'prod_default.png' && $file_name != 'defaultUser.png') {
-            if (File::exists(public_path($path . $file_name))) {
-                File::delete(public_path($path . $file_name));
+            if (File::exists($path . $file_name)) {
+                File::delete($path . $file_name);
             }
             return true;
         }
