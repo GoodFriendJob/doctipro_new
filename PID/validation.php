@@ -211,10 +211,12 @@ function validation($pshealthid_p12, $doctor_id, $pshealthid, $id_response_simul
 		 
 	$req2 = $OPC->prepare("UPDATE doctor_pid 
 		SET validation_xml = :validation_xml,
-			validation_response_xml =:validation_response_xml,part_statutaire=:part_statutaire,recouvrement=:recouvrement,paye=:paye,
+			validation_response_xml =:validation_response_xml, 
+			part_statutaire=:part_statutaire, 
+			recouvrement=:recouvrement, 
+			paye=:paye,
 			validation_response_xml_date_added = NOW() 
 		WHERE pshealthid = :pshealthid AND id_response_simulation = :id_response_simulation
-		)
 	");
 
 	$req2->execute([
