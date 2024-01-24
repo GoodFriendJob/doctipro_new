@@ -326,6 +326,9 @@ class DoctorController extends Controller
     {
         $request->validate([
             'name' => 'bail|required|unique:doctor,name,' . $id . ',id',
+            'pshealthid' => 'bail|required|unique:doctor,pshealthid,' . $id . ',id',
+            'pshealthid_p12_pass' => 'bail|required',
+            'pshealthid_p12' => 'bail|required',
             'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required',
