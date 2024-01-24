@@ -1,6 +1,8 @@
 <?php
 function validation($id_response_simulation, $CCss, $WsuID)
 {
+	echo "<br><br><br><br>";
+	echo 2;
 	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
 	$pshealthid = '2854201475'; // Remplacez 'valeur_de_pshealthid' par la valeur réelle du pshealthid
 
@@ -177,12 +179,12 @@ function validation($id_response_simulation, $CCss, $WsuID)
 			'Content-Type: text/xml;charset=UTF-8'
 		)
 	);
+	echo "<br><br><br><br>";
+	echo 1;
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
 	$response = curl_exec($ch);
 
-	echo "<br><br><br><br>";
-	echo 1;
 	if (curl_errno($ch))
 	{// Une erreur cURL s'est produite. Vous pouvez récupérer les informations sur l'erreur.
 		echo '======= Erreur cURL : ' . curl_error($ch);
