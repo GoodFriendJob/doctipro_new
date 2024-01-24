@@ -21,19 +21,18 @@
                         <tr>
                             <th rowspan="2" class="border">{{__('ID')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-key"></i> {{__('pshealthid')}}</th>
-                            <th colspan="2" class="border"><i class="fa fa-id-card"></i> {{__('Auth Action')}}</th>
-                            <th colspan="3" class="border"><i class="fa fa-arrow-right"></i> {{__('Sync Exchange')}}</th>
+                            <th class="border"><i class="fa fa-id-card"></i> {{__('Auth Action')}}</th>
                             <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('CNS Business Call Validate')}}</th>
+                            <th colspan="3" class="border"><i class="fa fa-arrow-right"></i> {{__('Sync Exchange')}}</th>
                         </tr>
                         <tr>
                             <th class="border">{{__('authn_ccss_date_added')}}</th>
-                            <th class="border">{{__('ccss_token')}}</th>
-                            <th class="border">{{__('id_memoire_honoraire')}}</th>
-                            <th class="border">{{__('id_externe_prestation')}}</th>
-                            <th class="border">{{__('id_response_contestation')}}</th>
                             <th class="border">{{__('part_statutaire')}}</th>
                             <th class="border">{{__('recouvrement')}}</th>
                             <th class="border">{{__('paye')}}</th>
+                            <th class="border">{{__('id_memoire_honoraire')}}</th>
+                            <th class="border">{{__('id_externe_prestation')}}</th>
+                            <th class="border">{{__('id_response_contestation')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,13 +41,12 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $history->pshealthid }}</td>
                             <td>{{ $history->authn_ccss_date_added }}</td>
-                            <td>{{ $history->ccss_token }}</td>
-                            <td>{{ $history->id_memoire_honoraire }}</td>
-                            <td>{{ $history->id_externe_prestation }}</td>
-                            <td>{{ $history->id_response_contestation }}</td>
                             <td>{{ $history->part_statutaire }}</td>
                             <td>{{ $history->recouvrement }}</td>
                             <td>{{ $history->paye }}</td>
+                            <td>{{ $history->id_memoire_honoraire }}</td>
+                            <td>{{ $history->id_externe_prestation }}</td>
+                            <td>{{ $history->id_response_contestation }}</td>
                         </tr>
                         @endforeach
                     </tbody>
