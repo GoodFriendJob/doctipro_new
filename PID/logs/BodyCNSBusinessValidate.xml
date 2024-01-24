@@ -1,0 +1,10 @@
+<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
+    <sync:RequestInfo modelUID="2023-CNS-PID-VAL-V1">
+      <cns:paiementMedecin xmlns:cns="http://www.secu.lu/ciss/cns">
+        <cns:idReponseSimulation>4ad40f1d-78dd-40f4-8ba1-1fe9fa319d16</cns:idReponseSimulation>
+        <cns:indicateurValidationMedecin>true</cns:indicateurValidationMedecin>
+        <cns:indicateurValidationPersonneProtegee>true</cns:indicateurValidationPersonneProtegee>
+        <cns:indicateurAcquittementParticipationPersonnelle>true</cns:indicateurAcquittementParticipationPersonnelle>
+      </cns:paiementMedecin>
+    </sync:RequestInfo>
+  </soapenv:Body>

@@ -1,0 +1,23 @@
+<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
+    <sync:RequestInfo modelUID="2023-CNS-PID-SIM-V1">
+      <cns:simulationMedecin xmlns:cns="http://www.secu.lu/ciss/cns">
+        <cns:UTA>
+          <cns:identifiantFacturier>90812100</cns:identifiantFacturier>
+          <cns:matricule>1900123456712</cns:matricule>
+          <cns:idMemoireHonoraire>84b88219-a6b2-4df1-9e08-b47cd591a8db</cns:idMemoireHonoraire>
+          <cns:dateEtablissementMemoireHonoraire>2023-12-28</cns:dateEtablissementMemoireHonoraire>
+          <cns:Lignes>
+            <cns:LigneUTA>
+              <cns:identifiantExternePrestation>97a36099-0b24-4236-b166-9443895f784b</cns:identifiantExternePrestation>
+              <cns:dateDebutPrestation>2023-12-28</cns:dateDebutPrestation>
+              <cns:acte>
+                <com:codeActe xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">C1</com:codeActe>
+                <com:nombre xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">1</com:nombre>
+              </cns:acte>
+              <cns:lieuDePrestation>01</cns:lieuDePrestation>
+            </cns:LigneUTA>
+          </cns:Lignes>
+        </cns:UTA>
+      </cns:simulationMedecin>
+    </sync:RequestInfo>
+  </soapenv:Body>
