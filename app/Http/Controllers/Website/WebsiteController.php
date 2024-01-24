@@ -284,15 +284,21 @@ class WebsiteController extends Controller
             return response()->json(['html' => $view, 'count' => count($doctors), 'meta' => $doctors, 'success' => true]);
         }
         $doctors = $doctor->paginate(5);
-        $doctors = $doctors->toArray();
-        foreach ($doctors['data'] as &$doctor) {
-            $doctor['is_fav'] = $this->checkFavourite($doctor['id']);
-            $doctor['hospital'] = (new CustomController)->getHospital($doctor['id']);
+        try {
+            $doctors = $doctors->toArray();
+            foreach ($doctors['data'] as &$doctor) {
+                $doctor['is_fav'] = $this->checkFavourite($doctor['id']);
+                $doctor['hospital'] = (new CustomController)->getHospital($doctor['id']);
+            }
+        } catch (\Throwable $e) {
+            //throw $th;
+            return $e->getMessage();
         }
         if ($request->ajax()) {
             $view = view('website.display_doctors', compact('doctors', 'currency', 'categories'))->render();
             return response()->json(['html' => $view, 'count' => count($doctors), 'meta' => $doctors, 'success' => true]);
         }
+        
         return view('website.find_doctor', compact('doctors', 'currency', 'categories'));
     }
 
