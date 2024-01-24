@@ -37,7 +37,7 @@ if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12
 
 $return_values = simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation, $varMatricule, $NombreActeMedical, $biller_id);
 validation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID']);
-// contestation($return_values['identifiantReponseSimulation'],$return_values['CCss'],$return_values['WsuID'],$pshealthid,$return_values['varIdMemoireHonoraire']);
+// contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'],$return_values['CCss'],$return_values['WsuID'],$pshealthid,$return_values['varIdMemoireHonoraire']);
 
 // var_dump($a);
 
