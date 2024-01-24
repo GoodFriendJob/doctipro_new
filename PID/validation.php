@@ -1,7 +1,7 @@
 <?php
-function validation($id_response_simulation, $CCss, $WsuID)
+function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 {
-	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
+	global $db_host, $db_name, $db_user, $db_pass;
 	$pshealthid = '2854201475'; // Remplacez 'valeur_de_pshealthid' par la valeur réelle du pshealthid
 	echo "<br><br><br><br>";
 	echo 1;
