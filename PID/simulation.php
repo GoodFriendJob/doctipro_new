@@ -317,7 +317,8 @@ try {
 	'authentication_guichet_xml' =>$doc->saveXML(),
 	'assertion_response_xml' => $response
 	 ));
-   echo $req1->queryString;
+   $queries = DB::getQueryLog();
+dd($queries);
   } catch (\Exception $e) {
     // Log or handle the exception
     \Log::error("Error inserting into doctor_pid table: " . $e->getMessage());
