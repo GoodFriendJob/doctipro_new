@@ -1,13 +1,10 @@
 <?php
-function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
+function validation($pshealthid_p12, $doctor_id, $pshealthid, $id_response_simulation, $CCss, $WsuID)
 {
-	global $db_host, $db_name, $db_user, $db_pass;
-	$pshealthid = '2854201475'; // Remplacez 'valeur_de_pshealthid' par la valeur réelle du pshealthid
-	echo "<br><br><br><br>";
-	echo 1;
+	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
+
 	$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
-	echo "<br><br><br><br>";
-	echo 2;
+
 	$info = getCertificatGuichet($pshealthid_p12);
 	$privateKey = $info['privateKey'];
 	$publicCertWithoutTitle = $info['publicCertWithoutTitle'];
@@ -18,8 +15,7 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 	list($created, $expires) = generateTimestamps();
 	$dateIssueInstant = getCurrentDateTimeInISO8601();
 
-	echo "<br><br><br><br>";
-	echo 3;
+
 	$doc = new DomDocument('1.0', 'UTF-8');
 
 	// Création de l'élément racine <soapenv:Envelope>
@@ -33,8 +29,7 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 	$header->setAttribute('xmlns:wsse', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd');
 	$header->setAttribute('xmlns:wsu', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd');
 	$envelope->appendChild($header);
-	echo "<br><br><br><br>";
-	echo 4;
+
 	// Création de l'élément <wsse:Security>
 	$security = $doc->createElement('wsse:Security');
 
@@ -53,8 +48,7 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 	$binarySecurityToken2->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
 	$binarySecurityToken2->setAttribute('wsu:Id', 'X509-8A64C6552EAFBF7166169511421308223');
 	$security->appendChild($binarySecurityToken2);
-	echo "<br><br><br><br>";
-	echo 5;
+
 	// Création de l'élément <ds:Signature>
 	$signature = $doc->createElement('ds:Signature');
 	$signature->setAttribute('Id', 'SIG-8A64C6552EAFBF7166169511421308327');
@@ -94,8 +88,7 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 	$signedInfo->appendChild($canonicalizationMethod);
 	$signedInfo->appendChild($signatureMethod);
 	$signedInfo->appendChild($reference);
-	echo "<br><br><br><br>";
-	echo 6;
+
 	$signatureValue = $doc->createElement('ds:SignatureValue', 'tempSignature');
 	$keyInfo = $doc->createElement('ds:KeyInfo');
 	$keyInfo->setAttribute('Id', 'KI-8A64C6552EAFBF7166169511421308224');
@@ -153,22 +146,17 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 	$digestValue = $doc->getElementsByTagName('ds:DigestValue')->item(0);
 	$digestValue->nodeValue = base64_encode($digestBody);
 
-	echo "<br><br><br><br>";
-	echo 1;
 	$canonizedSignature = CanoniseSignedInfoValidation($digestBody);
 	openssl_sign($canonizedSignature, $signature1, $privateKey, OPENSSL_ALGO_SHA256 );
-	echo "<br><br><br><br>";
-	echo 2;
+
 	$SignatureValue = $doc->getElementsByTagName('ds:SignatureValue')->item(0);
 	$SignatureValue->nodeValue = base64_encode($signature1);
 	$doc->formatOutput = true;
 	$a = $doc->saveXML();
 
-	echo "<br><br><br><br>";
-	echo 3;
+
 	file_put_contents('logs/RequestBusinessValidate.xml',$a);
-	echo "<br><br><br><br>";
-	echo 4;
+
 	$ch = curl_init();
 	$soapActionHeaderValue = 'exchange';
 	$service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
@@ -188,8 +176,6 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 			'Content-Type: text/xml;charset=UTF-8'
 		)
 	);
-	echo "<br><br><br><br>";
-	echo 5;
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
 	$response = curl_exec($ch);
@@ -223,11 +209,7 @@ function validation($pshealthid_p12, $id_response_simulation, $CCss, $WsuID)
 		SET validation_xml = :validation_xml,
 			validation_response_xml =:validation_response_xml,part_statutaire=:part_statutaire,recouvrement=:recouvrement,paye=:paye,
 			validation_response_xml_date_added = NOW() 
-		WHERE pid_id = (
-			SELECT pid_id 
-			FROM pid 
-			WHERE pshealthid = :pshealthid 
-			AND id_response_simulation = :id_response_simulation
+		WHERE pshealthid = :pshealthid AND id_response_simulation = :id_response_simulation
 		)
 	");
 

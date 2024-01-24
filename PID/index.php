@@ -33,7 +33,7 @@ $NombreActeMedical = '1';
 if (isset($_POST['NombreActeMedical'])) $NombreActeMedical = $_POST['NombreActeMedical'];
 
 $return_values = simulation($pshealthid_p12, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation, $varMatricule, $NombreActeMedical, $biller_id);
-validation($pshealthid_p12, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID']);
+validation($pshealthid_p12, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID']);
 // contestation($return_values['identifiantReponseSimulation'],$return_values['CCss'],$return_values['WsuID'],$pshealthid,$return_values['varIdMemoireHonoraire']);
 
 // var_dump($a);
