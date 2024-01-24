@@ -317,11 +317,6 @@ try {
       'authentication_guichet_xml' =>$doc->saveXML(),
       'assertion_response_xml' => $response
     ]);
-    if ($rowCount > 0) {
-        echo "Record inserted successfully!";
-    } else {
-        echo "No records inserted.";
-    }
 } catch (\Exception $e) {
     // Handle the exception
     echo "Error: " . $e->getMessage();

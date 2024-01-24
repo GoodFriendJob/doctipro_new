@@ -181,6 +181,8 @@ function validation($id_response_simulation, $CCss, $WsuID)
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
 	$response = curl_exec($ch);
 
+	echo "<br><br><br><br>";
+	echo 1;
 	if (curl_errno($ch))
 	{// Une erreur cURL s'est produite. Vous pouvez récupérer les informations sur l'erreur.
 		echo '======= Erreur cURL : ' . curl_error($ch);
