@@ -192,7 +192,7 @@ class DoctorController extends Controller
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
         $doctor->workingHours = WorkingHour::where('doctor_id', $doctor->id)->get();
         $doctor->firstHours = WorkingHour::where('doctor_id', $doctor->id)->first();
-        return view('doctor.doctor.doctor_schedule', compact('doctor'));
+        return view('doctor.doctor.doctor_schedule', compact('doctor'))->withStatus(__('Doctor updated successfully..!!'));;
     }
 
     public function pid_settings()

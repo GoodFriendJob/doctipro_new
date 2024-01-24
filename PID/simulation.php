@@ -2,7 +2,7 @@
 
 require 'functions.php';
 
-function simulation($pshealthid_p12, $doctor_id, $psEHealthID, $code_prestataire,$codeMedical,$lieuPrestation,$varMatricule,$NombreActeMedical)
+function simulation($pshealthid_p12, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation,$varMatricule,$NombreActeMedical, $biller_id)
 {
 	global $db_host, $db_name, $db_user, $db_pass;
   $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
@@ -440,7 +440,7 @@ $digestMethod1->setAttribute('Algorithm', 'http://www.w3.org/2001/04/xmlenc#sha2
 $reference1->appendChild($digestMethod1);
 
 $dateIssueInstant = getCurrentDateTimeInISO8601Z();
-$BodyCanonized = CanoniseBody2();
+$BodyCanonized = CanoniseBody2($code_prestataire);
 
 $SamlCanonized = canoniserSAMLresponse($dateIssueInstant,$assertionID,$signatureValueX,$x509Certificate,$signatureId,$digestValueX,$notBefore,$notOnAfter,$keyInfoId);
 $digestAssertion = openssl_digest($SamlCanonized, 'sha256', true);//ok
@@ -759,7 +759,7 @@ $uta = $doc->createElement('cns:UTA');
 $simulationMedecin->appendChild($uta);
 
 // Ajout des éléments à <cns:UTA>
-$identifiantFacturier = $doc->createElement('cns:identifiantFacturier', '90812100');
+$identifiantFacturier = $doc->createElement('cns:identifiantFacturier', $biller_id);
 $uta->appendChild($identifiantFacturier);
 
 $matricule = $doc->createElement('cns:matricule', $varMatricule);
@@ -952,7 +952,7 @@ $CanonizedBody = '<soapenv:Body xmlns:saml2="urn:oasis:names:tc:SAML:2.0:asserti
 
    return $CanonizedBody;
 }
-function CanoniseBody2()
+function CanoniseBody2($code_prestataire)
 {
 	$CanonizedBody ='<soapenv:Body xmlns:auth="http://schemas.xmlsoap.org/ws/2006/12/authorization" xmlns:ns="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054522149119">
     <ns:RequestSecurityToken>
@@ -965,7 +965,7 @@ function CanoniseBody2()
       </wsp:AppliesTo>
       <ns:Claims Dialect="http://schemas.xmlsoap.org/ws/2006/12/authorization/authclaims">
         <auth:ClaimType Uri="http://ws.mysecu.lu/trust/prodo/espaceid">
-          <auth:Value>90813319</auth:Value>
+          <auth:Value>'.$code_prestataire.'</auth:Value>
         </auth:ClaimType>
       </ns:Claims>
     </ns:RequestSecurityToken>
