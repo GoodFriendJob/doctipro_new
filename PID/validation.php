@@ -204,6 +204,10 @@ function validation($pshealthid_p12, $doctor_id, $pshealthid, $id_response_simul
 	$montantRecouvrement = $xpath->query('//cns:montantRecouvrement');
 	$montantPaye = $xpath->query('//cns:montantPaye');
 	
+	echo '<br>';
+	echo '<br>';
+	echo '<br>';
+	echo $id_response_simulation;
 		 
 	$req2 = $OPC->prepare("UPDATE doctor_pid 
 		SET validation_xml = :validation_xml,
