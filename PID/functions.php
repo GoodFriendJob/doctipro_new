@@ -34,16 +34,15 @@ function ConnexionBdd($var1,$var2,$var3,$var4)
 
 	return $OPC;
 }
-function getCertificatGuichet($pshealthid_p12)
+function getCertificatGuichet($pshealthid_p12, $p12_password)
 {
 	$path_certificat_p12 = $pshealthid_p12;
-	$client_key_password = '7v4DfRK,G0Y0=?Cc';
 	if (!$cert_store = file_get_contents($path_certificat_p12)) {
 		echo "Error: Unable to read the cert file\n";
 		exit;
 	}
 
-	if (openssl_pkcs12_read($cert_store, $cert_info, $client_key_password)) {
+	if (openssl_pkcs12_read($cert_store, $cert_info, $p12_password)) {
 		$privateKey = $cert_info['pkey']; // Clé privée
 		$publicCert = $cert_info['cert']; // Certificat public
 		$publicCertWithoutTitle = str_replace("-----BEGIN CERTIFICATE-----",'',$publicCert);

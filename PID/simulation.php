@@ -2,12 +2,12 @@
 
 require 'functions.php';
 
-function simulation($pshealthid_p12, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation,$varMatricule,$NombreActeMedical, $biller_id)
+function simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation,$varMatricule,$NombreActeMedical, $biller_id)
 {
 	global $db_host, $db_name, $db_user, $db_pass;
   $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
-  $info = getCertificatGuichet($pshealthid_p12);
+  $info = getCertificatGuichet($pshealthid_p12, $p12_password);
   $privateKey = $info['privateKey'];
   $publicCertWithoutTitle = $info['publicCertWithoutTitle'];
 
@@ -19,7 +19,7 @@ function simulation($pshealthid_p12, $doctor_id, $psEHealthID, $code_prestataire
   curl_setopt($ch, CURLOPT_URL, $service_url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSLCERT, 'certificat.pem');
-  // curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $client_key_password);
+  // curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $p12_password);
   curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
   // curl_setopt($ch, CURLOPT_VERBOSE, true);
   curl_setopt($ch, CURLOPT_POST, true);

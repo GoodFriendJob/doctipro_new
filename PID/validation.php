@@ -1,11 +1,11 @@
 <?php
-function validation($pshealthid_p12, $doctor_id, $pshealthid, $id_response_simulation, $CCss, $WsuID)
+function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id_response_simulation, $CCss, $WsuID)
 {
 	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
 
 	$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
-	$info = getCertificatGuichet($pshealthid_p12);
+	$info = getCertificatGuichet($pshealthid_p12, $p12_password);
 	$privateKey = $info['privateKey'];
 	$publicCertWithoutTitle = $info['publicCertWithoutTitle'];
 

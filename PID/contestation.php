@@ -1,12 +1,12 @@
 <?php
-function contestation($pshealthid_p12, $identifiantReponseSimulationVar,$CCss,$WsuID,$pshealthid,$identifiantAnomalieVar)
+function contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $identifiantReponseSimulationVar,$CCss,$WsuID,$pshealthid,$identifiantAnomalieVar)
 {
 	$OPC = ConnexionBdd('localhost','doctipro','doctipro_user','sMXNMDbpJoo1jyhF');
 
 	$wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
 	$sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 
-	$info = getCertificatGuichet($pshealthid_p12);
+	$info = getCertificatGuichet($pshealthid_p12, $p12_password);
 	$privateKey = $info['privateKey'];
 	$publicCertWithoutTitle = $info['publicCertWithoutTitle'];
 
