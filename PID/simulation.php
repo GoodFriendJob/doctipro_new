@@ -309,7 +309,7 @@ if (curl_errno($ch))
 }
 file_put_contents('logs/responseGuichet.xml', $response);
 
-	$req1 = $OPC->prepare("INSERT INTO doctor_pid(doctor_id, pshealthid, authentication_guichet_xml, authentication_guichet_xml_date_added, assertion_response_xml, assertion_response_date_added, date_modified) VALUES (:doctor_id, :pshealthid,:authentication_guichet_xml,NOW(),:assertion_response_xml,NOW(),NOW())");
+	$req1 = $OPC->prepare("INSERT INTO doctor_pid (doctor_id, pshealthid, authentication_guichet_xml, authentication_guichet_xml_date_added, assertion_response_xml, assertion_response_date_added, date_modified) VALUES (:doctor_id, :pshealthid,:authentication_guichet_xml,NOW(),:assertion_response_xml,NOW(),NOW())");
 try {
 	$req1->execute(array(
 	'doctor_id' => $doctor_id,	
@@ -317,6 +317,7 @@ try {
 	'authentication_guichet_xml' =>$doc->saveXML(),
 	'assertion_response_xml' => $response
 	 ));
+   echo $req1->queryString;
   } catch (\Exception $e) {
     // Log or handle the exception
     \Log::error("Error inserting into doctor_pid table: " . $e->getMessage());
