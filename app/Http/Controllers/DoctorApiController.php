@@ -160,7 +160,7 @@ class DoctorApiController extends Controller
             'verify' => $verify,
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
-            'image' => 'defaultUser.png',
+            'image' => 'default_doctor.jpg',
             'status' => 1,
             'dob' => $data['dob'],
             'gender' => $data['gender']
@@ -171,7 +171,7 @@ class DoctorApiController extends Controller
             $user->save();
         }
         $data['user_id'] = $user->id;
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['based_on'] = $setting->default_base_on;
         if($data['based_on'] == 'commission'){
             $data['commission_amount'] = $setting->default_commission;

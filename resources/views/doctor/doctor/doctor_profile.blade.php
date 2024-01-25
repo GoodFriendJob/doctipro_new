@@ -17,7 +17,7 @@
             <div class="text-center alert-success mx-4 py-1" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
             <div class="card-body">
                 <div class="row mt-4">
-                    <div class="col-lg-2 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         <label for="Doctor_image" class="ul-form__label"> {{__('Doctor image')}}</label>
                         <div class="avatar-upload avatar-box avatar-box-left">
                             <div class="avatar-edit">
@@ -35,7 +35,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-10 col-md-8">
+                    <div class="col-lg-9 col-md-8">
                         <div class="form-group">
                             <label class="col-form-label">{{__('Name')}}</label>
                             <input type="text" value="{{ $doctor->name }}" name="name" class="form-control @error('name') is-invalid @enderror">

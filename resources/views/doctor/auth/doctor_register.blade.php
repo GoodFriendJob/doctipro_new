@@ -68,6 +68,15 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="repeat_password">{{__('Repeat Password') }}</label>
+                    <input class="form-control @error('repeat_password') is-invalid @enderror" name="repeat_password" type="password">
+                    @error('repeat_password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="password">{{__('Date of birth') }}</label>
                     <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" name="dob">
                     @error('dob')

@@ -112,7 +112,7 @@ class UserApiController extends Controller
         $verify = $verification == 1 ? 0 : 1;
         $data['password'] = Hash::make($request->password);
         $data['verify'] = $verify;
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['status'] = 1;
         $user = User::create($data);
         if($user->verify == 1)

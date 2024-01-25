@@ -56,7 +56,7 @@ class AdminUserController extends Controller
             'phone' => 'bail|required|digits_between:6,12',
         ]);
         $data = $request->all();
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['password'] = Hash::make($request->password);
         $data['status'] = $request->has('status') ? 1 : 0;
         $data['verify'] = 1;
@@ -106,7 +106,7 @@ class AdminUserController extends Controller
             'phone' => 'bail|required|digits_between:6,12',
         ]);
         $data = $request->all();
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['status'] = $request->has('status') ? 1 : 0;
         $user = User::find($id);
         $user->update($data);

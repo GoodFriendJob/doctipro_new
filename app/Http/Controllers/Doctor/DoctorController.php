@@ -100,7 +100,8 @@ class DoctorController extends Controller
             'dob' => 'bail|required',
             'gender' => 'bail|required',
             'phone' => 'bail|required|digits_between:6,12',
-            'password' => 'bail|required|min:6'
+            'password' => 'bail|required|min:6',
+            'repeat_password' => 'required|same:password'
         ]);
         $user = (new CustomController)->doctorRegister($request->all());
         if ($user->verify == 1) {

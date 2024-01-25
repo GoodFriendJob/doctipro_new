@@ -116,7 +116,6 @@
             }
         }
 @endsection
-
 @section('content')
     {{-- Your Home For Health --}}
     <div class="pt-14 border-b border-white-light mb-10 pb-10">
@@ -153,7 +152,6 @@
             </div>
         </form>
     </div>
-
     <div class="msm:mx-20 xsm:mx-0 xxsm:mx-0">
         <div class="flex pt-5 2xl:flex-row xl:flex-row xlg:flex-row lg:flex-row xmd:flex-rowmd:flex-row sm:flex-row xsm:flex-col xxsm:flex-col">
             {{-- side bar --}}
@@ -222,7 +220,7 @@
             </div>
 
             <div class="w-full">
-                @if (count($doctors['data']) > 0)
+                @if (is_array($doctors['data']) && count($doctors['data']) > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xlg:grid-cols-3 dispDoctor">
                         @include('website.display_doctors', ['doctor' => $doctors])
                     </div>

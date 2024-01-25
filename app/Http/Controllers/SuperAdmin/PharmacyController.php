@@ -108,7 +108,7 @@ class PharmacyController extends Controller
         }
         else
         {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         $data['status'] = 1;
         $data['is_shipping'] = $request->has('is_shipping') ? 1 : 0;

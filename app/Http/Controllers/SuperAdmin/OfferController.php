@@ -54,7 +54,7 @@ class OfferController extends Controller
         }
         else
         {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         $data['status'] = 1;
         $data['doctor_id'] = implode(',',$data['doctor_id']);

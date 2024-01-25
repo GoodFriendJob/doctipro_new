@@ -80,7 +80,7 @@ class UserController extends Controller
             $data['image'] = (new CustomController)->imageUpload($request->image);
 
         } else {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         $data['verify'] = 1;
         User::create($data);

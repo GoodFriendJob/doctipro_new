@@ -62,7 +62,7 @@
                             <div class="row mt-4">
                                 <div class="col-lg-4 form-group">
                                     <label class="col-form-group">{{__('eHealth ID')}}</label>
-                                    <input type="text" value="{{ old('pshealthid', $doctor->pshealthid )}}" class="form-control @error('pshealthid') is-invalid @enderror" name="pshealthid">
+                                    <input type="text" value="{{ old('pshealthid')}}" class="form-control @error('pshealthid') is-invalid @enderror" name="pshealthid">
                                     @error('pshealthid')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="col-form-group">{{__('eHealth P12 Password')}}</label>
-                                    <input type="text" value="{{ old('pshealthid_p12_pass', $doctor->pshealthid_p12_pass )}}" class="form-control @error('pshealthid_p12_pass') is-invalid @enderror" name="pshealthid_p12_pass">
+                                    <input type="text" value="{{ old('pshealthid_p12_pass')}}" class="form-control @error('pshealthid_p12_pass') is-invalid @enderror" name="pshealthid_p12_pass">
                                     @error('pshealthid_p12_pass')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -80,8 +80,8 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="col-form-group">{{__('eHealth .p12 file')}}</label>
-                                    <input type="file" value="{{ old('pshealthid_p12', $doctor->pshealthid_p12 )}}" id="pshealthid_p12" name="pshealthid_p12" class="form-control form-control-sm" onchange="displayFileName()" />
-                                    <span id="fileNameLabel"><i class="fa fa-file-powerpoint"></i> {{ old('pshealthid_p12', $doctor->pshealthid_p12 )}}</span>
+                                    <input type="file" value="{{ old('pshealthid_p12')}}" id="pshealthid_p12" name="pshealthid_p12" class="form-control form-control-sm" onchange="displayFileName()" />
+                                    <span id="fileNameLabel"><i class="fa fa-file-powerpoint"></i> {{ old('pshealthid_p12' )}}</span>
                                 </div>
                             </div>
                         </div>

@@ -103,7 +103,7 @@ class LabSettingController extends Controller
             'verify' => $veri,
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
-            'image' => 'defaultUser.png'
+            'image' => 'default_doctor.jpg'
         ]);
         $user->assignRole('laboratory');
         if($request->hasFile('image'))
@@ -112,7 +112,7 @@ class LabSettingController extends Controller
         }
         else
         {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         $data['start_time'] = strtolower(Carbon::parse($data['start_time'])->format('h:i a'));
         $data['end_time'] = strtolower(Carbon::parse($data['end_time'])->format('h:i a'));

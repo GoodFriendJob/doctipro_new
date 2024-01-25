@@ -137,7 +137,7 @@ class PharmacyController extends Controller
         $data['user_id'] = $user->id;
         $data['start_time'] = strtolower('08:00 am');
         $data['end_time'] = strtolower('08:00 pm');
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['status'] = 1;
         $data['commission_amount'] = $setting->pharmacy_commission;
         $pharmacy = Pharmacy::create($data);

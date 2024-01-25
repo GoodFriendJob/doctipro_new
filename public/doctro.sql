@@ -2308,7 +2308,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `phone`, `phone_code`, `verify`, `remember_token`, `otp`, `dob`, `gender`, `image`, `status`, `doctor_id`, `device_token`, `language`, `channel_name`, `agora_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin doctro', 'admindoctro@gmail.com', NULL, '$2y$10$g/L/W4ID9zR6bB6QQPtmhOc6.jeMbT9gZx.Wy9dOMqRhSk6YOW3Qi', '7788994455', '+91', 1, NULL, NULL, NULL, NULL, 'defaultUser.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-02-08 12:55:48');
+(1, 'admin doctro', 'admindoctro@gmail.com', NULL, '$2y$10$g/L/W4ID9zR6bB6QQPtmhOc6.jeMbT9gZx.Wy9dOMqRhSk6YOW3Qi', '7788994455', '+91', 1, NULL, NULL, NULL, NULL, 'default_doctor.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-02-08 12:55:48');
 
 -- --------------------------------------------------------
 

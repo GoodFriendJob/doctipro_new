@@ -39,7 +39,7 @@ class CustomController extends Controller
 
     public function deleteFile($file_name)
     {
-        if ($file_name != 'prod_default.png' && $file_name != 'defaultUser.png') {
+        if ($file_name != 'prod_default.png' && $file_name != 'default_doctor.jpg') {
             if (File::exists(public_path('images/upload/' . $file_name))) {
                 File::delete(public_path('images/upload/' . $file_name));
             }
@@ -58,7 +58,7 @@ class CustomController extends Controller
 
     public function ext_deleteFile($path, $file_name)
     {
-        if ($file_name != 'prod_default.png' && $file_name != 'defaultUser.png') {
+        if ($file_name != 'prod_default.png' && $file_name != 'default_doctor.jpg') {
             if (File::exists($path . $file_name)) {
                 File::delete($path . $file_name);
             }
@@ -357,13 +357,13 @@ class CustomController extends Controller
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
             'status' => 1,
-            'image' => 'defaultUser.png',
+            'image' => 'default_doctor.jpg',
             'dob' => $data['dob'],
             'gender' => $data['gender']
         ]);
         $user->assignRole('doctor');
         $data['user_id'] = $user->id;
-        $data['image'] = 'defaultUser.png';
+        $data['image'] = 'default_doctor.jpg';
         $data['based_on'] = $setting->default_base_on;
         if ($data['based_on'] == 'commission') {
             $data['commission_amount'] = $setting->default_commission;

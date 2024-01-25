@@ -79,7 +79,7 @@ class DoctorController extends Controller
         $request->validate([
             'name' => 'bail|required|unique:doctor',
             'email' => 'bail|required|email|unique:users',
-            'pshealthid' => 'bail|required|unique:doctor,pshealthid,' . $id . ',id',
+            'pshealthid' => 'bail|required|unique:doctor',
             'pshealthid_p12_pass' => 'bail|required',
             'pshealthid_p12' => 'bail|required',
             'treatment_id' => 'bail|required',
@@ -108,7 +108,7 @@ class DoctorController extends Controller
             'verify' => 1,
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
-            'image' => 'defaultUser.png'
+            'image' => 'default_doctor.jpg'
         ],
         [
             'image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.',
@@ -142,7 +142,7 @@ class DoctorController extends Controller
         }
         else
         {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         if($request->hasFile('pshealthid_p12'))
         {

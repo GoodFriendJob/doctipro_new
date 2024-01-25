@@ -91,7 +91,7 @@ class WebsiteController extends Controller
             'verify' => $verify,
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
-            'image' => 'defaultUser.png',
+            'image' => 'default_doctor.jpg',
             'status' => 1,
             'dob' => $data['dob'],
             'gender' => $data['gender']
@@ -228,7 +228,7 @@ class WebsiteController extends Controller
         $categories = Category::whereStatus(1)->get();
         $doctor = Doctor::with(['treatment', 'category', 'expertise'])->whereStatus(1)->where('is_filled', 1)->whereSubscriptionStatus(1);
         $data = $request->all();
-        $getSet = 0;
+        $getSet = 0; 
         if (isset($data['doc_lat']) && isset($data['doc_lang']) && $data['doc_lang'] != '' && $data['doc_lat'] != '') {
             $radius = $setting->radius;
             $hospital = Hospital::whereStatus(1)->GetByDistance($data['doc_lat'], $data['doc_lang'], $radius)->get(['id']);
@@ -298,7 +298,6 @@ class WebsiteController extends Controller
             $view = view('website.display_doctors', compact('doctors', 'currency', 'categories'))->render();
             return response()->json(['html' => $view, 'count' => count($doctors), 'meta' => $doctors, 'success' => true]);
         }
-        
         return view('website.find_doctor', compact('doctors', 'currency', 'categories'));
     }
 

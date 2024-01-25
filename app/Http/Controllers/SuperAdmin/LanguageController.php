@@ -63,7 +63,7 @@ class LanguageController extends Controller
         }
         else
         {
-            $data['image'] = 'defaultUser.png';
+            $data['image'] = 'default_doctor.jpg';
         }
         if ($file = $request->hasfile('json_file'))
         {
@@ -157,7 +157,7 @@ class LanguageController extends Controller
         if(File::exists(resource_path('lang'.'/'.$language->json_file)))
             File::delete(resource_path('lang'.'/'.$language->json_file));
 
-        if($language->image != 'prod_default.png' && $language->image != 'defaultUser.png')
+        if($language->image != 'prod_default.png' && $language->image != 'default_doctor.jpg')
         {
             if(File::exists(public_path('images/upload/'.$language->image)))
                 File::delete(public_path('images/upload/'.$language->image));
