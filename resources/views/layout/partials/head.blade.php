@@ -16,7 +16,6 @@
 
 <link rel="stylesheet" href="{{ url('assets/css/style.css') }}">
 
-
 @yield('css')
 
 <input type="hidden" name="rtl_direction" class="rtl_direction" value="{{ session('direction') == 'rtl' ? 'true' : 'false' }}">
