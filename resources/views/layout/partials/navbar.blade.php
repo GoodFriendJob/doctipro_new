@@ -23,7 +23,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item nav-select {{ $active_page == 'pharmacy' ? 'active' : '' }}">
+                        {{-- <li class="nav-item nav-select {{ $active_page == 'pharmacy' ? 'active' : '' }}">
                             <a class="nav-link menu-link d-flex flex-column" href="{{ url('/all-pharmacies') }}">{{__('Pharmacy')}}
                                 <span>{{__('Medicines & Health Product')}}</span>
                             </a>
@@ -39,7 +39,7 @@
                             <a class="nav-link menu-link d-flex flex-column " href="{{ url('all-offers') }}">{{ __('Offers') }}
                                 <span>{{ __('Coupons And Discount') }}</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item nav-select {{ $active_page == 'blog' ? 'active' : '' }}">
                             <a class="nav-link menu-link d-flex flex-column " href="{{ url('blogs') }}">{{ __('Blog') }}
                                 <span>{{ __('Blogs') }}</span>

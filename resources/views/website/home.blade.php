@@ -279,7 +279,6 @@
                     {{__('Read top articles from health experts')}}
                 </h2>
             </div>
-            @if (Session::get('locale') ==='English')
             <div class="flex">
                 <button type="button" class="prev w-10 md:px-2 lg:text-base lg:py-2 md:text-sm md:py-2 sm:py-2 sm:px-3 msm:py-2 msm:px-3 xsm:py-2 xsm:px-3 xxsm:py-2 xxsm:px-3 text-primary border border-primary text-center">
                     <svg class="m-auto" width="8" height="12" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -292,60 +291,43 @@
                     </svg>
                 </button>
             </div>
-            @elseif(Session::get('locale') === 'Arabic')
-            <div class="flex">
-                <button type="button" class="prev ml-2 w-10 md:px-2 lg:text-base lg:py-2 md:text-sm md:py-2 sm:py-2 sm:px-3 msm:py-2 msm:px-3 xsm:py-2 xsm:px-3 xxsm:py-2 xxsm:px-3 text-primary border border-primary text-center">
-                    <svg class="m-auto" width="8" height="12" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.70697 11.707L7.41397 5.99997L1.70697 0.292969L0.292969 1.70697L4.58597 5.99997L0.292969 10.293L1.70697 11.707Z" />
-                    </svg>
-                </button>
-                <button type="button" class="next w-10 md:px-2 lg:text-base lg:py-2 md:text-sm md:py-2 sm:py-2 sm:px-3 msm:py-2 msm:px-3 xsm:py-2 xsm:px-3 xxsm:py-2 xxsm:px-3 text-primary border border-primary text-center">
-                    <svg class="m-auto" width="8" height="12" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.29303 11.707L0.586032 5.99997L6.29303 0.292969L7.70703 1.70697L3.41403 5.99997L7.70703 10.293L6.29303 11.707Z" />
-                    </svg>
-                </button>
-            </div>
-            @endif
         </div>
-        @if (Session::get('locale') ==='Arabic')
-        <div class="single-item mb-5">
-            @if(count($blogs) > 0)
-            <div class="slick-slider-rtl" dir="rtl">
-                @foreach ($blogs as $blog)
-                <div class="element element-{{ $loop->iteration }} ">
-                    <div class="md:mt-12 sm:mt-11 msm:mt-11 xsm:mt-11 xxsm:mt-11 w-full">
-                        <img class="w-96 h-56 object-cover bg-cover" src="{{ $blog->title }}" alt="" />
-                        <p class="text-slate-500 text-left font-normal text-base py-2 leading-5 font-fira-sans">
-                            <span class="font-fira-sans text-primary font-medium text-base leading-5 md:text-sm"></span>
-                        </p>
-                        <p class="font-fira-sans font-normal leading-6 text-black text-left text-sm"></p>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @else
-            <div class="flex justify-center mt-44 font-fira-sans font-normal text-base text-gray">{{__('No Data Avalaible')}}</div>
-            @endif
-        </div>
-        @elseif(Session::get('locale') ==='English')
         <div class="single-item mb-5">
             @if(count($blogs) > 0)
             <div class="slick-slider-ltr" dir="ltr">
                 @foreach ($blogs as $blog)
-                <a href="{{  url('blog-details/'.$blog->id.'/'.Str::slug($blog->title)) }}">
+                @php
+                //updated by Polaris
+                $tlist = json_decode($blog->multi_language);
+                $temp_title = $blog->title;
+                $temp_desc = strip_tags($blog->desc);
+                foreach ($tlist as $t) {
+                    if (strcmp($t->lang, session('locale'))==0) {
+                        $temp_title = $t->title;
+                        $temp_desc = strip_tags($t->desc);
+                    }
+                }
+                @endphp
+                <a href="{{ url('blog-details/'.$blog->id.'/'.Str::slug($blog->title)) }}">
                     <div class="element element-{{ $loop->iteration }} ">
                         <div class="md:mt-12 sm:mt-11 msm:mt-11 xsm:mt-11 xxsm:mt-11 w-full">
                             <img class="w-full h-56 object-cover bg-cover" src="{{ url('images/upload/'.$blog->image) }}" alt="" />
                             <div class="w-96 text-gray text-left font-medium text-base py-2 font-fira-sans flex">
-                                @if (strlen($blog->title) > 30)
-                                <div class="font-fira-sans text-primary text-base font-normal md:text-sm">{!! substr(clean($blog->title),0,30) !!}....</div>
-                                @else
-                                <div class="font-fira-sans text-primary text-base font-normal md:text-sm">{!! clean($blog->title) !!}</div>
-                                @endif
+                                <div class="font-fira-sans text-primary text-base font-normal md:text-sm">{{ $blog->blog_ref }}</div>
                                 <div class="ml-5">{{ Carbon\Carbon::parse($blog->created_at)->format('d M,Y') }}</div>
                             </div>
-                            <p class="font-fira-sans font-normal text-xl text-black text-left mb-2">{{ $blog->blog_ref }}</p>
-                            <div class="font-fira-sans font-normal text-sm text-gray w-[400px] h-[40px] truncate">{{ strip_tags(html_entity_decode($blog->desc)) }}</div>
+                            @if (strlen($temp_title) > 30)
+                            <div class="font-fira-sans font-normal text-xl text-black text-left mb-2">{!! substr(clean($temp_title), 0, 30) !!}....</div>
+                            @else
+                            <div class="font-fira-sans font-normal text-xl text-black text-left mb-2">{!! clean($temp_title) !!}</div>
+                            @endif
+                            <div class="font-fira-sans font-normal text-sm text-gray w-[400px] h-[40px] truncate">
+                                @if (strlen($temp_desc) > 190)
+                                    {!! substr(clean($temp_desc), 0, 190) !!}....
+                                @else
+                                    {!! clean($temp_desc) !!}
+                                @endif    
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -355,7 +337,6 @@
             <div class="flex justify-center mt-44 font-fira-sans font-normal text-base text-gray">{{__('No Data Avalaible')}}</div>
             @endif
         </div>
-        @endif
     </div>
 
     {{-- Download the Doctro --}}

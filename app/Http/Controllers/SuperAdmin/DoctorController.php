@@ -79,6 +79,9 @@ class DoctorController extends Controller
         $request->validate([
             'name' => 'bail|required|unique:doctor',
             'email' => 'bail|required|email|unique:users',
+            'pshealthid' => 'bail|required|unique:doctor,pshealthid,' . $id . ',id',
+            'pshealthid_p12_pass' => 'bail|required',
+            'pshealthid_p12' => 'bail|required',
             'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required',
@@ -140,6 +143,12 @@ class DoctorController extends Controller
         else
         {
             $data['image'] = 'defaultUser.png';
+        }
+        if($request->hasFile('pshealthid_p12'))
+        {
+            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
+        } else {
+            $data['pshealthid_p12'] = 'MIPIT.p12';
         }
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)

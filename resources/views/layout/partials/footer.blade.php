@@ -23,7 +23,7 @@
                         <div class="2xl:pt-10 xxsm:pt-5">
                             <a href="{{url('/show-doctors')}}" class="text-white text-sm font-normal leading-4 font-fira-sans pt-10">{{__('Search for Doctors')}}</a>
                         </div>
-                        <div>
+                        {{-- <div>
                             <a href="{{url('/all-pharmacies')}}" class="text-white text-sm font-normal leading-4 font-fira-sans pt-2">{{__('Pharmacy')}}</a>
                         </div>
                         <div>
@@ -31,7 +31,7 @@
                         </div>
                         <div>
                             <a href="{{url('/our-offers')}}" class="text-white text-sm font-normal leading-4 font-fira-sans pt-2">{{__('Offers')}}</a>
-                        </div>
+                        </div> --}}
                         <div>
                             <a href="{{url('/our_blogs')}}" class="text-white text-sm font-normal leading-4 font-fira-sans pt-2">{{__('Blog')}}</a>
                         </div>
