@@ -416,7 +416,8 @@ class DoctorApiController extends Controller
 
     public function apiCategory($treatment_id)
     {
-        $categories = Category::where([['treatment_id',$treatment_id],['status',1]])->get(['id','name']);
+        // $categories = Category::where([['treatment_id',$treatment_id],['status',1]])->get(['id','name']);
+        $categories = Category::where('status', 1)->get(['id','name']);
         return response(['success' => true,'data' => $categories , 'msg' => 'Categories']);
     }
 
