@@ -59,8 +59,8 @@ class CustomController extends Controller
     public function ext_deleteFile($path, $file_name)
     {
         if ($file_name != 'prod_default.png' && $file_name != 'default_doctor.jpg') {
-            if (File::exists($path . $file_name)) {
-                File::delete($path . $file_name);
+            if (File::exists($path . '/' . $file_name)) {
+                File::delete($path . '/' . $file_name);
             }
             return true;
         }

@@ -2,17 +2,50 @@
 
 @section('title',__('pid settings'))
 @section('content')
+@php
+    $is_p12_exist = false;
+    if (File::exists("/opt/doctipro/" . $doctor->pshealthid_p12)) $is_p12_exist = true;
+@endphp
 <section class="section">
     @include('layout.breadcrumb',[
         'title' => __('pid settings'),
     ])
     <div class="card">
         <div class="card-body pt-0">
-            <div class="row text-right">
-                <div class="col">
-                <a class="edit-link btn btn-danger float-right" data-toggle="modal" href="#request_pid_dlg">
-                    <i class="fa fa-calendar-plus mr-1"></i> {{__('Call Request')}}
-                </a>
+            <div class="row">
+                @if (!empty($doctor->pshealthid) && $is_p12_exist)
+                <div class="col-md-3 pb-2">
+                    <a class="edit-link btn btn-primary" data-toggle="modal" href="#request_pid_dlg">
+                        <i class="fa fa-calendar-plus mr-1"></i> {{__('Request A Simulation')}}
+                    </a>
+                </div>
+                @endif
+                <div class="col-md-3 form-group">
+                    <p><i class="fa fa-user-md"></i>&nbsp; {{__('PsHealth ID')}} : 
+                        @if (!empty($doctor->pshealthid))
+                        <span class="bg-success text-white py-1 px-2">{{ $doctor->pshealthid }}<span>
+                        @else
+                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-2 form-group">
+                    <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
+                        @if ($is_p12_exist)
+                        <span class="badge bg-success text-white">{{__('Set')}}<span>
+                        @else
+                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-4 form-group">
+                    <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
+                        @if (!empty($doctor->pshealthid_p12_pass))
+                        <span class="bg-success text-white py-1 px-2">{{ $doctor->pshealthid_p12_pass }}<span>
+                        @else
+                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        @endif
+                    </p>
                 </div>
             </div>
             <div class="table-responsive mt-4">
@@ -20,7 +53,13 @@
                     <thead>
                         <tr>
                             <th rowspan="2" class="border">{{__('ID')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-key"></i> {{__('pshealthid')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-user-md"></i><br>{{__('PsHealth ID')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
+                            <th rowspan="2" class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
                             <th class="border"><i class="fa fa-id-card"></i> {{__('Auth Action')}}</th>
                             <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('CNS Business Call Validate')}}</th>
                             <th colspan="3" class="border"><i class="fa fa-arrow-right"></i> {{__('Sync Exchange')}}</th>
@@ -40,6 +79,12 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $history->pshealthid }}</td>
+                            <td>{{ $history->medical_code }}</td>
+                            <td>{{ $history->service_place }}</td>
+                            <td>{{ $history->patient_number }}</td>
+                            <td>{{ $history->biller_id }}</td>
+                            <td>{{ $history->act_code }}</td>
+                            <td>{{ $history->act_number }}</td>
                             <td>{{ $history->authn_ccss_date_added }}</td>
                             <td>{{ $history->part_statutaire }}</td>
                             <td>{{ $history->recouvrement }}</td>

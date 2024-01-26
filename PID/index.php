@@ -35,6 +35,9 @@ if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
 $p12_password = '7v4DfRK,G0Y0=?Cc';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
+// Set the content type to application/json
+header('Content-Type: application/json');
+
 $return_values = simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation, $varMatricule, $NombreActeMedical, $biller_id);
 validation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID']);
 // contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID'], $return_values['varIdMemoireHonoraire']);

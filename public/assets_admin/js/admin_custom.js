@@ -844,15 +844,28 @@ function call_pid()
         //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         // },
         type: "POST",
+        dataType: 'json',
         url: base_url + '/PID/',
         data: $('#request_pid_dlg .myform').serialize(),
         success: function (result)
         {
            console.log(result);
-           location.href = location.href;
+        //    setTimeout(() => {
+        //         window.location.reload();
+        //     }, 3000);
+        //     Swal.fire(
+        //         'Simulation Request Success',
+        //         'Your Simulation Request has been posted successfully! <br>Now you can proceed with validation or take any contestation action. ',
+        //         'success'
+        //     )
         },
-        error: function (err) {
-
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.error('Error:', textStatus, errorThrown);
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
         }
     });
 }

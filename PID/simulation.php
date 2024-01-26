@@ -4,6 +4,14 @@ require 'functions.php';
 
 function simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation,$varMatricule,$NombreActeMedical, $biller_id)
 {
+  $res = array(
+    'status' => 0, 'message' => 'Error is happened',
+    'soap' => array(
+        'request' => '',
+        'response' => ''
+    )
+  );
+
 	global $db_host, $db_name, $db_user, $db_pass;
   $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
@@ -288,8 +296,6 @@ if ($signedInfoElement) {
 
 /***********************************************************************************************************/
 $doc->formatOutput = true;//laisser ça là !
-file_put_contents('logs/RequestGuichet.xml', $doc->saveXML());
-
 curl_setopt($ch, CURLOPT_POSTFIELDS, $doc->saveXML());
 
 // Exécutez la requête cURL
@@ -297,29 +303,38 @@ $response = curl_exec($ch);
 
 if (curl_errno($ch))
 {
-    echo '======= Erreur cURL : ' . curl_error($ch);
+    $res['message'] = 'Erreur cURL : ' . curl_error($ch);
+    echo json_encode($res); 
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
     if ($httpCode == 500) {
-        echo '============= Erreur 500 : ' . $response;
+      $res['message'] = 'Erreur 500 : ' . $response; 
+      echo json_encode($res); exit;
     } else {
-        echo '=============  Réponse du serveur : ' . $response;
+      // echo '=============  Réponse du serveur : ' . $response;
     }
 }
-file_put_contents('logs/responseGuichet.xml', $response);
 
-$req1 = $OPC->prepare("INSERT INTO doctor_pid (doctor_id, pshealthid, authentication_guichet_xml, authentication_guichet_xml_date_added, assertion_response_xml, assertion_response_date_added, date_modified) VALUES (:doctor_id, :pshealthid,:authentication_guichet_xml,NOW(),:assertion_response_xml,NOW(),NOW())");
 try {
-    $req1->execute([
-      'doctor_id' => $doctor_id,	
-      'pshealthid' => $psEHealthID,	
-      'authentication_guichet_xml' =>$doc->saveXML(),
-      'assertion_response_xml' => $response
-    ]);
+  $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
+  (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
+VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, NOW(), NOW())");
+  $req1->execute([
+    'doctor_id' => $doctor_id,	
+    'pshealthid' => $psEHealthID,	
+    'medical_code' => $codeMedical,	
+    'service_place' => $lieuPrestation,	
+    'patient_number' => $varMatricule,	
+    'biller_id' => $biller_id,	
+    'act_code' => $code_prestataire,	
+    'act_number' => $NombreActeMedical,	
+  ]);
+  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestGuichet.xml', $doc->saveXML());
+  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseGuichet.xml', $response);
 } catch (\Exception $e) {
-    // Handle the exception
-    echo "Error: " . $e->getMessage();
+  // echo "Error: " . $e->getMessage();
+  $res['message'] = "Error: " . $e->getMessage(); 
+  echo json_encode($res); exit;
 }
 	 
 $docResponseGuichet = new DOMDocument();
