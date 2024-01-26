@@ -103,6 +103,16 @@
             </div>
             <div class="hidden items-center justify-between w-full md:flex md:w-auto md:order-1" id="mobile-menu-language-select">
                 <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+                    @if (auth::check() && auth()->user()->hasRole('super admin'))
+                    <li>
+                        <a href="{{url('/home')}}" class="{{ $activePage == 'home' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
+                    </li>
+                    @endif
+                    @if (auth::check() && auth()->user()->hasRole('doctor'))
+                    <li>
+                        <a href="{{url('/doctor_homee')}}" class="{{ $activePage == 'doctor_homee' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
+                    </li>
+                    @endif
                     <li>
                         <a href="{{url('/show-doctors')}}" class="{{ $activePage == 'doctors' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Find Doctors') }}</a>
                     </li>

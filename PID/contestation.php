@@ -3,8 +3,8 @@ function contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, 
 {
 	$OPC = ConnexionBdd('localhost','doctipro','doctipro_user','sMXNMDbpJoo1jyhF');
 
-	$wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
-	$sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
+	// $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
+	// $sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 
 	$info = getCertificatGuichet($pshealthid_p12, $p12_password);
 	$privateKey = $info['privateKey'];

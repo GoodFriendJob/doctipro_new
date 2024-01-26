@@ -53,45 +53,43 @@
                     <thead>
                         <tr>
                             <th rowspan="2" class="border">{{__('ID')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-user-md"></i><br>{{__('PsHealth ID')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
                             <th rowspan="2" class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
-                            <th class="border"><i class="fa fa-id-card"></i> {{__('Auth Action')}}</th>
-                            <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('CNS Business Call Validate')}}</th>
-                            <th colspan="3" class="border"><i class="fa fa-arrow-right"></i> {{__('Sync Exchange')}}</th>
+                            <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
-                            <th class="border">{{__('authn_ccss_date_added')}}</th>
-                            <th class="border">{{__('part_statutaire')}}</th>
-                            <th class="border">{{__('recouvrement')}}</th>
-                            <th class="border">{{__('paye')}}</th>
-                            <th class="border">{{__('id_memoire_honoraire')}}</th>
-                            <th class="border">{{__('id_externe_prestation')}}</th>
-                            <th class="border">{{__('id_response_contestation')}}</th>
+                            <th class="border">{{__('Simulate')}}</th>
+                            <th class="border">{{__('Validate')}}</th>
+                            <th class="border">{{__('Contest')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($histories as $history)
-                        <tr>
+                        @php
+                            $simulate = !empty($history->ccss_token);
+                            $validate = !empty($history->paye);
+                            $contenst = !empty($history->contestation_id);
+                        @endphp
+                        <tr class="{{ $simulate && $validate==true ? 'bg-light':'' }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $history->pshealthid }}</td>
                             <td>{{ $history->medical_code }}</td>
                             <td>{{ $history->service_place }}</td>
                             <td>{{ $history->patient_number }}</td>
                             <td>{{ $history->biller_id }}</td>
                             <td>{{ $history->act_code }}</td>
                             <td>{{ $history->act_number }}</td>
-                            <td>{{ $history->authn_ccss_date_added }}</td>
-                            <td>{{ $history->part_statutaire }}</td>
-                            <td>{{ $history->recouvrement }}</td>
-                            <td>{{ $history->paye }}</td>
-                            <td>{{ $history->id_memoire_honoraire }}</td>
-                            <td>{{ $history->id_externe_prestation }}</td>
-                            <td>{{ $history->id_response_contestation }}</td>
+                            <td>
+                            @if ($simulate)
+                            @else
+                                <a class="btn btn-sm btn-outline-success" href="#"><nobr><i class="fa fa-eye"></i> {{__('Simulate')}}</nobr></a>
+                            @endif
+                            </td>
+                            <td><a class="btn btn-sm btn-primary" href="#"><nobr><i class="fa fa-arrow-right"></i> {{__('Validate')}}</nobr></a></td>
+                            <td><a class="btn btn-sm btn-primary" href="#"><nobr><i class="fa fa-arrow-right"></i> {{__('Contest')}}</nobr></a></td>
                         </tr>
                         @endforeach
                     </tbody>
