@@ -353,8 +353,6 @@ if (curl_errno($ch))
 }
 
 try {
-  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestGuichet.xml', $doc->saveXML());
-  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseGuichet.xml', $response);
   $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
   (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
 VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, NOW(), NOW())");
@@ -368,6 +366,8 @@ VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number,
     'act_code' => $code_prestataire,	
     'act_number' => $NombreActeMedical,	
   ]);
+  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestGuichet.xml', $doc->saveXML());
+  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseGuichet.xml', $response);
 } catch (\Exception $e) {
   $res['message'] = "Error: " . $e->getMessage(); 
   echo json_encode($res); exit;
@@ -925,8 +925,8 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   }
 
   if ($lastInsertId) {
-    file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestBusiness.xml', $a);
-    file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseBusiness.xml', $response);
+    file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.xml', $a);
+    file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
     $req2 = $OPC->prepare(" UPDATE doctor_pid SET 
     ccss_token=:ccss_token, wsu_id=:wsu_id, 
     id_memoire_honoraire=:id_memoire_honoraire, 

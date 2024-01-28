@@ -107,7 +107,6 @@ if ($pid_step==1) {
     .'<div class="pid_request_xml">'.$req_xml.'</div>'
     .'<div class="pid_response_params"><h3>Response</h3><p>Params: '
     .' id_response_date: <span>'.$row['id_response_date'].'</span>'
-    .' ccss_token: <span>'.$row['ccss_token'].'</span>'
     .' id_memoire_honoraire: <span>'.$row['id_memoire_honoraire'].'</span>'
     .' id_response_simulation: <span>'.$row['id_response_simulation'].'</span>'
     .' id_externe_prestation: <span>'.$row['id_externe_prestation'].'</span>'

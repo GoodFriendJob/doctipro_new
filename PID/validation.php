@@ -1,8 +1,9 @@
 <?php
+require_once 'config.php';
+require_once 'functions.php';
+
 function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id_response_simulation, $CCss, $WsuID)
 {
-	global $db_host, $db_name, $db_user, $db_pass, $cert_path;
-
 	$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
 	$info = getCertificatGuichet($pshealthid_p12, $p12_password);
@@ -210,9 +211,7 @@ function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id
 	echo $id_response_simulation;
 		 
 	$req2 = $OPC->prepare(" UPDATE doctor_pid 
-		SET validation_xml = :validation_xml,
-			validation_response_xml =:validation_response_xml, 
-			part_statutaire=:part_statutaire, 
+		SET part_statutaire=:part_statutaire, 
 			recouvrement=:recouvrement, 
 			paye=:paye,
 			validation_date = NOW() 

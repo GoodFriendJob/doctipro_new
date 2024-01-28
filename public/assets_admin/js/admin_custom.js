@@ -881,7 +881,6 @@ function call_pid_simulate()
         data: $('#request_pid_dlg .myform').serialize(),
         success: function (result)
         {
-            console.log(result);
             if (result.status) {
                 setTimeout(() => {
                     window.location.reload();
@@ -894,6 +893,43 @@ function call_pid_simulate()
             } else {
                 Swal.fire(
                     'Simulation Request Failed',
+                    result.message,
+                    'warning'
+                );
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+        }
+    });
+}
+
+function call_pid_validate()
+{
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: base_url + '/PID/validation.php',
+        data: $('#request_pid_dlg .myform').serialize(),
+        success: function (result)
+        {
+            if (result.status) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                Swal.fire(
+                    'Validation Request Success',
+                    result.message,
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Validation Request Failed',
                     result.message,
                     'warning'
                 );
