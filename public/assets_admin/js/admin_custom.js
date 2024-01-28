@@ -877,7 +877,7 @@ function call_pid_simulate()
     $.ajax({
         type: "POST",
         dataType: 'json',
-        url: base_url + '/PID/',
+        url: base_url + '/PID/simulation.php',
         data: $('#request_pid_dlg .myform').serialize(),
         success: function (result)
         {

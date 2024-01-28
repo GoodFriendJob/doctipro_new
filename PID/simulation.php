@@ -1,9 +1,43 @@
 <?php
-
+require_once 'config.php';
 require_once 'functions.php';
 
-function simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation,$varMatricule,$NombreActeMedical, $biller_id)
-{
+$doctor_id = 1;
+if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
+
+$psEHealthID = '2854201475';
+if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
+
+$pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
+if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
+
+$codeMedical = 'C1';
+if (isset($_POST['medical_code'])) $codeMedical = $_POST['medical_code'];
+
+$biller_id = '90812100';
+if (isset($_POST['biller_id'])) $biller_id = $_POST['biller_id'];
+
+$lieuPrestation = '01';
+if (isset($_POST['service_place'])) $lieuPrestation = $_POST['service_place'];
+
+$varMatricule = '1900123456712';
+if (isset($_POST['patient_number'])) $varMatricule = $_POST['patient_number'];
+
+$code_prestataire="90813319";
+if (isset($_POST['act_code'])) $code_prestataire = $_POST['act_code'];
+
+$NombreActeMedical = '1';
+if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
+
+$p12_password = '7v4DfRK,G0Y0=?Cc';
+if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
+
+// Set the content type to application/json
+header('Content-Type: application/json');
+
+/**
+ * end of Initialize
+ */
   $lastInsertId = 0;
   $res = array(
     'status' => 0, 'message' => 'Error is happened',
@@ -915,7 +949,8 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   array_push($res['soap']['response'], $response);
    
   echo json_encode($res);
-}
+
+
 function extractBinarySecurityToken($xmlString) {
     $doc = new DOMDocument();
     $doc->loadXML($xmlString);
