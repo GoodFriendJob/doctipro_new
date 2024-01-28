@@ -658,7 +658,7 @@ try {
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_requestCNS.xml', $a);
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_respondeCNS.xml', $response);
   if ($lastInsertId) {
-    $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_date=NOW(), ccss_token_date=:ccss_token_date WHERE pid_id = :lastInsertId");
+    $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_token_date=:ccss_token_date WHERE pid_id = :lastInsertId");
     $req2->execute([
       'ccss_token_date' => $response,
       'lastInsertId' => $lastInsertId
