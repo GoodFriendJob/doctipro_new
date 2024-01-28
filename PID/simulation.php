@@ -8,8 +8,8 @@ function simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $c
   $res = array(
     'status' => 0, 'message' => 'Error is happened',
     'soap' => array(
-        'request' => '',
-        'response' => ''
+        'request' => [],
+        'response' => []
     )
   );
 
