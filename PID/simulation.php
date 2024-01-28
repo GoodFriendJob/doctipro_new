@@ -885,6 +885,7 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   $xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
   $query = '//cns:identifiantReponseSimulation';
   $nodes = $xpath->query($query);
+  $id_response_simulation = '';
   if ($nodes->length > 0) {
       $id_response_simulation = $nodes->item(0)->nodeValue;
   }
