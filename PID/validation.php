@@ -223,7 +223,7 @@ if (curl_errno($ch))
 {
 	// echo '======= Erreur cURL : ' . curl_error($ch);
 	$res['message'] = 'Erreur cURL : ' . curl_error($ch);
-	echo json_encode($res); 
+	echo json_encode($res); exit;
 } else {
 	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -231,6 +231,7 @@ if (curl_errno($ch))
 		// echo '============= Erreur 500 : ' . $response;
 		$res['message'] = 'Erreur 500 : ' . $response;
 		echo json_encode($res); 
+		exit;
 	} else {
 		// echo '=============  Réponse du serveur : ' . $response;
 	}
