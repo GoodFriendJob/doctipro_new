@@ -195,10 +195,10 @@ function contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, 
 	}
 	file_put_contents('logs/responseCNSBusinessCallContestation.xml', $response);
 
-	$req2 = $OPC->prepare("UPDATE doctor_pid 
+	$req2 = $OPC->prepare(" UPDATE doctor_pid 
 		SET validation_xml = :validation_xml,
 			validation_response_xml = :validation_response_xml,
-			validation_response_xml_date_added = NOW() 
+			validation_date = NOW() 
 		WHERE pid_id = (
 			SELECT pid_id 
 			FROM pid 

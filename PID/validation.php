@@ -209,13 +209,13 @@ function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id
 	echo '<br>';
 	echo $id_response_simulation;
 		 
-	$req2 = $OPC->prepare("UPDATE doctor_pid 
+	$req2 = $OPC->prepare(" UPDATE doctor_pid 
 		SET validation_xml = :validation_xml,
 			validation_response_xml =:validation_response_xml, 
 			part_statutaire=:part_statutaire, 
 			recouvrement=:recouvrement, 
 			paye=:paye,
-			validation_response_xml_date_added = NOW() 
+			validation_date = NOW() 
 		WHERE pshealthid = :pshealthid AND id_response_simulation = :id_response_simulation
 	");
 
