@@ -113,7 +113,56 @@ if ($pid_step==1) {
     .' wsu_id: <span>'.$row['wsu_id'].'</span>'
     .'</p></div>'
     .'<div class="pid_response_xml">'.$res_xml.'</div>';
-
+}
+else if ($pid_step==2) {
+    //validation
+    $req_xml = ''; $res_xml='';
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml')) {
+        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml');
+        $req_xml = beautify_xml($req_xml);
+    }
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml')) {
+        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml');
+        $res_xml = beautify_xml($res_xml);
+    }
+    $message .='<div class="pid_request_params"><h1>Validation</h1><h3>Request</h3><p>Params: '
+    .' pshealthid: <span>'.$row['pshealthid'].'</span>'
+    .' id_response_simulation: <span>'.$row['id_response_simulation'].'</span>'
+    .' WsuID: <span>'.$row['WsuID'].'</span>'
+    .'</p></div>'
+    .'<div class="pid_request_xml">'.$req_xml.'</div>'
+    .'<div class="pid_response_params"><h3>Response</h3><p>Params: '
+    .' validation_date: <span>'.$row['validation_date'].'</span>'
+    .' part_statutaire: <span>'.$row['part_statutaire'].'</span>'
+    .' recouvrement: <span>'.$row['recouvrement'].'</span>'
+    .' paye: <span>'.$row['paye'].'</span>'
+    .'</p></div>'
+    .'<div class="pid_response_xml">'.$res_xml.'</div>';
+}
+else if ($pid_step==3) {
+    //Contraint
+    $req_xml = ''; $res_xml='';
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml')) {
+        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml');
+        $req_xml = beautify_xml($req_xml);
+    }
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml')) {
+        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml');
+        $res_xml = beautify_xml($res_xml);
+    }
+    $message .='<div class="pid_request_params"><h1>Validation</h1><h3>Request</h3><p>Params: '
+    .' pshealthid: <span>'.$row['pshealthid'].'</span>'
+    .' id_response_simulation: <span>'.$row['id_response_simulation'].'</span>'
+    .' WsuID: <span>'.$row['WsuID'].'</span>'
+    .'</p></div>'
+    .'<div class="pid_request_xml">'.$req_xml.'</div>'
+    .'<div class="pid_response_params"><h3>Response</h3><p>Params: '
+    .' validation_date: <span>'.$row['validation_date'].'</span>'
+    .' part_statutaire: <span>'.$row['part_statutaire'].'</span>'
+    .' recouvrement: <span>'.$row['recouvrement'].'</span>'
+    .' paye: <span>'.$row['paye'].'</span>'
+    .'</p></div>'
+    .'<div class="pid_response_xml">'.$res_xml.'</div>';
 }
 $res['message'] = $message;
 $res['status'] = 1;
