@@ -10,7 +10,7 @@ $pid = 1;
 if (isset($_POST['pid'])) $pid = $_POST['pid'];
 
 $pid_step = 1;
-if (isset($_POST['pid_step'])) $pid = $_POST['pid_step'];
+if (isset($_POST['pid_step'])) $pid_step = $_POST['pid_step'];
 
 $res = array(
     'status' => 0, 'message' => 'Error is happened',
@@ -128,7 +128,7 @@ else if ($pid_step==2) {
     $message .='<div class="pid_request_params"><h1>Validation</h1><h3>Request</h3><p>Params: '
     .' pshealthid: <span>'.$row['pshealthid'].'</span>'
     .' id_response_simulation: <span>'.$row['id_response_simulation'].'</span>'
-    .' WsuID: <span>'.$row['WsuID'].'</span>'
+    .' WsuID: <span>'.$row['wsu_id'].'</span>'
     .'</p></div>'
     .'<div class="pid_request_xml">'.$req_xml.'</div>'
     .'<div class="pid_response_params"><h3>Response</h3><p>Params: '
@@ -153,7 +153,7 @@ else if ($pid_step==3) {
     $message .='<div class="pid_request_params"><h1>Validation</h1><h3>Request</h3><p>Params: '
     .' pshealthid: <span>'.$row['pshealthid'].'</span>'
     .' id_response_simulation: <span>'.$row['id_response_simulation'].'</span>'
-    .' WsuID: <span>'.$row['WsuID'].'</span>'
+    .' WsuID: <span>'.$row['wsu_id'].'</span>'
     .'</p></div>'
     .'<div class="pid_request_xml">'.$req_xml.'</div>'
     .'<div class="pid_response_params"><h3>Response</h3><p>Params: '
