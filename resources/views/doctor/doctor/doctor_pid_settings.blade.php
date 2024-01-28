@@ -87,7 +87,7 @@
                                     <i class="fa fa-circle text-success"></i>
                                 @else
                                     <i class="fa fa-exclamation-triangle text-warning"></i><br>
-                                    <a class="btn btn-sm btn-outline-primary" href="#">{{__('Simulate')}}</a>
+                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate()">{{__('Simulate')}}</a>
                                 @endif
                             </td>
                             <td>
@@ -95,7 +95,7 @@
                                 @if ($validate)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    <a class="btn btn-sm btn-outline-success" href="#">{{__('Validate')}}</a>
+                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate()">{{__('Validate')}}</a>
                                 @endif
                             @endif
                             </td>
@@ -104,7 +104,7 @@
                                 @if ($contenst)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    <a class="btn btn-sm btn-outline-danger" href="#">{{__('Contenst')}}</a>
+                                    <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest()">{{__('Contenst')}}</a>
                                 @endif
                             @endif
                             </td>
@@ -122,6 +122,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <form method="post" class="myform" onsubmit="return false">
+                <input type="hidden" name="pid" id="pid" value="0" />
                 <input type="hidden" name="doctor_id" value={{$doctor->id}} />
                 <input type="hidden" name="psEHealthID" id="psEHealthID" value={{$doctor->pshealthid}} />
                 <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />

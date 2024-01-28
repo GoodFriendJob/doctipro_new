@@ -2,6 +2,9 @@
 require_once 'config.php';
 require_once 'functions.php';
 
+$pid = 0;
+if (isset($_POST['pid'])) $pid = $_POST['pid'];
+
 $doctor_id = 1;
 if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
 
@@ -353,21 +356,26 @@ if (curl_errno($ch))
 }
 
 try {
-  $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
-  (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
-VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, NOW(), NOW())");
-  $req1->execute([
-    'doctor_id' => $doctor_id,	
-    'pshealthid' => $psEHealthID,	
-    'medical_code' => $codeMedical,	
-    'service_place' => $lieuPrestation,	
-    'patient_number' => $varMatricule,	
-    'biller_id' => $biller_id,	
-    'act_code' => $code_prestataire,	
-    'act_number' => $NombreActeMedical,	
-  ]);
-  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestGuichet.xml', $doc->saveXML());
-  file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseGuichet.xml', $response);
+  if ($pid > 0 ) {
+    $lastInsertId = $pid;
+  } else {
+    $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
+    (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
+  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, NOW(), NOW())");
+    $req1->execute([
+      'doctor_id' => $doctor_id,	
+      'pshealthid' => $psEHealthID,	
+      'medical_code' => $codeMedical,	
+      'service_place' => $lieuPrestation,	
+      'patient_number' => $varMatricule,	
+      'biller_id' => $biller_id,	
+      'act_code' => $code_prestataire,	
+      'act_number' => $NombreActeMedical,	
+    ]);
+    $lastInsertId = $OPC->lastInsertId();
+  }
+  file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
+  file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseGuichet.xml', $response);
 } catch (\Exception $e) {
   $res['message'] = "Error: " . $e->getMessage(); 
   echo json_encode($res); exit;

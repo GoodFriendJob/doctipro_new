@@ -946,6 +946,43 @@ function call_pid_validate()
     });
 }
 
+function call_pid_contest()
+{
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: base_url + '/PID/contestation.php',
+        data: $('#request_pid_dlg .myform').serialize(),
+        success: function (result)
+        {
+            if (result.status) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                Swal.fire(
+                    'contestation Request Success',
+                    result.message,
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'contestation Request Failed',
+                    result.message,
+                    'warning'
+                );
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+        }
+    });
+}
+
 
 function edit_timeslot()
 {
