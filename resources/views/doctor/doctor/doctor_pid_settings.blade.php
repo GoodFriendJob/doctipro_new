@@ -202,7 +202,7 @@
                     <div class="pid-steps">
                         <p class="mb-0"><a href="javascript:show_pid_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
                         <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
-                        <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validation')}}</a></p>
+                        <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validate')}}</a></p>
                         <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
                         <p class="mb-0"><a href="javascript:show_pid_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
                     </div>
