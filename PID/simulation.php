@@ -1094,7 +1094,7 @@ function CanoniseSignedInfo($digestTimestamp,$digestCertificat,$digestBody)
 
 	return $signedinfo;
 }
-function CanoniseSignedInfoCNS($digestbody,$digestAssertion,$uriAssertion,$uriBody="",$filename="signedinfoCns.xml")
+function CanoniseSignedInfoCNS($digestbody,$digestAssertion,$uriAssertion,$uriBody="", $filename="signedinfoCns.xml")
 {
 	$signedinfo = '<ds:SignedInfo xmlns:auth="http://schemas.xmlsoap.org/ws/2006/12/authorization" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ns="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
           <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
@@ -1123,7 +1123,7 @@ function CanoniseSignedInfoCNS($digestbody,$digestAssertion,$uriAssertion,$uriBo
 
 	if($filename != "")
 	{
-		file_put_contents($filename, $signedinfo);
+		file_put_contents('logs/'. $filename, $signedinfo);
 	}
 	return $signedinfo;
 }
