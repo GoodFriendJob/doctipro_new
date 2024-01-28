@@ -5,6 +5,7 @@
 /vendor
 /license
 /PID/config.php
+/PID/logs
 .env
 .env.backup
 .phpunit.result.cache
