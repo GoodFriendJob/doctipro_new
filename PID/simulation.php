@@ -894,17 +894,18 @@ $SignatureValue->nodeValue = base64_encode($signature1);
     file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_RequestBusiness.xml', $a);
     file_put_contents('logs/'. $psEHealthID . '_' . $OPC->lastInsertId().'_ResponseBusiness.xml', $response);
     $req2 = $OPC->prepare(" UPDATE doctor_pid SET 
-    ccss_token=:CCss, wsu_id=:WsuID, 
+    ccss_token=:ccss_token, wsu_id=:wsu_id, 
     id_memoire_honoraire=:id_memoire_honoraire, 
     id_externe_prestation=:id_externe_prestation, 
     id_response_simulation=:id_response_simulation, 
     id_response_date=NOW() WHERE pid_id = :lastInsertId");
+
     $req2->execute([
       'id_memoire_honoraire' => $varIdMemoireHonoraire,
       'id_response_simulation' => $id_response_simulation,
       'id_externe_prestation' => $varIdentifiantExternePrestation,
-      "CCss" => $CCss,
-      "WsuID" => $WsuID,
+      "ccss_token" => $CCss,
+      "wsu_id" => $WsuID,
       'lastInsertId' => $lastInsertId
     ]);
   }
