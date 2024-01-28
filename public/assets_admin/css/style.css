@@ -3018,7 +3018,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   overflow: scroll;
   height: 320px;
 }
-.pid_request_params span {
+.pid_request_params span, .pid_response_params span {
   display: inline-block;
   padding: 0 5px 0 0;
   color: #e63c3c;
