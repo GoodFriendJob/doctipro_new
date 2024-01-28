@@ -2,8 +2,48 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id_response_simulation, $CCss, $WsuID)
-{
+$pid = 1;
+if (isset($_POST['pid'])) $pid = $_POST['pid'];
+
+$doctor_id = 1;
+if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
+
+$psEHealthID = '2854201475';
+if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
+
+$pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
+if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
+
+$p12_password = '7v4DfRK,G0Y0=?Cc';
+if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
+
+$res = array(
+    'status' => 0, 'message' => 'Error is happened',
+    'soap' => array(
+        'request' => [],
+        'response' => []
+    )
+  );
+
+$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
+$stmt = $OPC->prepare(" SELECT * FROM doctor_pid where pid_id=".$pid.";");
+try{
+    $stmt->execute();
+}catch(PDOException $err){
+    $res['message'] = 'DB connection Error!';
+    echo json_encode($res);
+    exit;
+}
+$row = [];
+while($result=$stmt->fetch(PDO::FETCH_ASSOC)){
+    //select column by key and use
+    $row = $result;
+} 
+
+$id_response_simulation = $row['id_response_simulation'];
+$CCss = $row['ccss_token'];
+$WsuID = $row['wsu_id'];
+
 	$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
 	$info = getCertificatGuichet($pshealthid_p12, $p12_password);
@@ -230,7 +270,7 @@ function validation($pshealthid_p12, $p12_password, $doctor_id, $pshealthid, $id
 	
 	$queryString = $req2->queryString;
 	
-}
+
 function CanoniseBodyValidation($id)
 {  
   $CanonizedBody = '<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
