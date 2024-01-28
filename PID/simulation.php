@@ -858,10 +858,10 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   );
 
   curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
-
+ echo 1;
   // Exécutez la requête cURL
   $response = curl_exec($ch);
-
+  echo 2 exit;
   if (curl_errno($ch))
   {
     $res['message'] = "Erreur Bussiness cURL : " . curl_error($ch); 
