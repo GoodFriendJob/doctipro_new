@@ -835,32 +835,72 @@ function display_timeslot(id)
         }
     });
 }
+function show_pid_step(pid_step) {
+    $('.pid_step_btn').removeClass('active');
+    $('.pid_step_btn'+pid_step).addClass('active');
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: base_url + '/PID/info.php',
+        data: {
+            psEHealthID: $('#psEHealthID').val(),
+            pid: $('#detail_pid').val(),
+            pid_step: pid_step
+        },
+        success: function (result)
+        {
+            if (result.status == 1) {
+                console.log('====', result);
+                console.log('===== message: =====', result.message);
+                $('#pid_xml').html(result.message);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.error('Error:', textStatus, errorThrown);
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+        }
+    });
+}
+function open_detail_dlg(pid)
+{
+    $('#detail_pid').val(pid);
+    show_pid_step(1);
+    $('#detail_pid_dlg').modal('show');
+}
 
-function call_pid()
+function call_pid_simulate()
 {
     $.ajax({
-        // headers:
-        // {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        // },
         type: "POST",
         dataType: 'json',
         url: base_url + '/PID/',
         data: $('#request_pid_dlg .myform').serialize(),
         success: function (result)
         {
-           console.log(result);
-        //    setTimeout(() => {
-        //         window.location.reload();
-        //     }, 3000);
-        //     Swal.fire(
-        //         'Simulation Request Success',
-        //         'Your Simulation Request has been posted successfully! <br>Now you can proceed with validation or take any contestation action. ',
-        //         'success'
-        //     )
+            console.log(result);
+            if (result.status) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                Swal.fire(
+                    'Simulation Request Success',
+                    'Your Simulation Request has been posted successfully! <br>Now you can proceed with validation or take any contestation action. ',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Simulation Request Failed',
+                    result.message,
+                    'warning'
+                );
+            }
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            // console.error('Error:', textStatus, errorThrown);
             Swal.fire(
                 'Server Error',
                 textStatus + "<br>" + errorThrown,

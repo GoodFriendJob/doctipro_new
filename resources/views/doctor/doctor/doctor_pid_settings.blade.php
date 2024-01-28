@@ -74,7 +74,7 @@
                             $validate = !empty($history->paye);
                             $contenst = !empty($history->contestation_id);
                         @endphp
-                        <tr class="{{ $simulate && $validate==true ? 'bg-light':'' }}">
+                        <tr class="{{ $simulate ? 'bg-light':'' }}" onclick="javascript:open_detail_dlg({{$history->pid_id}})">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $history->medical_code }}</td>
                             <td>{{ $history->service_place }}</td>
@@ -83,13 +83,31 @@
                             <td>{{ $history->act_code }}</td>
                             <td>{{ $history->act_number }}</td>
                             <td>
+                                @if ($simulate)
+                                    <i class="fa fa-circle text-success"></i>
+                                @else
+                                    <i class="fa fa-exclamation-triangle text-warning"></i><br>
+                                    <a class="btn btn-sm btn-outline-primary" href="#">{{__('Simulate')}}</a>
+                                @endif
+                            </td>
+                            <td>
                             @if ($simulate)
-                            @else
-                                <a class="btn btn-sm btn-outline-success" href="#"><nobr><i class="fa fa-eye"></i> {{__('Simulate')}}</nobr></a>
+                                @if ($validate)
+                                    <i class="fa fa-circle text-success"></i>
+                                @else
+                                    <a class="btn btn-sm btn-outline-success" href="#">{{__('Validate')}}</a>
+                                @endif
                             @endif
                             </td>
-                            <td><a class="btn btn-sm btn-primary" href="#"><nobr><i class="fa fa-arrow-right"></i> {{__('Validate')}}</nobr></a></td>
-                            <td><a class="btn btn-sm btn-primary" href="#"><nobr><i class="fa fa-arrow-right"></i> {{__('Contest')}}</nobr></a></td>
+                            <td>
+                            @if ($simulate)
+                                @if ($contenst)
+                                    <i class="fa fa-circle text-success"></i>
+                                @else
+                                    <a class="btn btn-sm btn-outline-danger" href="#">{{__('Contenst')}}</a>
+                                @endif
+                            @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -105,11 +123,11 @@
         <div class="modal-content">
             <form method="post" class="myform" onsubmit="return false">
                 <input type="hidden" name="doctor_id" value={{$doctor->id}} />
-                <input type="hidden" name="psEHealthID" value={{$doctor->pshealthid}} />
+                <input type="hidden" name="psEHealthID" id="psEHealthID" value={{$doctor->pshealthid}} />
                 <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
                 <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('Call Request')}}</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('Simulation Request')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -161,9 +179,38 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-danger text-white" href="javascript:call_pid()"><i class="fa fa-handshake"></i> {{__('Request')}}</a>
+                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate()"><i class="fa fa-handshake"></i> {{__('Request')}}</a>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="detail_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detail_pid_dlg_title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID Detail')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="px-1 py-2 row">
+                <input type="hidden" name="detail_pid" id="detail_pid" value="" />
+                <div class="col-sm-2 text-center">
+                    <div class="pid-steps">
+                        <p class="mb-0"><a href="javascript:show_pid_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
+                        <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
+                        <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validation')}}</a></p>
+                        <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
+                        <p class="mb-0"><a href="javascript:show_pid_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div id="pid_xml"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -2995,3 +2995,31 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   padding-left: 5px;
   overflow: hidden;
 }
+
+.pid_step_btn {
+  display: inline-block;
+  width: 92px;
+  height: 92px;
+  border-radius: 100%;
+  border: 1px solid #34395e;
+  color: #34395e;
+  line-height: 92px;
+  text-align: center;
+  overflow: hidden;
+}
+.pid_step_btn:hover, .pid_step_btn.active {
+  background: #34395e;
+  color: #fff;
+}
+.pid_request_xml, .pid_response_xml {
+  padding: 10px;
+  background: #111;
+  color: #fff;
+  overflow: scroll;
+  height: 320px;
+}
+.pid_request_params span {
+  display: inline-block;
+  padding: 0 5px 0 0;
+  color: #34395e;
+}

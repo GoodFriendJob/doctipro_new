@@ -110,7 +110,7 @@
                     @endif
                     @if (auth::check() && auth()->user()->hasRole('doctor'))
                     <li>
-                        <a href="{{url('/doctor_homee')}}" class="{{ $activePage == 'doctor_homee' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
+                        <a href="{{url('/doctor_home')}}" class="{{ $activePage == 'doctor_home' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
                     </li>
                     @endif
                     <li>
