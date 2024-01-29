@@ -724,7 +724,7 @@ if (curl_errno($ch))
 
 try {
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseCNS.xml', $response);
-  $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_token_date=NOW() WHERE pid_id = :lastInsertId");
+  $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_token_date=NOW(), date_modified=NOW() WHERE pid_id = :lastInsertId");
   $req2->execute([
     'lastInsertId' => $lastInsertId
   ]);
@@ -957,7 +957,7 @@ if ($nodes->length > 0) {
 }
 
 file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
-$req2 = $OPC->prepare(" UPDATE doctor_pid SET 
+$req2 = $OPC->prepare(" UPDATE doctor_pid SET date_modified=NOW(), 
 ccss_token=:ccss_token, wsu_id=:wsu_id, 
 id_memoire_honoraire=:id_memoire_honoraire, 
 id_externe_prestation=:id_externe_prestation, 

@@ -73,6 +73,9 @@
                             $simulate = !empty($history->ccss_token);
                             $validate = !empty($history->paye);
                             $contenst = !empty($history->contestation_id);
+                            $guichet_date = strtotime($history->guichet_date);
+                            $guichet_date+= 30*60;
+                            $is_valid = $guichet_date < time() ? true: false;
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $loop->iteration }}</td>
@@ -83,7 +86,7 @@
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
                             <td>
-                                @if ($simulate)
+                                @if ($is_valid && $simulate)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
                                     <i class="fa fa-exclamation-triangle text-warning"></i><br>
@@ -91,7 +94,7 @@
                                 @endif
                             </td>
                             <td>
-                            @if ($simulate)
+                            @if ($is_valid && $simulate)
                                 @if ($validate)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
@@ -100,13 +103,27 @@
                             @endif
                             </td>
                             <td>
-                            @if ($simulate)
+                            @if ($is_valid && $simulate)
                                 @if ($contenst)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest()">{{__('Contenst')}}</a>
                                 @endif
                             @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">
+                                <p>
+                                    @if ($is_valid && $simulate)
+                                        <span>Valid</span>
+                                    @else
+                                        <span>Expired</span>
+                                    @endif
+                                    guichet_date: <span>{{ $history->guichet_date }} </span> &nbsp; 
+                                    validation_date: <span>{{ $history->validation_date }} </span> &nbsp; 
+                                    contestation_date: <span>{{ $history->contestation_date }} </span> &nbsp; 
+                                </p>
                             </td>
                         </tr>
                         @endforeach
