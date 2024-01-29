@@ -222,15 +222,13 @@ $response = curl_exec($ch);
 
 if (curl_errno($ch))
 {
-	// echo '======= Erreur cURL : ' . curl_error($ch);
 	$res['message'] = 'Erreur cURL : ' . curl_error($ch);
 	echo json_encode($res); exit;
 } else {
 	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	if ($httpCode == 500) {
-		// echo '============= Erreur 500 : ' . $response;
-		$res['message'] = 'Erreur 500 : ' . $response;
+		$res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
 		echo json_encode($res); 
 		exit;
 	} else {

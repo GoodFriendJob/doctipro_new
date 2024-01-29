@@ -342,11 +342,11 @@ $response = curl_exec($ch);
 if (curl_errno($ch))
 {
     $res['message'] = 'Erreur cURL : ' . curl_error($ch);
-    echo json_encode($res); 
+    echo json_encode($res); exit;
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 500) {
-      $res['message'] = 'Erreur 500 : ' . $response; 
+      $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
       echo json_encode($res); exit;
     } else {
       // echo '=============  Réponse du serveur : ' . $response;
@@ -686,7 +686,7 @@ if (curl_errno($ch))
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 500) {
-      $res['message'] = "Erreur 500 : ".$response; 
+      $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
       echo json_encode($res); exit;
     } else {
         // echo '=============  Réponse du serveur : ' . $response;
@@ -910,10 +910,9 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   } else {
       $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
       if ($httpCode == 500) {
-        $res['message'] = "Erreur Bussiness 500 : " . $response; 
+        $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
         echo json_encode($res); exit;
       } else {
-        // echo '=============  Réponse du serveur : ' . $response;
         array_push($res['soap']['request'], $a);
         array_push($res['soap']['response'], $response);
       }

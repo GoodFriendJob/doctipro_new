@@ -168,12 +168,4 @@ $res['message'] = $message;
 $res['status'] = 1;
 echo json_encode($res);
 
-function beautify_xml($xml) {
-    // $xml = str_replace('>', '><br>', $xml);
-    // $xml = str_replace('<br><br>', '<br>', $xml);
-    // $xml = preg_replace('/\<(\S+) /i', '<<strong>${1}</strong> ', $xml);
-    $xml = str_replace('<', '&lt;', $xml);
-    $xml = str_replace('>', '&gt;<br>', $xml);
-    return $xml;
-}
 ?>
