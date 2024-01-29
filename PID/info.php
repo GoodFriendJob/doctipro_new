@@ -62,12 +62,12 @@ if ($pid_step==1) {
     .'<div class="pid_response_xml">'.$res_xml.'</div>';
 
     $req_xml = ''; $res_xml='';
-    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_requestCNS.xml')) {
-        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_requestCNS.xml');
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_RequestCNS.xml')) {
+        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestCNS.xml');
         $req_xml = beautify_xml($req_xml);
     }
-    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_respondeCNS.xml')) {
-        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_respondeCNS.xml');
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_ResponseCNS.xml')) {
+        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseCNS.xml');
         $res_xml = beautify_xml($res_xml);
     }
     $message .='<div class="pid_request_params"><h1>CNS Request</h1><h3>Request</h3><p>Params: '
