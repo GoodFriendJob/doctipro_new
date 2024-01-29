@@ -142,12 +142,12 @@ else if ($pid_step==2) {
 else if ($pid_step==3) {
     //Contraint
     $req_xml = ''; $res_xml='';
-    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml')) {
-        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml');
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessContestation.xml')) {
+        $req_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessContestation.xml');
         $req_xml = beautify_xml($req_xml);
     }
-    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml')) {
-        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml');
+    if (file_exists('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessContestation.xml')) {
+        $res_xml = file_get_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessContestation.xml');
         $res_xml = beautify_xml($res_xml);
     }
     $message .='<div class="pid_request_params"><h1>Validation</h1><h3>Request</h3><p>Params: '

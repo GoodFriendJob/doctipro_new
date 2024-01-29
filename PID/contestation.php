@@ -220,7 +220,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
 
 // Exécutez la requête cURL
 $response = curl_exec($ch);
-
+file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessContestation.xml', $a);
 if (curl_errno($ch))
 {
 	// echo '======= Erreur cURL : ' . curl_error($ch);
@@ -248,7 +248,6 @@ try {
 		'pid' => $pid,
 		'contestation_id' => 11,
 	]);
-	file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessContestation.xml', $a);
 	file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessContestation.xml', $response);
 
 } catch (\Exception $e) {

@@ -3023,3 +3023,17 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   padding: 0 5px 0 0;
   color: #e63c3c;
 }
+
+.ajax-loading {
+  width: 100%;
+  margin: 40px auto;
+  text-align:center;
+}
+
+.search-loading svg {
+  width: 100%;
+  height: 100%;
+}
+.ajax-loading svg {
+  margin: 0 20%;
+}

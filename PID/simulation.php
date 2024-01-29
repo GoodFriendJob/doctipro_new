@@ -901,6 +901,7 @@ $SignatureValue->nodeValue = base64_encode($signature1);
 
   curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
   // Exécutez la requête cURL
+  file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.xml', $a);
   $response = curl_exec($ch);
   if (curl_errno($ch))
   {
@@ -933,7 +934,6 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   }
 
   if ($lastInsertId) {
-    file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.xml', $a);
     file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
     $req2 = $OPC->prepare(" UPDATE doctor_pid SET 
     ccss_token=:ccss_token, wsu_id=:wsu_id, 
@@ -1069,7 +1069,7 @@ function CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonora
     </sync:RequestInfo>
   </soapenv:Body>';
    
-  file_put_contents("logs/BodyCNSBusiness.xml", $CanonizedBody);
+  // file_put_contents("logs/BodyCNSBusiness.xml", $CanonizedBody);
   
   return $CanonizedBody;
 }
