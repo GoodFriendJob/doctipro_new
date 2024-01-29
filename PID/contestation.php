@@ -230,7 +230,7 @@ if (curl_errno($ch))
 	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	if ($httpCode == 500) {
-		$res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
+		$res['message'] = '<h3>Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
 		echo json_encode($res); exit;
 	} else {
 		// echo '=============  Réponse du serveur : ' . $response;

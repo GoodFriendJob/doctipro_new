@@ -346,12 +346,12 @@ if (curl_errno($ch))
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 500) {
-      $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
+      $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
       echo json_encode($res); exit;
     } else {
       // echo '=============  Réponse du serveur : ' . $response;
-      array_push($res['soap']['request'], $doc->saveXML());
-      array_push($res['soap']['response'], $response);
+      // array_push($res['soap']['request'], $doc->saveXML());
+      // array_push($res['soap']['response'], $response);
     }
 }
 
@@ -686,7 +686,7 @@ if (curl_errno($ch))
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 500) {
-      $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
+      $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
       echo json_encode($res); exit;
     } else {
         // echo '=============  Réponse du serveur : ' . $response;
@@ -910,7 +910,7 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   } else {
       $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
       if ($httpCode == 500) {
-        $res['message'] = '<h3>Erreur 500</h3>' . beautify_xml($response); 
+        $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
         echo json_encode($res); exit;
       } else {
         array_push($res['soap']['request'], $a);
