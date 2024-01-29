@@ -196,11 +196,21 @@ class DoctorController extends Controller
         return view('doctor.doctor.doctor_schedule', compact('doctor'))->withStatus(__('Doctor updated successfully..!!'));;
     }
 
-    public function pid_settings()
+    public function pid_settings(Request $request)
     {
+        $data = $request->all();
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-        $histories = DoctorPID::where('doctor_id', $doctor->id)->get();
-        return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories'));
+
+        $h = DoctorPID::where('doctor_id', $doctor->id);
+        if (isset($data['date_type'])) {
+            if (isset($data['start_date']))
+                $h = $h->where($data['date_type'], $data['start_date'], '>=');
+            if (isset($data['end_date']))
+                $h = $h->where($data['date_type'], $data['end_date'], '<=');
+        }        
+
+        $histories = $h->get();
+        return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
     }
 
     public function doctor_profile()

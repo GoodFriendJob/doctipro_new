@@ -1,5 +1,7 @@
 @extends('layout.mainlayout_admin',['activePage' => 'pid_settings'])
-
+@section('css')
+    <link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
+@endsection
 @section('title',__('pid settings'))
 @section('content')
 @php
@@ -23,31 +25,64 @@
                 <div class="col-md-3 form-group">
                     <p><i class="fa fa-user-md"></i>&nbsp; {{__('PsHealth ID')}} : 
                         @if (!empty($doctor->pshealthid))
-                        <span class="bg-success text-white py-1 px-2">{{ $doctor->pshealthid }}<span>
+                        <span class="border text-primary py-1 px-2">{{ $doctor->pshealthid }}<span>
                         @else
-                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
                         @endif
                     </p>
                 </div>
                 <div class="col-md-2 form-group">
                     <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
                         @if ($is_p12_exist)
-                        <span class="badge bg-success text-white">{{__('Set')}}<span>
+                        <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
                         @else
-                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
                         @endif
                     </p>
                 </div>
                 <div class="col-md-4 form-group">
                     <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
                         @if (!empty($doctor->pshealthid_p12_pass))
-                        <span class="bg-success text-white py-1 px-2">{{ $doctor->pshealthid_p12_pass }}<span>
+                        <span class="border text-primary py-1 px-2">{{ $doctor->pshealthid_p12_pass }}<span>
                         @else
-                        <span class="badge bg-warning text-white">{{__('Not Set')}}<span>
+                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
                         @endif
                     </p>
                 </div>
             </div>
+            <form action="{{ url('pid_settings') }}" method="get" class="form">
+                @csrf
+                <div class="row">
+                    <div class="col-sm-3 form-group mb-0">
+                        <label for="date_type" class="col-form-label"> {{__('Date Type')}}</label>
+                        <div class="d-flex date-type">
+                            <select class="form-control" id="date_type">
+                                <option value="guichet_date" selected>Guichet</option>
+                                <option value="validation_date">Validation</option>
+                                <option value="contestation_date">Contestation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group mb-0">
+                        <label for="start_date" class="col-form-label"> {{__('Start Date')}}</label>
+                        <div class="d-flex input-group date" id='start_date'>
+                            <input type='text' name='start_date' class="form-control" value="{{ old('start_date', $data['start_date']) }}" />
+                            <button class="btn btn-outline-primary" type="button" id="start_date_btn"><i class="fa fa-calendar"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 form-group text-center mb-0"><h1 class="mt-4"> ~ </h1></div>
+                    <div class="col-sm-3 form-group mb-0">
+                        <label for="end_date" class="col-form-label"> {{__('End Date')}}</label>
+                        <div class="d-flex input-group date" id='end_date'>
+                            <input type='text' name='end_date' class="form-control" value="{{ old('end_date', $data['end_date']) }}" />
+                            <button class="btn btn-outline-primary" type="button" id="end_date_btn"><i class="fa fa-calendar"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 form-group text-right mb-0">
+                        <input type="submit" value="{{__('Search')}}" class="mt-4 btn btn-lg btn-primary">
+                    </div>
+                </div>
+            </form>
             <div class="table-responsive mt-4">
                 <table class="datatable table table-hover table-center mb-0 text-center">
                     <thead>
@@ -222,4 +257,24 @@
 </div>
 
 @endsection
-
+@section('js')
+    <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script>
+        $('#start_date input').datepicker({
+            format: "yyyy-mm-dd",
+            maxViewMode: 3,
+            language: "fr",
+            daysOfWeekHighlighted: "0",
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#end_date input').datepicker({
+            format: "yyyy-mm-dd",
+            maxViewMode: 3,
+            language: "fr",
+            daysOfWeekHighlighted: "0",
+            autoclose: true,
+            todayHighlight: true
+        });
+    </script>
+@endsection
