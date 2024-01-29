@@ -56,10 +56,10 @@
                     <div class="col-sm-3 form-group mb-0">
                         <label for="date_type" class="col-form-label"> {{__('Date Type')}}</label>
                         <div class="d-flex date-type">
-                            <select class="form-control" id="date_type">
-                                <option value="guichet_date" selected>Guichet</option>
-                                <option value="validation_date">Validation</option>
-                                <option value="contestation_date">Contestation</option>
+                            <select class="form-control" id="date_type" name="date_type">
+                                <option value="guichet_date" {{(old('date_type') == 'guichet_date') ? 'selected':''}}>Guichet</option>
+                                <option value="validation_date" {{(old('date_type') == 'validation_date') ? 'selected':''}}>Validation</option>
+                                <option value="contestation_date" {{(old('date_type') == 'contestation_date') ? 'selected':''}}>Contestation</option>
                             </select>
                         </div>
                     </div>
