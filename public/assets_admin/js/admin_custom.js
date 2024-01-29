@@ -1035,7 +1035,6 @@ function call_pid_contest()
     });
 }
 
-
 function edit_timeslot()
 {
     var id = $('input[name=working_id]').val();

@@ -110,7 +110,7 @@
                             $contenst = !empty($history->contestation_id);
                             $guichet_date = strtotime($history->guichet_date);
                             $guichet_date+= 30*60;
-                            $is_valid = $guichet_date < time() ? true: false;
+                            $is_valid = $guichet_date > time() ? true: false;
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td>
@@ -135,7 +135,8 @@
                             <td>
                             @if ($is_valid && $simulate)
                                 @if ($validate)
-                                    <i class="fa fa-circle text-success"></i>
+                                    <i class="fa fa-circle text-success"></i> <br>
+                                    <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
                                 @else
                                     <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate()">{{__('Validate')}}</a>
                                 @endif

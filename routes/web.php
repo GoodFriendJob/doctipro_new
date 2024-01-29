@@ -317,7 +317,9 @@ Route::group(['middleware' => ['XssSanitizer']], function ()
 
         // pid
         Route::get('/pid_settings',[App\Http\Controllers\Doctor\DoctorController::class,'pid_settings']);
-        Route::post('/pid_export',[App\Http\Controllers\Doctor\DoctorController::class,'pid_export']);
+        Route::post('/pid_excel_export',[App\Http\Controllers\Doctor\DoctorController::class,'pid_excel_export']);
+        Route::get('/pid_pdf_download/{id}',[App\Http\Controllers\Doctor\DoctorController::class,'pid_pdf_download']);
+
 
         // doctor profile
         Route::get('/doctor_profile',[App\Http\Controllers\Doctor\DoctorController::class,'doctor_profile']);

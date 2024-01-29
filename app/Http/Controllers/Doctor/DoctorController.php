@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
 use App;
 use Spatie\Permission\Models\Permission;
+use PDF;
+
 
 class DoctorController extends Controller
 {
@@ -215,14 +217,40 @@ class DoctorController extends Controller
         return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
     }
 
-    public function pid_export(Request $request)
+    public function pid_excel_export(Request $request)
     {
         if (empty(auth()->user()->id))
             return json_encode(['status'=>0, 'data' => []]);
         $data = $request->all();
-        $histories = DoctorPID::whereIn('doctor_id', $data['pid_list'])->get();
+        $histories = DoctorPID::whereIn('pid_id', $data['pid_list'])->get();
   
         return json_encode(['status'=>0, 'data' => $histories]);
+    }
+
+    public function pid_pdf_save(Request $request)
+    {
+        if (empty(auth()->user()->id) || empty($data['pid_id']))
+            return json_encode(['status'=>0, 'data' => []]);
+        $data = $request->all();
+        $pid_info = DoctorPID::where('pid_id', $data['pid_id'])->first();
+        
+        $pdf = PDF::loadView('temp', compact('medicineName'));
+        $path = public_path() . '/prescription/upload';
+        $fileName =  uniqid() . '.' . 'pdf' ;
+        $pdf->save($path . '/' . $fileName);
+        $pres->pdf = $fileName;
+        $pres->save();
+        return redirect('/appointment');
+    }
+
+    public function pid_pdf_download($id)
+    {
+        if (empty(auth()->user()->id))
+            return json_encode(['status'=>0, 'data' => []]);
+        $pid_info = DoctorPID::where('pid_id', $id)->first();
+  
+        $pdf = PDF::loadView('pdf.pid_pdf', compact('pid_info'));
+        return $pdf->download('doctor_pid_ticket_'.$id.'.pdf');
     }
 
     public function doctor_profile()
