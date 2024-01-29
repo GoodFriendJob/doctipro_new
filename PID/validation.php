@@ -36,7 +36,6 @@ try{
 }
 $row = [];
 while($result=$stmt->fetch(PDO::FETCH_ASSOC)){
-    //select column by key and use
     $row = $result;
 } 
 

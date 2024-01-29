@@ -2,6 +2,8 @@
 require_once 'config.php';
 require_once 'functions.php';
 
+$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
+$lastInsertId = 0;
 $pid = 0;
 if (isset($_POST['pid'])) $pid = $_POST['pid'];
 
@@ -18,31 +20,52 @@ $p12_password = '7v4DfRK,G0Y0=?Cc';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
 ////////////////////////////////////////////////////////////////
-
-$codeMedical = 'C1';
-if (isset($_POST['medical_code'])) $codeMedical = $_POST['medical_code'];
+$medical_code = 'C1';
+if (isset($_POST['medical_code'])) $medical_code = $_POST['medical_code'];
 
 $biller_id = '90812100';
 if (isset($_POST['biller_id'])) $biller_id = $_POST['biller_id'];
 
-$lieuPrestation = '01';
-if (isset($_POST['service_place'])) $lieuPrestation = $_POST['service_place'];
+$service_place = '01';
+if (isset($_POST['service_place'])) $service_place = $_POST['service_place'];
 
-$varMatricule = '1900123456712';
-if (isset($_POST['patient_number'])) $varMatricule = $_POST['patient_number'];
+$patient_number = '1900123456712';
+if (isset($_POST['patient_number'])) $patient_number = $_POST['patient_number'];
 
-$code_prestataire="90813319";
-if (isset($_POST['act_code'])) $code_prestataire = $_POST['act_code'];
+$act_code="90813319";
+if (isset($_POST['act_code'])) $act_code = $_POST['act_code'];
 
-$NombreActeMedical = '1';
-if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
+$act_number = '1';
+if (isset($_POST['act_number'])) $act_number = $_POST['act_number'];
 
+if ($pid>0) {
+  $stmt = $OPC->prepare(" SELECT * FROM doctor_pid where pid_id=".$pid.";");
+  try{
+      $stmt->execute();
+  }catch(PDOException $err){
+      $res['message'] = 'DB connection Error!';
+      echo json_encode($res);
+      exit;
+  }
+  $row = [];
+  while($result=$stmt->fetch(PDO::FETCH_ASSOC)){
+      $row = $result;
+  } 
+  if (!empty($row)) {
+    $medical_code = $row['medical_code'];
+    $biller_id = $row['biller_id'];
+    $service_place = $row['service_place'];
+    $patient_number = $row['patient_number'];
+    $act_code = $row['act_code'];
+    $act_number = $row['act_number'];
+    $lastInsertId = $row['pid_id'];
+  }
+}
 ////////////////////////////////////////////////////////////////
 
 // Set the content type to application/json
 header('Content-Type: application/json');
 
-$lastInsertId = 0;
 $res = array(
   'status' => 0, 'message' => 'Error is happened',
   'soap' => array(
@@ -50,7 +73,7 @@ $res = array(
       'response' => []
   )
 );
-$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -357,8 +380,11 @@ if (curl_errno($ch))
 }
 
 try {
-  if ($pid > 0 ) {
-    $lastInsertId = $pid;
+  if ($lastInsertId > 0 ) {
+    $req1 = $OPC->prepare(" UPDATE doctor_pid SET guichet_date=NOW(), date_modified=NOW() where pid_id=:pid_id;");
+    $req1->execute([
+      'pid_id' => $lastInsertId
+    ]);
   } else {
     $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
     (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
@@ -366,12 +392,12 @@ try {
     $req1->execute([
       'doctor_id' => $doctor_id,	
       'pshealthid' => $psEHealthID,	
-      'medical_code' => $codeMedical,	
-      'service_place' => $lieuPrestation,	
-      'patient_number' => $varMatricule,	
+      'medical_code' => $medical_code,	
+      'service_place' => $service_place,	
+      'patient_number' => $patient_number,	
       'biller_id' => $biller_id,	
-      'act_code' => $code_prestataire,	
-      'act_number' => $NombreActeMedical,	
+      'act_code' => $act_code,	
+      'act_number' => $act_number,	
     ]);
     $lastInsertId = $OPC->lastInsertId();
   }
@@ -505,7 +531,7 @@ $digestMethod1->setAttribute('Algorithm', 'http://www.w3.org/2001/04/xmlenc#sha2
 $reference1->appendChild($digestMethod1);
 
 $dateIssueInstant = getCurrentDateTimeInISO8601Z();
-$BodyCanonized = CanoniseBody2($code_prestataire);
+$BodyCanonized = CanoniseBody2($act_code);
 
 $SamlCanonized = canoniserSAMLresponse($dateIssueInstant,$assertionID,$signatureValueX,$x509Certificate,$signatureId,$digestValueX,$notBefore,$notOnAfter,$keyInfoId);
 $digestAssertion = openssl_digest($SamlCanonized, 'sha256', true);//ok
@@ -618,7 +644,7 @@ $claims = $doc->createElement('ns:Claims');
 $claims->setAttribute('Dialect', 'http://schemas.xmlsoap.org/ws/2006/12/authorization/authclaims');
 $claimType = $doc->createElement('auth:ClaimType');
 $claimType->setAttribute('Uri', 'http://ws.mysecu.lu/trust/prodo/espaceid');
-$value = $doc->createElement('auth:Value', $code_prestataire);
+$value = $doc->createElement('auth:Value', $act_code);
 
 // Construction de la structure XML en ajoutant les éléments les uns aux autres
 $claimType->appendChild($value);
@@ -676,7 +702,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 );
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
-
+file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestCNS.xml', $a);
 // Exécutez la requête cURL
 $response = curl_exec($ch);
 
@@ -697,15 +723,11 @@ if (curl_errno($ch))
 }
 
 try {
-  $lastInsertId = $OPC->lastInsertId();
-  file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestCNS.xml', $a);
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseCNS.xml', $response);
-  if ($lastInsertId) {
-    $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_token_date=NOW() WHERE pid_id = :lastInsertId");
-    $req2->execute([
-      'lastInsertId' => $lastInsertId
-    ]);
-  }
+  $req2 = $OPC->prepare(" UPDATE doctor_pid SET ccss_token_date=NOW() WHERE pid_id = :lastInsertId");
+  $req2->execute([
+    'lastInsertId' => $lastInsertId
+  ]);
 } catch (\Exception $e) {
   $res['message'] = "Error: " . $e->getMessage(); 
   echo json_encode($res); exit;
@@ -829,7 +851,7 @@ $simulationMedecin->appendChild($uta);
 $identifiantFacturier = $doc->createElement('cns:identifiantFacturier', $biller_id);
 $uta->appendChild($identifiantFacturier);
 
-$matricule = $doc->createElement('cns:matricule', $varMatricule);
+$matricule = $doc->createElement('cns:matricule', $patient_number);
 $uta->appendChild($matricule);
 
 $varIdMemoireHonoraire = format_uuidv4(random_bytes(16));
@@ -865,7 +887,7 @@ $acte->appendChild($nombre);
 $lieuDePrestation = $doc->createElement('cns:lieuDePrestation', '01');
 $ligneUTA->appendChild($lieuDePrestation);
 
-$bodyNodeCanonized = CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$codeMedical,$lieuPrestation,$varMatricule,$NombreActeMedical);
+$bodyNodeCanonized = CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number);
 
 $digestBody = openssl_digest($bodyNodeCanonized, 'sha256', true);//ok
 
@@ -877,87 +899,86 @@ openssl_sign($canonizedSignature, $signature1, $privateKey, OPENSSL_ALGO_SHA256 
 $SignatureValue = $doc->getElementsByTagName('ds:SignatureValue')->item(0);
 $SignatureValue->nodeValue = base64_encode($signature1);
 
-  $doc->formatOutput = true;
-  $a = $doc->saveXML();
+$doc->formatOutput = true;
+$a = $doc->saveXML();
 
-  $ch = curl_init();
-  $soapActionHeaderValue = 'exchange';
-  $service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
-  // Configurez les options cURL
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
-  curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
-  curl_setopt($ch, CURLOPT_URL, $service_url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSLCERT, 'certificat.pem');
-  curl_setopt($ch, CURLOPT_CAINFO,  'certificats.pem');
-  curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'pem');
-  curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-  curl_setopt($ch, CURLOPT_VERBOSE, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          'Content-Type: text/xml;charset=UTF-8'
-      )
-  );
+$ch = curl_init();
+$soapActionHeaderValue = 'exchange';
+$service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
+// Configurez les options cURL
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
+curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
+curl_setopt($ch, CURLOPT_URL, $service_url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSLCERT, 'certificat.pem');
+curl_setopt($ch, CURLOPT_CAINFO,  'certificats.pem');
+curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'pem');
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+curl_setopt($ch, CURLOPT_VERBOSE, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'Content-Type: text/xml;charset=UTF-8'
+  )
+);
 
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
-  // Exécutez la requête cURL
-  file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.xml', $a);
-  $response = curl_exec($ch);
-  if (curl_errno($ch))
-  {
-    $res['message'] = "Erreur Bussiness cURL : " . curl_error($ch); 
+curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
+// Exécutez la requête cURL
+file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.xml', $a);
+$response = curl_exec($ch);
+if (curl_errno($ch))
+{
+$res['message'] = "Erreur Bussiness cURL : " . curl_error($ch); 
+echo json_encode($res); exit;
+} else {
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  if ($httpCode == 500) {
+    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     echo json_encode($res); exit;
   } else {
-      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-      if ($httpCode == 500) {
-        $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
-        echo json_encode($res); exit;
-      } else {
-        // echo '=============  Réponse du serveur : ' . $response;
-        // array_push($res['soap']['request'], $a);
-        // array_push($res['soap']['response'], $response);
-      }
+    // echo '=============  Réponse du serveur : ' . $response;
+    // array_push($res['soap']['request'], $a);
+    // array_push($res['soap']['response'], $response);
   }
+}
 
-  $docResponseBusinessCall = new DOMDocument();
-  $docResponseBusinessCall->loadXML($response);
-  $xpath = new DOMXPath($docResponseBusinessCall);
-  $xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
-  $xpath->registerNamespace('soap', 'http://schemas.xmlsoap.org/soap/envelope/');
-  $xpath->registerNamespace('mySecu', 'http://ws.mysecu.lu/generic/sync');
-  $xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
-  $query = '//cns:identifiantReponseSimulation';
-  $nodes = $xpath->query($query);
-  $id_response_simulation = '';
-  if ($nodes->length > 0) {
-      $id_response_simulation = $nodes->item(0)->nodeValue;
-  }
+$docResponseBusinessCall = new DOMDocument();
+$docResponseBusinessCall->loadXML($response);
+$xpath = new DOMXPath($docResponseBusinessCall);
+$xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
+$xpath->registerNamespace('soap', 'http://schemas.xmlsoap.org/soap/envelope/');
+$xpath->registerNamespace('mySecu', 'http://ws.mysecu.lu/generic/sync');
+$xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
+$query = '//cns:identifiantReponseSimulation';
+$nodes = $xpath->query($query);
+$id_response_simulation = '';
+if ($nodes->length > 0) {
+  $id_response_simulation = $nodes->item(0)->nodeValue;
+}
 
-  if ($lastInsertId) {
-    file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
-    $req2 = $OPC->prepare(" UPDATE doctor_pid SET 
-    ccss_token=:ccss_token, wsu_id=:wsu_id, 
-    id_memoire_honoraire=:id_memoire_honoraire, 
-    id_externe_prestation=:id_externe_prestation, 
-    id_response_simulation=:id_response_simulation, 
-    id_response_date=NOW() WHERE pid_id = :lastInsertId");
+file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
+$req2 = $OPC->prepare(" UPDATE doctor_pid SET 
+ccss_token=:ccss_token, wsu_id=:wsu_id, 
+id_memoire_honoraire=:id_memoire_honoraire, 
+id_externe_prestation=:id_externe_prestation, 
+id_response_simulation=:id_response_simulation, 
+id_response_date=NOW() WHERE pid_id = :lastInsertId");
 
-    $req2->execute([
-      'id_memoire_honoraire' => $varIdMemoireHonoraire,
-      'id_response_simulation' => $id_response_simulation,
-      'id_externe_prestation' => $varIdentifiantExternePrestation,
-      "ccss_token" => $CCss,
-      "wsu_id" => $WsuID,
-      'lastInsertId' => $lastInsertId
-    ]);
-  }
-  $res['status'] = 1;
-  $res['message'] = 'Simulation request is posted successfully';
-  // array_push($res['soap']['request'], $a);
-  // array_push($res['soap']['response'], $response);
-   
-  echo json_encode($res);
+$req2->execute([
+  'id_memoire_honoraire' => $varIdMemoireHonoraire,
+  'id_response_simulation' => $id_response_simulation,
+  'id_externe_prestation' => $varIdentifiantExternePrestation,
+  "ccss_token" => $CCss,
+  "wsu_id" => $WsuID,
+  'lastInsertId' => $lastInsertId
+]);
+
+$res['status'] = 1;
+$res['message'] = 'Simulation request is posted successfully';
+// array_push($res['soap']['request'], $a);
+// array_push($res['soap']['response'], $response);
+  
+echo json_encode($res);
 
 
 function extractBinarySecurityToken($xmlString) {
@@ -1021,7 +1042,7 @@ $CanonizedBody = '<soapenv:Body xmlns:saml2="urn:oasis:names:tc:SAML:2.0:asserti
 
    return $CanonizedBody;
 }
-function CanoniseBody2($code_prestataire)
+function CanoniseBody2($act_code)
 {
 	$CanonizedBody ='<soapenv:Body xmlns:auth="http://schemas.xmlsoap.org/ws/2006/12/authorization" xmlns:ns="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054522149119">
     <ns:RequestSecurityToken>
@@ -1034,7 +1055,7 @@ function CanoniseBody2($code_prestataire)
       </wsp:AppliesTo>
       <ns:Claims Dialect="http://schemas.xmlsoap.org/ws/2006/12/authorization/authclaims">
         <auth:ClaimType Uri="http://ws.mysecu.lu/trust/prodo/espaceid">
-          <auth:Value>'.$code_prestataire.'</auth:Value>
+          <auth:Value>'.$act_code.'</auth:Value>
         </auth:ClaimType>
       </ns:Claims>
     </ns:RequestSecurityToken>
@@ -1044,14 +1065,14 @@ function CanoniseBody2($code_prestataire)
 	
 	 return $CanonizedBody;
 }
-function CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$codeMedical,$lieuPrestation,$varMatricule,$NombreActeMedical)
+function CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number)
 {  
   $CanonizedBody = '<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
     <sync:RequestInfo modelUID="2023-CNS-PID-SIM-V1">
       <cns:simulationMedecin xmlns:cns="http://www.secu.lu/ciss/cns">
         <cns:UTA>
           <cns:identifiantFacturier>90812100</cns:identifiantFacturier>
-          <cns:matricule>'.$varMatricule.'</cns:matricule>
+          <cns:matricule>'.$patient_number.'</cns:matricule>
           <cns:idMemoireHonoraire>'.$varIdMemoireHonoraire.'</cns:idMemoireHonoraire>
           <cns:dateEtablissementMemoireHonoraire>'.$varDateEtablissementMemoireHonoraire.'</cns:dateEtablissementMemoireHonoraire>
           <cns:Lignes>
@@ -1059,10 +1080,10 @@ function CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonora
               <cns:identifiantExternePrestation>'.$varIdentifiantExternePrestation.'</cns:identifiantExternePrestation>
               <cns:dateDebutPrestation>'.$varDateDebutPrestation.'</cns:dateDebutPrestation>
               <cns:acte>
-                <com:codeActe xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">'.$codeMedical.'</com:codeActe>
-                <com:nombre xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">'.$NombreActeMedical.'</com:nombre>
+                <com:codeActe xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">'.$medical_code.'</com:codeActe>
+                <com:nombre xmlns:com="http://www.secu.lu/ciss/cns/commonTypes">'.$act_number.'</com:nombre>
               </cns:acte>
-              <cns:lieuDePrestation>'.$lieuPrestation.'</cns:lieuDePrestation>
+              <cns:lieuDePrestation>'.$service_place.'</cns:lieuDePrestation>
             </cns:LigneUTA>
           </cns:Lignes>
         </cns:UTA>

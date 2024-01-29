@@ -14,23 +14,23 @@ if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
 $pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
 if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
 
-$codeMedical = 'C1';
-if (isset($_POST['medical_code'])) $codeMedical = $_POST['medical_code'];
+$medical_code = 'C1';
+if (isset($_POST['medical_code'])) $medical_code = $_POST['medical_code'];
 
 $biller_id = '90812100';
 if (isset($_POST['biller_id'])) $biller_id = $_POST['biller_id'];
 
-$lieuPrestation = '01';
-if (isset($_POST['service_place'])) $lieuPrestation = $_POST['service_place'];
+$service_place = '01';
+if (isset($_POST['service_place'])) $service_place = $_POST['service_place'];
 
-$varMatricule = '1900123456712';
-if (isset($_POST['patient_number'])) $varMatricule = $_POST['patient_number'];
+$patient_number = '1900123456712';
+if (isset($_POST['patient_number'])) $patient_number = $_POST['patient_number'];
 
-$code_prestataire="90813319";
-if (isset($_POST['act_code'])) $code_prestataire = $_POST['act_code'];
+$act_code="90813319";
+if (isset($_POST['act_code'])) $act_code = $_POST['act_code'];
 
-$NombreActeMedical = '1';
-if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
+$act_number = '1';
+if (isset($_POST['act_number'])) $act_number = $_POST['act_number'];
 
 $p12_password = '7v4DfRK,G0Y0=?Cc';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
@@ -38,7 +38,7 @@ if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12
 // Set the content type to application/json
 header('Content-Type: application/json');
 
-$return_values = simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $code_prestataire, $codeMedical, $lieuPrestation, $varMatricule, $NombreActeMedical, $biller_id);
+$return_values = simulation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $act_code, $medical_code, $service_place, $patient_number, $act_number, $biller_id);
 // validation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID']);
 // contestation($pshealthid_p12, $p12_password, $doctor_id, $psEHealthID, $return_values['identifiantReponseSimulation'], $return_values['CCss'], $return_values['WsuID'], $return_values['varIdMemoireHonoraire']);
 
