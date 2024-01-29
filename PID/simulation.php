@@ -689,9 +689,9 @@ if (curl_errno($ch))
       $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
       echo json_encode($res); exit;
     } else {
-        // echo '=============  Réponse du serveur : ' . $response;
-        array_push($res['soap']['request'], $a);
-        array_push($res['soap']['response'], $response);
+      // echo '=============  Réponse du serveur : ' . $response;
+      // array_push($res['soap']['request'], $a);
+      // array_push($res['soap']['response'], $response);
     }
 }
 
@@ -913,8 +913,9 @@ $SignatureValue->nodeValue = base64_encode($signature1);
         $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
         echo json_encode($res); exit;
       } else {
-        array_push($res['soap']['request'], $a);
-        array_push($res['soap']['response'], $response);
+        // echo '=============  Réponse du serveur : ' . $response;
+        // array_push($res['soap']['request'], $a);
+        // array_push($res['soap']['response'], $response);
       }
   }
 
@@ -952,8 +953,8 @@ $SignatureValue->nodeValue = base64_encode($signature1);
   }
   $res['status'] = 1;
   $res['message'] = 'Simulation request is posted successfully';
-  array_push($res['soap']['request'], $a);
-  array_push($res['soap']['response'], $response);
+  // array_push($res['soap']['request'], $a);
+  // array_push($res['soap']['response'], $response);
    
   echo json_encode($res);
 

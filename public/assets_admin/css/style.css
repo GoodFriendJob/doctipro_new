@@ -3037,3 +3037,10 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .ajax-loading svg {
   margin: 0 20%;
 }
+.pid-error {
+  text-align: left;
+  font-size: 13px;
+  width: 100%;
+  background: #111;
+  color: #fff;
+}
