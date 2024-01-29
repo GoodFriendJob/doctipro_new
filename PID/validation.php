@@ -2,19 +2,19 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-$pid = 1;
+$pid = 0;
 if (isset($_POST['pid'])) $pid = $_POST['pid'];
 
-$doctor_id = 1;
+$doctor_id = 0;
 if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
 
-$psEHealthID = '2854201475';
+$psEHealthID = '';
 if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
 
 $pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
 if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
 
-$p12_password = '7v4DfRK,G0Y0=?Cc';
+$p12_password = '';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
 $res = array(
