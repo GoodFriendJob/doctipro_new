@@ -835,6 +835,44 @@ function display_timeslot(id)
         }
     });
 }
+function export_excel() {
+    var checked = [];
+    $('.pid_id_check').map(function (chk) {
+        if ($(this).is(':checked'))
+            checked.push($(this).attr('value'));
+    });
+    $.ajax({
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        dataType: 'json',
+        url: base_url + '/pid_export',
+        data: {
+            pid_list: checked
+        },
+        success: function (result)
+        {
+            if (result.status == 1) {
+                // console.log('====', result);
+                // console.log('===== message: =====', result.message);
+                $('#pid_xml').html(result.message);
+            } else {
+                $('#pid_xml').html('');
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.error('Error:', textStatus, errorThrown);
+            $('#pid_xml').html('');
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+        }
+    });
+}
 function show_pid_step(pid_step) {
     $('#pid_xml').html('<div class="ajax-loading"><svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><path id="pulsar" stroke="rgb(57 108 240)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path></svg></div>');
     $('.pid_step_btn').removeClass('active');
@@ -879,6 +917,15 @@ function open_detail_dlg(pid)
 function call_pid_simulate(pid)
 {
     $('#pid').val(pid);
+    if ($('#medical_code').val()=='' || $('#biller_id').val()=='' || $('#patient_number').val()==''
+    || $('#service_place').val()=='' || $('#act_code').val()=='' || $('#act_number').val()=='' ) {
+        Swal.fire(
+            'Please check Fields',
+            'Please fill whole informations',
+            'warning'
+        );
+        return;
+    }
     $.ajax({
         type: "POST",
         dataType: 'json',

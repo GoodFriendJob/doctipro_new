@@ -51,22 +51,21 @@
                 </div>
             </div>
             <form action="{{ url('pid_settings') }}" method="get" class="form">
-                @csrf
                 <div class="row">
                     <div class="col-sm-3 form-group mb-0">
                         <label for="date_type" class="col-form-label"> {{__('Date Type')}}</label>
                         <div class="d-flex date-type">
                             <select class="form-control" id="date_type" name="date_type">
-                                <option value="guichet_date" {{(old('date_type') == 'guichet_date') ? 'selected':''}}>Guichet</option>
-                                <option value="validation_date" {{(old('date_type') == 'validation_date') ? 'selected':''}}>Validation</option>
-                                <option value="contestation_date" {{(old('date_type') == 'contestation_date') ? 'selected':''}}>Contestation</option>
+                                <option value="guichet_date" {{(!isset($data['data_type']) || $data['data_type'] == 'guichet_date') ? 'selected':''}}>Guichet</option>
+                                <option value="validation_date" {{(isset($data['data_type']) && $data['data_type'] == 'validation_date') ? 'selected':''}}>Validation</option>
+                                <option value="contestation_date" {{(isset($data['data_type']) && $data['data_type'] == 'contestation_date') ? 'selected':''}}>Contestation</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-3 form-group mb-0">
                         <label for="start_date" class="col-form-label"> {{__('Start Date')}}</label>
                         <div class="d-flex input-group date" id='start_date'>
-                            <input type='text' name='start_date' class="form-control" value="{{ old('start_date', $data['start_date']) }}" />
+                            <input type='text' name='start_date' class="form-control" value="{{ isset($data['start_date']) ? $data['start_date']:'' }}" />
                             <button class="btn btn-outline-primary" type="button" id="start_date_btn"><i class="fa fa-calendar"></i></button>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
                     <div class="col-sm-3 form-group mb-0">
                         <label for="end_date" class="col-form-label"> {{__('End Date')}}</label>
                         <div class="d-flex input-group date" id='end_date'>
-                            <input type='text' name='end_date' class="form-control" value="{{ old('end_date', $data['end_date']) }}" />
+                            <input type='text' name='end_date' class="form-control" value="{{ isset($data['end_date']) ? $data['end_date']:'' }}" />
                             <button class="btn btn-outline-primary" type="button" id="end_date_btn"><i class="fa fa-calendar"></i></button>
                         </div>
                     </div>
@@ -88,7 +87,7 @@
                     <thead>
                         <tr>
                             <th rowspan="2" class="border">{{__('ID')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-calendar"></i><br>{{__('Date')}}</th>
+                            <th rowspan="2" width='50' class="border"><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
@@ -114,8 +113,11 @@
                             $is_valid = $guichet_date < time() ? true: false;
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $loop->iteration }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->guichet_date }}</td>
+                            <td>
+                                <label for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label><br>
+                                <input type="checkbox" class="form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" />
+                            </td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
@@ -153,6 +155,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-3">
+                <a href="javascript:export_excel()" class="btn btn-primary"><i class="fa fa-file-excel"></i>&nbsp; {{__('Export Excel')}}</a>
+            </div>
         </div>
     </div>
 
@@ -168,7 +173,7 @@
                 <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
                 <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('Simulation Request')}}</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('New Simulation')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -220,7 +225,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Request')}}</a>
+                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
                 </div>
             </form>
         </div>
@@ -260,6 +265,7 @@
 @section('js')
     <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script>
+    $(document).ready(function () {
         $('#start_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
@@ -268,13 +274,29 @@
             autoclose: true,
             todayHighlight: true
         });
+        // handle input group button click
+        $('#start_date_btn').click(function (e) {
+            e.preventDefault();
+            $('#start_date input').datepicker('showWidget');
+        });
         $('#end_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
             language: "fr",
             daysOfWeekHighlighted: "0",
             autoclose: true,
+            icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-arrow-up",
+				down: "fa fa-arrow-down"
+			},
             todayHighlight: true
         });
+        $('#end_date_btn').click(function (e) {
+            e.preventDefault();
+            $('#end_date input').datepicker('showWidget');
+        });
+    });
     </script>
 @endsection

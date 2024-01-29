@@ -198,19 +198,31 @@ class DoctorController extends Controller
 
     public function pid_settings(Request $request)
     {
+        if (empty(auth()->user()->id))
+            return view('doctor.auth.doctor_login');
         $data = $request->all();
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
 
         $h = DoctorPID::where('doctor_id', $doctor->id);
         if (isset($data['date_type'])) {
-            if (isset($data['start_date']))
-                $h = $h->where($data['date_type'], $data['start_date'], '>=');
-            if (isset($data['end_date']))
-                $h = $h->where($data['date_type'], $data['end_date'], '<=');
+            if (isset($data['start_date']) && $data['start_date']!='')
+                $h = $h->where($data['date_type'], '>=', $data['start_date'].' 00.00.00');
+            if (isset($data['end_date']) && $data['end_date']!='')
+                $h = $h->where($data['date_type'], '<=', $data['end_date'].' 23.59.59');
         }        
 
         $histories = $h->get();
         return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
+    }
+
+    public function pid_export(Request $request)
+    {
+        if (empty(auth()->user()->id))
+            return json_encode(['status'=>0, 'data' => []]);
+        $data = $request->all();
+        $histories = DoctorPID::whereIn('doctor_id', $data['pid_list'])->get();
+  
+        return json_encode(['status'=>0, 'data' => $histories]);
     }
 
     public function doctor_profile()
