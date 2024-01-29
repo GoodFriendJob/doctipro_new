@@ -43,7 +43,7 @@
                 <div class="col-md-4 form-group">
                     <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
                         @if (!empty($doctor->pshealthid_p12_pass))
-                        <span class="border text-primary py-1 px-2">{{ $doctor->pshealthid_p12_pass }}<span>
+                        <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
                         @else
                         <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
                         @endif
