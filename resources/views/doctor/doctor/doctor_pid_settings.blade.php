@@ -53,12 +53,13 @@
                     <thead>
                         <tr>
                             <th rowspan="2" class="border">{{__('ID')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
-                            <th rowspan="2" class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-calendar"></i><br>{{__('Date')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
                             <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
@@ -79,6 +80,7 @@
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $loop->iteration }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->guichet_date }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
@@ -89,7 +91,7 @@
                                 @if ($is_valid && $simulate)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    <i class="fa fa-exclamation-triangle text-warning"></i><br>
+                                    <i class="fa fa-exclamation-triangle text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
                                     <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                 @endif
                             </td>
@@ -110,20 +112,6 @@
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest()">{{__('Contenst')}}</a>
                                 @endif
                             @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="10">
-                                <p>
-                                    @if ($is_valid && $simulate)
-                                        <span>Valid</span>
-                                    @else
-                                        <span>Expired</span>
-                                    @endif
-                                    guichet_date: <span>{{ $history->guichet_date }} </span> &nbsp; 
-                                    validation_date: <span>{{ $history->validation_date }} </span> &nbsp; 
-                                    contestation_date: <span>{{ $history->contestation_date }} </span> &nbsp; 
-                                </p>
                             </td>
                         </tr>
                         @endforeach

@@ -3044,3 +3044,11 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   background: #111;
   color: #fff;
 }
+#pulsar {
+  stroke-dasharray: 281;
+  -webkit-animation: dash 2.5s infinite linear forwards;
+}
+@keyframes dash{
+   from{stroke-dashoffset:814;} 
+   to {stroke-dashoffset:-814;}
+}
