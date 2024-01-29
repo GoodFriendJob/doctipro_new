@@ -138,7 +138,7 @@
                                     <i class="fa fa-circle text-success"></i> <br>
                                     <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
                                 @else
-                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate()">{{__('Validate')}}</a>
+                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                 @endif
                             @endif
                             </td>
@@ -147,7 +147,7 @@
                                 @if ($contenst)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest()">{{__('Contenst')}}</a>
+                                    <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                 @endif
                             @endif
                             </td>

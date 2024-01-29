@@ -961,8 +961,9 @@ function call_pid_simulate(pid)
     });
 }
 
-function call_pid_validate()
+function call_pid_validate(pid)
 {
+    $('#pid').val(pid);
     $.ajax({
         type: "POST",
         dataType: 'json',
@@ -998,8 +999,9 @@ function call_pid_validate()
     });
 }
 
-function call_pid_contest()
+function call_pid_contest(pid)
 {
+    $('#pid').val(pid);
     $.ajax({
         type: "POST",
         dataType: 'json',
