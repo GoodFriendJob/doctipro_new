@@ -87,7 +87,7 @@
                                     <i class="fa fa-circle text-success"></i>
                                 @else
                                     <i class="fa fa-exclamation-triangle text-warning"></i><br>
-                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate()">{{__('Simulate')}}</a>
+                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                 @endif
                             </td>
                             <td>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate()"><i class="fa fa-handshake"></i> {{__('Request')}}</a>
+                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Request')}}</a>
                 </div>
             </form>
         </div>

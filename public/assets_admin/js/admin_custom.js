@@ -876,8 +876,9 @@ function open_detail_dlg(pid)
     $('#detail_pid_dlg').modal('show');
 }
 
-function call_pid_simulate()
+function call_pid_simulate(pid)
 {
+    $('#pid').val(pid);
     $.ajax({
         type: "POST",
         dataType: 'json',

@@ -44,8 +44,6 @@ $id_response_simulation = $row['id_response_simulation'];
 $CCss = $row['ccss_token'];
 $WsuID = $row['wsu_id'];
 
-$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
-
 $info = getCertificatGuichet($pshealthid_p12, $p12_password);
 $privateKey = $info['privateKey'];
 $publicCertWithoutTitle = $info['publicCertWithoutTitle'];

@@ -14,6 +14,11 @@ if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
 $pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
 if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
 
+$p12_password = '7v4DfRK,G0Y0=?Cc';
+if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
+
+////////////////////////////////////////////////////////////////
+
 $codeMedical = 'C1';
 if (isset($_POST['medical_code'])) $codeMedical = $_POST['medical_code'];
 
@@ -32,48 +37,44 @@ if (isset($_POST['act_code'])) $code_prestataire = $_POST['act_code'];
 $NombreActeMedical = '1';
 if (isset($_POST['act_number'])) $NombreActeMedical = $_POST['act_number'];
 
-$p12_password = '7v4DfRK,G0Y0=?Cc';
-if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
+////////////////////////////////////////////////////////////////
 
 // Set the content type to application/json
 header('Content-Type: application/json');
 
-/**
- * end of Initialize
- */
-  $lastInsertId = 0;
-  $res = array(
-    'status' => 0, 'message' => 'Error is happened',
-    'soap' => array(
-        'request' => [],
-        'response' => []
-    )
-  );
+$lastInsertId = 0;
+$res = array(
+  'status' => 0, 'message' => 'Error is happened',
+  'soap' => array(
+      'request' => [],
+      'response' => []
+  )
+);
+$OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 
-	global $db_host, $db_name, $db_user, $db_pass;
-  $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
+////////////////////////////////////////////////////////////////
 
-  $info = getCertificatGuichet($pshealthid_p12, $p12_password);
-  $privateKey = $info['privateKey'];
-  $publicCertWithoutTitle = $info['publicCertWithoutTitle'];
+$info = getCertificatGuichet($pshealthid_p12, $p12_password);
+$privateKey = $info['privateKey'];
+$publicCertWithoutTitle = $info['publicCertWithoutTitle'];
 
-  $ch = curl_init();
-  $service_url = 'https://www-integration.esante.lu/SAML2Server/AuthenticationService';
+$ch = curl_init();
+$service_url = 'https://www-integration.esante.lu/SAML2Server/AuthenticationService';
 
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-  curl_setopt($ch, CURLOPT_URL, $service_url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSLCERT, 'certificat.pem');
-  // curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $p12_password);
-  curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
-  // curl_setopt($ch, CURLOPT_VERBOSE, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          'Content-Type: text/xml;charset=UTF-8',
-          'SOAPAction: "http://www.oasis-open.org/committees/securityhttp://www.oasis-open.org/committees/security"',
-      )
-  );
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($ch, CURLOPT_URL, $service_url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSLCERT, 'certificat.pem');
+// curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $p12_password);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
+// curl_setopt($ch, CURLOPT_VERBOSE, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Content-Type: text/xml;charset=UTF-8',
+    'SOAPAction: "http://www.oasis-open.org/committees/securityhttp://www.oasis-open.org/committees/security"',
+  )
+);
 
 $wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
 $wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
