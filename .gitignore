@@ -6,6 +6,7 @@
 /license
 /PID/config.php
 /PID/logs
+/public/images/images.rar
 .env
 .env.backup
 .phpunit.result.cache
