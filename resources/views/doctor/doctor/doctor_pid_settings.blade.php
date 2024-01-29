@@ -74,14 +74,14 @@
                             $validate = !empty($history->paye);
                             $contenst = !empty($history->contestation_id);
                         @endphp
-                        <tr class="{{ $simulate ? 'bg-light':'' }}" onclick="javascript:open_detail_dlg({{$history->pid_id}})">
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $history->medical_code }}</td>
-                            <td>{{ $history->service_place }}</td>
-                            <td>{{ $history->patient_number }}</td>
-                            <td>{{ $history->biller_id }}</td>
-                            <td>{{ $history->act_code }}</td>
-                            <td>{{ $history->act_number }}</td>
+                        <tr class="{{ $simulate ? 'bg-light':'' }}">
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $loop->iteration }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
                             <td>
                                 @if ($simulate)
                                     <i class="fa fa-circle text-success"></i>
