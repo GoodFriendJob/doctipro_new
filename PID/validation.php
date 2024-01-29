@@ -217,6 +217,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 );
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $a);
+file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml', $a);
 $response = curl_exec($ch);
 
 if (curl_errno($ch))
@@ -262,7 +263,6 @@ try {
 		'paye' => $montantPaye[0]->nodeValue
 	]);
 
-	file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_RequestBusinessValidate.xml', $a);
 	file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml', $response);
 
 } catch (\Exception $e) {
