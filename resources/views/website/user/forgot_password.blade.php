@@ -6,7 +6,7 @@
         <div class="bg-slate-100 justify-center items-center p-10 2xl:w-2/4 xxsm:w-full">
             <h1 class="font-fira-sans leading-10 font-medium text-3xl mb-10">{{__('Talk to thousands of specialist doctors.')}}</h1>
             <div>
-                <img src="{{asset('assets/image/login.png')}}" class="w-full h-3/5" alt="">
+                <img src="{{asset('assets/image/Mobile.png')}}" class="w-full h-3/5" alt="">
             </div>
         </div>
         <div class="2xl:w-2/4 xxsm:w-full">

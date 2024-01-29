@@ -63,7 +63,7 @@
     <div class="bg-slate-100 2xl:w-1/3 xl:w-1/3 xlg:w-1/3 lg:w-1/3 md:w-1/3 msm:w-full sm:w-1/3 justify-center items-center xsm:w-full p-5">
         <h1 class="font-fira-sans leading-10 font-medium text-3xl ">{{__('Talk to thousands of specialist doctors.')}}</h1>
         <div class="p-10">
-            <img src="{{asset('assets/image/login.png')}}" class="w-full h-3/5" alt="">
+            <img src="{{asset('assets/image/Mobile.png')}}" class="w-full h-3/5" alt="">
         </div>
     </div>
     <div class="2xl:w-1/3 xl:w-1/3 xlg:w-1/3 lg:w-1/3 md:w-1/3 msm:w-full sm:w-1/3 xsm:w-full">
