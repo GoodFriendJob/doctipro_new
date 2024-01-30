@@ -371,18 +371,26 @@ $response = curl_exec($ch);
 
 if (curl_errno($ch))
 {
-    $res['message'] = 'Erreur cURL : ' . curl_error($ch);
-    echo json_encode($res); exit;
+  if ($lastInsertId > 0 ) {
+    file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
+  }
+  $res['message'] = 'Erreur cURL : ' . curl_error($ch);
+  echo json_encode($res); exit;
+
 } else {
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    if ($httpCode == 500) {
-      $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
-      echo json_encode($res); exit;
-    } else {
-      // echo '=============  Réponse du serveur : ' . $response;
-      // array_push($res['soap']['request'], $doc->saveXML());
-      // array_push($res['soap']['response'], $response);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  if ($httpCode == 500) {
+    if ($lastInsertId > 0 ) {
+      file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
+      file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseGuichet.xml', $response);
     }
+    $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+    echo json_encode($res); exit;
+  } else {
+    // echo '=============  Réponse du serveur : ' . $response;
+    // array_push($res['soap']['request'], $doc->saveXML());
+    // array_push($res['soap']['response'], $response);
+  }
 }
 
 try {
@@ -714,11 +722,14 @@ $response = curl_exec($ch);
 
 if (curl_errno($ch))
 {
-    $res['message'] = "Error cURL : ".curl_error($ch); 
-    echo json_encode($res); exit;
+  $res['message'] = "Error cURL : ".curl_error($ch); 
+  echo json_encode($res); exit;
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 500) {
+      if ($lastInsertId > 0 ) {
+        file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseCNS.xml', $response);
+      }
       $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
       echo json_encode($res); exit;
     } else {
@@ -939,6 +950,9 @@ echo json_encode($res); exit;
 } else {
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   if ($httpCode == 500) {
+    if ($lastInsertId > 0 ) {
+      file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
+    }
     $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     echo json_encode($res); exit;
   } else {
@@ -947,6 +961,8 @@ echo json_encode($res); exit;
     // array_push($res['soap']['response'], $response);
   }
 }
+file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
+
 
 $docResponseBusinessCall = new DOMDocument();
 $docResponseBusinessCall->loadXML($response);
@@ -962,7 +978,6 @@ if ($nodes->length > 0) {
   $id_response_simulation = $nodes->item(0)->nodeValue;
 }
 
-file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
 $req2 = $OPC->prepare(" UPDATE doctor_pid SET date_modified=NOW(), 
 ccss_token=:ccss_token, wsu_id=:wsu_id, 
 id_memoire_honoraire=:id_memoire_honoraire, 
