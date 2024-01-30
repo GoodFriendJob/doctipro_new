@@ -81,7 +81,6 @@ class DoctorController extends Controller
             'email' => 'bail|required|email|unique:users',
             'pshealthid' => 'bail|required|unique:doctor',
             'pshealthid_p12_pass' => 'bail|required',
-            'pshealthid_p12' => 'bail|required',
             'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required',
@@ -98,6 +97,7 @@ class DoctorController extends Controller
             'custom_timeslot' => 'bail|required_if:timeslot,other',
             'commission_amount' => 'bail|required_if:based_on,commission'
         ]);
+
         $data = $request->all();
         $password = mt_rand(100000,999999);
         $setting = Setting::first();
@@ -172,6 +172,10 @@ class DoctorController extends Controller
         $data['subscription_status'] = 1;
         $data['is_filled'] = 1;
         $data['hospital_id'] = implode(',',$request->hospital_id);
+        //updated by Polaris
+        if (!isset($data['commission_amount']) || empty($data['commission_amount']))
+            $data['commission_amount'] = '10.00';
+
         $doctor = Doctor::create($data);
         if($doctor->based_on == 'subscription')
         {

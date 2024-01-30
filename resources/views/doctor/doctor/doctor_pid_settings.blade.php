@@ -6,7 +6,10 @@
 @section('content')
 @php
     $is_p12_exist = false;
-    if (File::exists("/opt/doctipro/" . $doctor->pshealthid_p12)) $is_p12_exist = true;
+    if (!empty($doctor->pshealthid_p12)) {
+        if (File::exists("/opt/doctipro/" . $doctor->pshealthid_p12))
+            $is_p12_exist = true;
+    }
 @endphp
 <section class="section">
     @include('layout.breadcrumb',[
@@ -15,13 +18,18 @@
     <div class="card">
         <div class="card-body pt-0">
             <div class="row">
-                @if (!empty($doctor->pshealthid) && $is_p12_exist)
+            @if (empty($doctor->pshealthid) || empty($doctor->pshealthid_p12_pass) || $is_p12_exist==false)
+                <div class="col text-center alert-warning p-2 mb-2 text-danger">
+                    {{__("It seems that the PsHealth ID and .p12 file are not configured for you.")}}
+                    <br>
+                    {{__("Please reach out to the site administrator for assistance with this matter.")}}
+                </div>
+            @else
                 <div class="col-md-3 pb-2">
                     <a class="edit-link btn btn-primary" data-toggle="modal" href="#request_pid_dlg">
                         <i class="fa fa-calendar-plus mr-1"></i> {{__('Request A Simulation')}}
                     </a>
                 </div>
-                @endif
                 <div class="col-md-3 form-group">
                     <p><i class="fa fa-user-md"></i>&nbsp; {{__('PsHealth ID')}} : 
                         @if (!empty($doctor->pshealthid))
@@ -31,7 +39,7 @@
                         @endif
                     </p>
                 </div>
-                <div class="col-md-2 form-group">
+                <div class="col-md-3 form-group">
                     <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
                         @if ($is_p12_exist)
                         <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
@@ -40,7 +48,7 @@
                         @endif
                     </p>
                 </div>
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
                         @if (!empty($doctor->pshealthid_p12_pass))
                         <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
@@ -49,6 +57,7 @@
                         @endif
                     </p>
                 </div>
+            @endif
             </div>
             <form action="{{ url('pid_settings') }}" method="get" class="form">
                 <div class="row">
