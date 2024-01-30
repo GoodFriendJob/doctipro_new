@@ -243,6 +243,15 @@ class DoctorController extends Controller
         return redirect('/appointment');
     }
 
+    public function pid_detail($id)
+    {
+        if (empty(auth()->user()->id))
+            return json_encode(['status'=>0, 'data' => []]);
+        $pid_info = DoctorPID::where('pid_id', $id)->first();
+  
+        return json_encode(['status'=>1, 'data' => $pid_info]);
+    }
+
     public function pid_pdf_download($id)
     {
         if (empty(auth()->user()->id))

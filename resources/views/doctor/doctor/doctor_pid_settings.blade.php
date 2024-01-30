@@ -251,7 +251,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="detail_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -275,6 +274,68 @@
                 <div class="col-sm-10">
                     <div id="pid_xml"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="view_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID Detail')}} : <span id="pid_view_title"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
+                <div class="row mt-4">
+                    <div class="col-lg-6 form-group">
+                        <label for="medical_code" class="col-form-label"> {{__('Medical Code')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 form-group">
+                        <label for="biller_id" class="col-form-label"> {{__('Biller ID')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="90812100" id="biller_id" name="biller_id" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6 form-group">
+                        <label for="patient_number" class="col-form-label"> {{__('Patient Number')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 form-group">
+                        <label for="service_place" class="col-form-label"> {{__('Place of Service')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="01" id="service_place" name="service_place" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6 form-group">
+                        <label for="act_code" class="col-form-label"> {{__('Type of Consultation (Act Code)')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="90813319" id="act_code" name="act_code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 form-group">
+                        <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
+                        <div class="d-flex">
+                            <input type="text" value="1" id="act_number" name="act_number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
             </div>
         </div>
     </div>

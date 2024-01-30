@@ -914,6 +914,40 @@ function open_detail_dlg(pid)
     $('#detail_pid_dlg').modal('show');
 }
 
+function open_view_dlg(pid)
+{
+    $.ajax({
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "GET",
+        dataType: 'json',
+        url: base_url + '/doctor_pid_detail/'+pid,
+        success: function (result)
+        {
+            if (result.status) {
+                
+                $('#view_pid_dlg').modal('show');
+            } else {
+                Swal.fire(
+                    'Simulation Request Failed',
+                    result.message,
+                    'warning'
+                );
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+        }
+    });
+}
+
 function call_pid_simulate(pid)
 {
     $('#pid').val(pid);
