@@ -907,15 +907,16 @@ function show_pid_step(pid_step) {
         }
     });
 }
-function open_detail_dlg(pid)
+function open_detail_dlg()
 {
-    $('#detail_pid').val(pid);
+    $('#view_pid_dlg').modal('hide');
     show_pid_step(1);
     $('#detail_pid_dlg').modal('show');
 }
 
 function open_view_dlg(pid)
 {
+    $('#detail_pid').val(pid);
     $.ajax({
         headers:
         {
@@ -923,7 +924,7 @@ function open_view_dlg(pid)
         },
         type: "GET",
         dataType: 'json',
-        url: base_url + '/doctor_pid_detail/'+pid,
+        url: base_url + '/pid_detail/'+pid,
         success: function (result)
         {
             if (result.status) {

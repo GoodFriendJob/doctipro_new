@@ -130,16 +130,16 @@
                                 <input type="checkbox" class="float-left form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <label class="pt-2" for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label>
                             </td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->part_statutaire }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
-                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})"><span class="text-danger">&pound; {{ $history->paye }}</span></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><span class="text-danger">&pound; {{ $history->paye }}</span></td>
                             <td>
                                 @if ($is_valid)
                                     <i class="fa fa-circle text-success"></i>
@@ -278,62 +278,104 @@
 </div>
 
 <div class="modal fade" id="view_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID Detail')}} : <span id="pid_view_title"></span></h5>
+                <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID')}} : <span id="pid_view_title"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
-                <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
-                        <label for="medical_code" class="col-form-label"> {{__('Medical Code')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control">
+                <div class="row-fluid">
+                    <h3 style="font-size:26px; margin-bottom:20px; text-align:center; border-bottom:1px solid #111;">PAIEMENT IMMÉDIAT DIRECT</h3>
+                    <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name"></span></h3>
+                    <p style="margin:0;">Service Imagerie <span id="detail_service_name"></span></p>
+                    <p style="margin:0;"><span id="detail_hospital_name"></span></p>
+                    <p style="margin:0;"><span id="detail_hospital_state"></span></p>
+                    <p style="margin:0;"><span id="detail_hospital_location"></span></p>
+                    <div style="width:60%; margin-top:30px; margin-left:40%;">
+                        <p style="margin:0;">Matricule :<span id="detail_patient_number"></span></p>
+                        <p style="margin:0;">Patient : <span id="detail_patient_name"></span></p>
+                    </div>
+
+                    <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
+                    <p style="margin:0;">N° 00337788</p>
+                    <p style="margin:0;">du 27.02.2023</p>
+                    <p style="margin:0;">N° ID 20230227196605306156700337788 </p>
+                    <table style="width:100%; border:1px solid #111;">
+                        <thead>
+                            <tr>
+                                <th>Code Acte</th>
+                                <th>Libellé / Objet</th>
+                                <th colspan="2">Montant pris <br>
+                                    en charge par  <br>
+                                    l’AMM*
+                                </th>
+                                <th colspan="2">Participation  <br>
+                                    personnelle
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>C20</td>
+                                <td>Consultation</td>
+                                <td>1</td>
+                                <td>34,14</td>
+                                <td>€</td>
+                                <td>4,14</td>
+                                <td>€</td>
+                            </tr>
+                            <tr>
+                                <td>C20</td>
+                                <td>Consultation</td>
+                                <td>1</td>
+                                <td>34,14</td>
+                                <td>€</td>
+                                <td>4,14</td>
+                                <td>€</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Total:<b></td>
+                                <td></td>
+                                <td>34,14</td>
+                                <td>€</td>
+                                <td>4,14</td>
+                                <td>€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="paddin-right:30px; text-align:right; font-size:18px; margin-top:10px">
+                        <h5 style="margin:0;">Montant total dû : 4,14 €</h5>            
+                        <h5 style="margin:0;">Montant total payé par l’AMM* : 4,14 €</h5> 
+                    </div>           
+                    <div style="margin-top:30px;">
+                        <div style="width:10%; float:left; text-align:right">
+                            <h1>!!!</h1>
+                        </div>
+                        <div style="width:80%; float:left; text-align:center">
+                            <p>Merci de ne pas envoyer ce document à votre caisse de <br>
+                            maladie.</p>
+                        </div>
+                        <div style="width:10%; float:left; text-align:left">
+                            <h1>!!!</h1>
                         </div>
                     </div>
-                    <div class="col-lg-6 form-group">
-                        <label for="biller_id" class="col-form-label"> {{__('Biller ID')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="90812100" id="biller_id" name="biller_id" class="form-control">
-                        </div>
+                    <div style="paddin-right:30px; text-align:right;">
+                        Signature et estampille du prestataire
                     </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
-                        <label for="patient_number" class="col-form-label"> {{__('Patient Number')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
-                        </div>
+
+                    <div style="margin-top:40px; font-size:12px; text-align:left;">
+                        *AMM = assurance maladie-maternité
                     </div>
-                    <div class="col-lg-6 form-group">
-                        <label for="service_place" class="col-form-label"> {{__('Place of Service')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="01" id="service_place" name="service_place" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
-                        <label for="act_code" class="col-form-label"> {{__('Type of Consultation (Act Code)')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="90813319" id="act_code" name="act_code" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 form-group">
-                        <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
-                        <div class="d-flex">
-                            <input type="text" value="1" id="act_number" name="act_number" class="form-control">
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
+                <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
             </div>
         </div>
     </div>

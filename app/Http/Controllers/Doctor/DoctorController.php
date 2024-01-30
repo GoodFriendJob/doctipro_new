@@ -254,11 +254,22 @@ class DoctorController extends Controller
 
     public function pid_pdf_download($id)
     {
-        if (empty(auth()->user()->id))
-            return json_encode(['status'=>0, 'data' => []]);
-        $pid_info = DoctorPID::where('pid_id', $id)->first();
-  
-        $pdf = PDF::loadView('pdf.pid_pdf', compact('pid_info'));
+
+        abort_if(Gate::denies('doctor_profile'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $doctor = Doctor::where('user_id', auth()->user()->id)->first();
+
+        $doctor_pid = DoctorPID::where('pid_id', $id)->first();
+        if (empty($doctor_pid)) exit;
+
+        $doctor = Doctor::where('id', $doctor_pid->doctor_id)->first();
+        $doctor->user = User::find($doctor->user_id);
+        $doctor['start_time'] = Carbon::parse($doctor['start_time'])->format('H:i');
+        $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
+        $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
+        $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
+        $languages = Language::whereStatus(1)->get();
+
+        $pdf = PDF::loadView('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'languages'));
         return $pdf->download('doctor_pid_ticket_'.$id.'.pdf');
     }
 
