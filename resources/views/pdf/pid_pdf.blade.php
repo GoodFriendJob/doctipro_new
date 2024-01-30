@@ -46,6 +46,7 @@
                 <tr>
                     <th>Code Acte</th>
                     <th>Libellé / Objet</th>
+                    <th>Nbre</th>
                     <th colspan="2">Montant pris <br>
                         en charge par  <br>
                         l’AMM*
