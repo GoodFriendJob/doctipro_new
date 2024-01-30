@@ -52,13 +52,22 @@ if ($pid>0) {
       $row = $result;
   } 
   if (!empty($row)) {
-    $medical_code = $row['medical_code'];
-    $biller_id = $row['biller_id'];
-    $service_place = $row['service_place'];
-    $patient_number = $row['patient_number'];
-    $act_code = $row['act_code'];
-    $act_number = $row['act_number'];
-    $lastInsertId = $row['pid_id'];
+    echo '====test';
+    echo $medical_code = $row['medical_code'];
+    echo '<br>';
+    echo $biller_id = $row['biller_id'];
+    echo '<br>';
+    echo $service_place = $row['service_place'];
+    echo '<br>';
+    echo $patient_number = $row['patient_number'];
+    echo '<br>';
+    echo $act_code = $row['act_code'];
+    echo '<br>';
+    echo $act_number = $row['act_number'];
+    echo '<br>';
+    echo $lastInsertId = $row['pid_id'];
+    echo '<br>';
+    var_dump($row);
   }
 }
 ////////////////////////////////////////////////////////////////
