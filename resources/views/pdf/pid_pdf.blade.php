@@ -5,16 +5,17 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+            border: 1px solid #aaa;
         }
 
         td, th {
-            border: 1px solid #111;
+            border: 1px solid #aaa;
             text-align: left;
             padding: 8px;
         }
 
         tr:nth-child(even) {
-            background-color: #dddddd;
+            background-color: #ddd;
         }
         </style>
     </head>

@@ -1,6 +1,24 @@
 @extends('layout.mainlayout_admin',['activePage' => 'pid_settings'])
 @section('css')
     <link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #aaa;
+        }
+
+        td, th {
+            border: 1px solid #aaa;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ddd;
+        }
+    </style>
 @endsection
 @section('title',__('pid settings'))
 @section('content')
@@ -95,18 +113,18 @@
                 <table class="datatable table table-hover table-center mb-0 text-center">
                     <thead>
                         <tr>
-                            <th rowspan="2" width='30' class="border">{{__('ID')}}</th>
-                            <th rowspan="2" width='50' class="border"><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
-                            <th rowspan="2" width='10' class="border"><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
-                            <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('Action')}}</th>
+                            <th rowspan="2" width='30'>{{__('ID')}}</th>
+                            <th rowspan="2" width='50'><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
+                            <th rowspan="2" width='10'><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
+                            <th colspan="3"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
                             <th class="border">{{__('Simulate')}}</th>
@@ -287,90 +305,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row-fluid">
-                    <h3 style="font-size:26px; margin-bottom:20px; text-align:center; border-bottom:1px solid #111;">PAIEMENT IMMÉDIAT DIRECT</h3>
-                    <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name"></span></h3>
-                    <p style="margin:0;">Service Imagerie <span id="detail_service_name"></span></p>
-                    <p style="margin:0;"><span id="detail_hospital_name"></span></p>
-                    <p style="margin:0;"><span id="detail_hospital_state"></span></p>
-                    <p style="margin:0;"><span id="detail_hospital_location"></span></p>
-                    <div style="width:60%; margin-top:30px; margin-left:40%;">
-                        <p style="margin:0;">Matricule :<span id="detail_patient_number"></span></p>
-                        <p style="margin:0;">Patient : <span id="detail_patient_name"></span></p>
-                    </div>
-
-                    <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
-                    <p style="margin:0;">N° 00337788</p>
-                    <p style="margin:0;">du 27.02.2023</p>
-                    <p style="margin:0;">N° ID 20230227196605306156700337788 </p>
-                    <table style="width:100%; border:1px solid #111;">
-                        <thead>
-                            <tr>
-                                <th>Code Acte</th>
-                                <th>Libellé / Objet</th>
-                                <th colspan="2">Montant pris <br>
-                                    en charge par  <br>
-                                    l’AMM*
-                                </th>
-                                <th colspan="2">Participation  <br>
-                                    personnelle
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>C20</td>
-                                <td>Consultation</td>
-                                <td>1</td>
-                                <td>34,14</td>
-                                <td>€</td>
-                                <td>4,14</td>
-                                <td>€</td>
-                            </tr>
-                            <tr>
-                                <td>C20</td>
-                                <td>Consultation</td>
-                                <td>1</td>
-                                <td>34,14</td>
-                                <td>€</td>
-                                <td>4,14</td>
-                                <td>€</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><b>Total:<b></td>
-                                <td></td>
-                                <td>34,14</td>
-                                <td>€</td>
-                                <td>4,14</td>
-                                <td>€</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div style="paddin-right:30px; text-align:right; font-size:18px; margin-top:10px">
-                        <h5 style="margin:0;">Montant total dû : 4,14 €</h5>            
-                        <h5 style="margin:0;">Montant total payé par l’AMM* : 4,14 €</h5> 
-                    </div>           
-                    <div style="margin-top:30px;">
-                        <div style="width:10%; float:left; text-align:right">
-                            <h1>!!!</h1>
-                        </div>
-                        <div style="width:80%; float:left; text-align:center">
-                            <p>Merci de ne pas envoyer ce document à votre caisse de <br>
-                            maladie.</p>
-                        </div>
-                        <div style="width:10%; float:left; text-align:left">
-                            <h1>!!!</h1>
-                        </div>
-                    </div>
-                    <div style="paddin-right:30px; text-align:right;">
-                        Signature et estampille du prestataire
-                    </div>
-
-                    <div style="margin-top:40px; font-size:12px; text-align:left;">
-                        *AMM = assurance maladie-maternité
-                    </div>
-
+                <div class="row-fluid" id="view_pid_body">
                 </div>
             </div>
             <div class="modal-footer">
