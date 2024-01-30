@@ -57,7 +57,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>C20</td>
+                    <td>{{ $doctor_pid['act_code'] }}</td>
                     <td>Consultation</td>
                     <td>1</td>
                     <td>{{ $doctor_pid['part_statutaire'] }}</td>
@@ -66,7 +66,7 @@
                     <td>€</td>
                 </tr>
                 <tr>
-                    <td>C20</td>
+                    <td>{{ $doctor_pid['act_code'] }}</td>
                     <td>Consultation</td>
                     <td>1</td>
                     <td>{{ $doctor_pid['recouvrement'] }}</td>
