@@ -10,13 +10,13 @@ if (isset($_POST['pid'])) $pid = $_POST['pid'];
 $doctor_id = 1;
 if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
 
-$psEHealthID = '2854201475';
+$psEHealthID = '';
 if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
 
 $pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
 if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
 
-$p12_password = '7v4DfRK,G0Y0=?Cc';
+$p12_password = '';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
 ////////////////////////////////////////////////////////////////
@@ -52,22 +52,13 @@ if ($pid>0) {
       $row = $result;
   } 
   if (!empty($row)) {
-    echo '====test';
-    echo $medical_code = $row['medical_code'];
-    echo '<br>';
-    echo $biller_id = $row['biller_id'];
-    echo '<br>';
-    echo $service_place = $row['service_place'];
-    echo '<br>';
-    echo $patient_number = $row['patient_number'];
-    echo '<br>';
-    echo $act_code = $row['act_code'];
-    echo '<br>';
-    echo $act_number = $row['act_number'];
-    echo '<br>';
-    echo $lastInsertId = $row['pid_id'];
-    echo '<br>';
-    var_dump($row);
+    $medical_code = $row['medical_code'];
+    $biller_id = $row['biller_id'];
+    $service_place = $row['service_place'];
+    $patient_number = $row['patient_number'];
+    $act_code = $row['act_code'];
+    $act_number = $row['act_number'];
+    $lastInsertId = $row['pid_id'];
   }
 }
 ////////////////////////////////////////////////////////////////
@@ -108,10 +99,16 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   )
 );
 
-$wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
-$wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
-$wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
-// $sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
+// $wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
+$wsuTimestampId = generateSecureID('TS-');
+
+// $wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
+$wsuBinarySecurityTokenId = generateSecureID('X509-');
+
+// $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
+$wsuBodyId = generateSecureID('id-');
+
+$samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 
 list($created, $expires) = generateTimestamps();
 $dateIssueInstant = getCurrentDateTimeInISO8601();
@@ -287,7 +284,7 @@ $envelope->appendChild($body);
 $authnRequest = $doc->createElement('saml2p:AuthnRequest');
 $authnRequest->setAttribute('AssertionConsumerServiceURL', 'https://ws.mysecu.lu:7443');
 $authnRequest->setAttribute('Destination', 'https://www-integration.esante.lu/auth/realms/organization/ideosso/protocol/saml');
-$authnRequest->setAttribute('ID', 'saml-3201bcaf15f82be8bf146387317f23fd');
+$authnRequest->setAttribute('ID', $samlID);
 $authnRequest->setAttribute('IssueInstant', $dateIssueInstant);
 $authnRequest->setAttribute('ProtocolBinding', 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP');
 $authnRequest->setAttribute('Version', '2.0');
@@ -338,9 +335,9 @@ $digestBodyNode = $doc->getElementsByTagName('ds:DigestValue')->item(2);//digest
 $timestampNode = $doc->getElementsByTagName('wsu:Timestamp');//D
 $wsseBinaryToken = $doc->getElementsByTagName('wsse:BinarySecurityToken')->item(0);
 
-$TimeStampCanonized = CanoniseTT($expires,$created,"logs/TimeStimeCanonizedFromScrath.xml");
-$wsseBinaryTokenCanonized = CanoniseCertificat($publicCertWithoutTitle,"CertificatCanonizedFromScratch.xml");
-$bodyNodeCanonized = CanoniseBody($dateIssueInstant,$psEHealthID,"BodyCanonizedFromScratch.xml");
+$TimeStampCanonized = CanoniseTT($wsuTimestampId, $expires,$created,"logs/TimeStimeCanonizedFromScrath.xml");
+$wsseBinaryTokenCanonized = CanoniseCertificat($wsuBinarySecurityTokenId, $publicCertWithoutTitle,"CertificatCanonizedFromScratch.xml");
+$bodyNodeCanonized = CanoniseBody($samlID, $wsuBodyId, $dateIssueInstant, $psEHealthID, "BodyCanonizedFromScratch.xml");
 
 $digestTimestamp = openssl_digest($TimeStampCanonized, 'sha256', true);//ok
 $digestCertificat = openssl_digest($wsseBinaryTokenCanonized, 'sha256', true);//ok
@@ -350,7 +347,7 @@ $digestBody = openssl_digest($bodyNodeCanonized, 'sha256', true);//ok
 $digestTimestampNode->nodeValue = base64_encode($digestTimestamp);//ok
 $digestCertificatNode->nodeValue = base64_encode($digestCertificat);//ok
 $digestBodyNode->nodeValue = base64_encode($digestBody);//ok
-$signedInfoToSign = CanoniseSignedInfo(base64_encode($digestTimestamp),base64_encode($digestCertificat),base64_encode($digestBody));
+$signedInfoToSign = CanoniseSignedInfo($wsuBodyId, $wsuBinarySecurityTokenId, $wsuTimestampId, base64_encode($digestTimestamp),base64_encode($digestCertificat),base64_encode($digestBody));
 
 openssl_sign($signedInfoToSign, $signature1, $privateKey, OPENSSL_ALGO_SHA256 );
 
@@ -1013,8 +1010,8 @@ function extractBinarySecurityTokenID($xmlString) {
 
     return $result;
 }
-function CanoniseTT($expired,$created,$filename="") {
-   $CanonisedTimeStamp ='<wsu:Timestamp xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="TS-8A64C6552EAFBF716616951123185611">
+function CanoniseTT($wsuTimestampId, $expired, $created, $filename="") {
+   $CanonisedTimeStamp ='<wsu:Timestamp xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="'.$wsuTimestampId.'">
         <wsu:Created>'.$created.'</wsu:Created>
         <wsu:Expires>'.$expired.'</wsu:Expires>
       </wsu:Timestamp>';
@@ -1025,15 +1022,14 @@ function CanoniseTT($expired,$created,$filename="") {
 
    return $CanonisedTimeStamp;
 }
-function CanoniseCertificat($publicCertWithoutTitle,$filename="") {
-   $CanonisedCertificat = '<wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-tokenprofile-1.0#X509v3" wsu:Id="X509-8A64C6552EAFBF716616951123185992">'.$publicCertWithoutTitle.'</wsse:BinarySecurityToken>';
-   
+function CanoniseCertificat($wsuBinarySecurityTokenId, $publicCertWithoutTitle,$filename="") {
+   $CanonisedCertificat = '<wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-tokenprofile-1.0#X509v3" wsu:Id="'.$wsuBinarySecurityTokenId.'">'.$publicCertWithoutTitle.'</wsse:BinarySecurityToken>';
    return $CanonisedCertificat;
 }
-function CanoniseBody($dateIssueInstant,$psEHealthID,$filename="") {
+function CanoniseBody($samlID, $wsuBodyId, $dateIssueInstant,$psEHealthID,$filename="") {
 	
-$CanonizedBody = '<soapenv:Body xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-8A64C6552EAFBF716616951123186195">
-    <saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" AssertionConsumerServiceURL="https://ws.mysecu.lu:7443" Destination="https://www-integration.esante.lu/auth/realms/organization/ideosso/protocol/saml" ID="saml-3201bcaf15f82be8bf146387317f23fd" IssueInstant="'.$dateIssueInstant.'" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Version="2.0">
+$CanonizedBody = '<soapenv:Body xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="'.$wsuBodyId.'">
+    <saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" AssertionConsumerServiceURL="https://ws.mysecu.lu:7443" Destination="https://www-integration.esante.lu/auth/realms/organization/ideosso/protocol/saml" ID="'.$samlID.'" IssueInstant="'.$dateIssueInstant.'" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Version="2.0">
       <saml2:Issuer>https://ws.mysecu.lu:7443</saml2:Issuer>
       <saml2p:Extensions>
         <saml2:Attribute Name="psEHealthID" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
@@ -1130,14 +1126,14 @@ function GetCcssToken($CCss,$wsuId)
 	
 	return $ccssToken;
 }
-function CanoniseSignedInfo($digestTimestamp,$digestCertificat,$digestBody)
+function CanoniseSignedInfo($wsuBodyId, $wsuBinarySecurityTokenId, $wsuTimestampId, $digestTimestamp,$digestCertificat,$digestBody)
 {
 	$signedinfo = '<ds:SignedInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
           <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
             <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="saml2 soapenv"></ec:InclusiveNamespaces>
           </ds:CanonicalizationMethod>
           <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></ds:SignatureMethod>
-          <ds:Reference URI="#TS-8A64C6552EAFBF716616951123185611">
+          <ds:Reference URI="#'.$wsuTimestampId.'">
             <ds:Transforms>
               <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
                 <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="wsse saml2 soapenv"></ec:InclusiveNamespaces>
@@ -1146,7 +1142,7 @@ function CanoniseSignedInfo($digestTimestamp,$digestCertificat,$digestBody)
             <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
             <ds:DigestValue>'.$digestTimestamp.'</ds:DigestValue>
           </ds:Reference>
-          <ds:Reference URI="#X509-8A64C6552EAFBF716616951123185992">
+          <ds:Reference URI="#'.$wsuBinarySecurityTokenId.'">
             <ds:Transforms>
               <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
                 <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList=""></ec:InclusiveNamespaces>
@@ -1155,7 +1151,7 @@ function CanoniseSignedInfo($digestTimestamp,$digestCertificat,$digestBody)
             <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
             <ds:DigestValue>'.$digestCertificat.'</ds:DigestValue>
           </ds:Reference>
-          <ds:Reference URI="#id-8A64C6552EAFBF716616951123186195">
+          <ds:Reference URI="#'.$wsuBodyId.'">
             <ds:Transforms>
               <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
                 <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="saml2"></ec:InclusiveNamespaces>

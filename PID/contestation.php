@@ -8,13 +8,13 @@ if (isset($_POST['pid'])) $pid = $_POST['pid'];
 $doctor_id = 1;
 if (isset($_POST['doctor_id'])) $doctor_id = $_POST['doctor_id'];
 
-$psEHealthID = '2854201475';
+$psEHealthID = '';
 if (isset($_POST['psEHealthID'])) $psEHealthID = $_POST['psEHealthID'];
 
 $pshealthid_p12 = $p12_path . '/' . 'MIPIT.p12';
 if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST['pshealthid_p12'];
 
-$p12_password = '7v4DfRK,G0Y0=?Cc';
+$p12_password = '';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
 $res = array(
@@ -44,9 +44,6 @@ $identifiantReponseSimulation = $row['id_response_simulation'];
 $CCss = $row['ccss_token'];
 $WsuID = $row['wsu_id'];
 $identifiantAnomalieVar = $row['id_memoire_honoraire'];
-
-// $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
-// $sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 
 $info = getCertificatGuichet($pshealthid_p12, $p12_password);
 $privateKey = $info['privateKey'];

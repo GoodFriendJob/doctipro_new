@@ -68,5 +68,20 @@ function beautify_xml($xml) {
     $xml = str_replace('>', '&gt;<br>', $xml);
     return $xml;
 }
+function uuid4() {
+    // Generate 16 random bytes
+    $bytes = random_bytes(16);
+
+    // Set the version (4) and variant (2)
+    $bytes[6] = chr(ord($bytes[6]) & 0x0f | 0x40); // set version to 0100
+    $bytes[8] = chr(ord($bytes[8]) & 0x3f | 0x80); // set variant to 10
+
+    // Format the UUID
+    $uuid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
+    return $uuid;
+}
+function generateSecureID($prefix='') {
+	return $prefix . strtoupper(str_replace('-', '', uuid4()));
+}
 
 ?>
