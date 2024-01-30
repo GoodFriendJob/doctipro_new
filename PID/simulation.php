@@ -99,17 +99,17 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   )
 );
 
-$wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
-// $wsuTimestampId = generateSecureID('TS-');
+// $wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
+$wsuTimestampId = generateSecureID('TS-');
 
-$wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
-// $wsuBinarySecurityTokenId = generateSecureID('X509-');
+// $wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
+$wsuBinarySecurityTokenId = generateSecureID('X509-');
 
-$wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
-// $wsuBodyId = generateSecureID('id-');
+// $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
+$wsuBodyId = generateSecureID('id-');
 
-$samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
-// $samlID = generateSecureID('saml-');
+// $samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
+$samlID = generateSecureID('saml-');
 
 list($created, $expires) = generateTimestamps();
 $dateIssueInstant = getCurrentDateTimeInISO8601();
