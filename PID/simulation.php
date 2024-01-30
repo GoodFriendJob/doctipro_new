@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'functions.php';
-$now = date('Y-m-d h:m:s');
+$now = date('Y-m-d h:i:s', time());
 $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 $lastInsertId = 0;
 $pid = 0;
