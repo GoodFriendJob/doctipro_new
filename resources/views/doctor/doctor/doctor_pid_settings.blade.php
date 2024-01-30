@@ -137,7 +137,7 @@
                             $guichet_date = strtotime($history->guichet_date);
                             $guichet_date+= 30*60;
                             $is_expired = $guichet_date < time() ? true: false;
-                            $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate)
+                            $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate);
                         @endphp
                         <tr class="{{ $is_valid ? 'bg-light':'' }}">
                             <td>

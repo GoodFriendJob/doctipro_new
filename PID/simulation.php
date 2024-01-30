@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'functions.php';
-
+$now = date('Y-m-d h:m:s');
 $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 $lastInsertId = 0;
 $pid = 0;
@@ -396,14 +396,14 @@ if (curl_errno($ch))
 
 try {
   if ($lastInsertId > 0 ) {
-    $req1 = $OPC->prepare(" UPDATE doctor_pid SET guichet_date=NOW(), date_modified=NOW() where pid_id=:pid_id;");
+    $req1 = $OPC->prepare(" UPDATE doctor_pid SET guichet_date='".$now."', date_modified=NOW() where pid_id=:pid_id;");
     $req1->execute([
       'pid_id' => $lastInsertId
     ]);
   } else {
     $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
     (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
-  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, NOW(), NOW())");
+  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, '".$now."', NOW())");
     $req1->execute([
       'doctor_id' => $doctor_id,	
       'pshealthid' => $psEHealthID,	
