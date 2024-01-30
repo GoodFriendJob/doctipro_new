@@ -147,7 +147,7 @@
                             // echo "<br>is_expired=".$is_expired;
                             // echo "<br>is_valid=".$is_valid;
                         @endphp
-                        <tr class="{{ $is_valid ? 'bg-light':'' }}">
+                        <tr class="{{ $validate ? 'bg-light':'' }} {{ $is_valid ? '':'text-warning' }}">
                             <td>
                                 <input type="checkbox" class="float-left form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <label class="pt-2" for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label>
