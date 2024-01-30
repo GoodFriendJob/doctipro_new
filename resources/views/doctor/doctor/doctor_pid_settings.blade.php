@@ -95,7 +95,7 @@
                 <table class="datatable table table-hover table-center mb-0 text-center">
                     <thead>
                         <tr>
-                            <th rowspan="2" class="border">{{__('ID')}}</th>
+                            <th rowspan="2" width='30' class="border">{{__('ID')}}</th>
                             <th rowspan="2" width='50' class="border"><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
@@ -103,6 +103,9 @@
                             <th rowspan="2" width='10' class="border"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
                             <th rowspan="2" width='10' class="border"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
+                            <th rowspan="2" width='10' class="border"><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
                             <th colspan="3" class="border"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
@@ -123,8 +126,8 @@
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td>
-                                <label for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label><br>
-                                <input type="checkbox" class="form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" />
+                                <input type="checkbox" class="float-left form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
+                                <label class="pt-2" for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label>
                             </td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
@@ -133,6 +136,9 @@
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->part_statutaire }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
+                            <td onclick="javascript:open_detail_dlg({{$history->pid_id}})"><span class="text-danger">&pound; {{ $history->paye }}</span></td>
                             <td>
                                 @if ($is_valid && $simulate)
                                     <i class="fa fa-circle text-success"></i>
