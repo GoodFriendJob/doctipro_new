@@ -14,10 +14,6 @@
             text-align: left;
             padding: 8px;
         }
-
-        tr:nth-child(even) {
-            background-color: #ddd;
-        }
     </style>
 @endsection
 @section('title',__('pid settings'))
@@ -143,7 +139,7 @@
                             $is_expired = $guichet_date < time() ? true: false;
                             $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate)
                         @endphp
-                        <tr class="{{ $simulate ? 'bg-light':'' }}">
+                        <tr class="{{ $is_valid ? 'bg-light':'' }}">
                             <td>
                                 <input type="checkbox" class="float-left form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <label class="pt-2" for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label>
