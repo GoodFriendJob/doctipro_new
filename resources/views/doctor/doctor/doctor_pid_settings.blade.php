@@ -122,10 +122,8 @@
                             $contenst = !empty($history->contestation_id);
                             $guichet_date = strtotime($history->guichet_date);
                             $guichet_date+= 30*60;
-                            echo '$guichet_date='.$guichet_date;
-                            echo '  time()='.time();
-                            echo '<br>';
-                            $is_valid = $guichet_date > time() ? true: false;
+                            $is_expired = $guichet_date < time() ? true: false;
+                            $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate)
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td>
@@ -143,7 +141,7 @@
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
                             <td onclick="javascript:open_detail_dlg({{$history->pid_id}})"><span class="text-danger">&pound; {{ $history->paye }}</span></td>
                             <td>
-                                @if ($is_valid && $simulate)
+                                @if ($is_valid)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
                                     <i class="fa fa-exclamation-triangle text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
@@ -151,7 +149,7 @@
                                 @endif
                             </td>
                             <td>
-                            @if ($is_valid && $simulate)
+                            @if ($is_valid)
                                 @if ($validate)
                                     <i class="fa fa-circle text-success"></i> <br>
                                     <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
@@ -161,7 +159,7 @@
                             @endif
                             </td>
                             <td>
-                            @if ($is_valid && $simulate)
+                            @if ($is_valid)
                                 @if ($contenst)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
