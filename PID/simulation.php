@@ -99,17 +99,13 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   )
 );
 
-// $wsuTimestampId = 'TS-8A64C6552EAFBF716616951123185611';
 $wsuTimestampId = generateSecureID('TS-');
-
-// $wsuBinarySecurityTokenId = 'X509-8A64C6552EAFBF716616951123185992';
 $wsuBinarySecurityTokenId = generateSecureID('X509-');
-
-// $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
 $wsuBodyId = generateSecureID('id-');
-
-// $samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 $samlID = generateSecureID('saml-');
+// Token generate
+$wsuBinarySecurityTokenId2 = generateSecureID('X509-');
+$signatureSecurityToken = generateSecureID('SIG-');
 
 list($created, $expires) = generateTimestamps();
 $dateIssueInstant = getCurrentDateTimeInISO8601();
@@ -786,12 +782,12 @@ $security->appendChild($binarySecurityToken1);
 $binarySecurityToken2 = $doc->createElement('wsse:BinarySecurityToken', $publicCertWithoutTitle);
 $binarySecurityToken2->setAttribute('EncodingType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary');
 $binarySecurityToken2->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
-$binarySecurityToken2->setAttribute('wsu:Id', 'X509-8A64C6552EAFBF7166169511421308223');
+$binarySecurityToken2->setAttribute('wsu:Id', $wsuBinarySecurityTokenId2);
 $security->appendChild($binarySecurityToken2);
 
 // Création de l'élément <ds:Signature>
 $signature = $doc->createElement('ds:Signature');
-$signature->setAttribute('Id', 'SIG-8A64C6552EAFBF7166169511421308327');
+$signature->setAttribute('Id', $signatureSecurityToken);
 $signature->setAttribute('xmlns:ds', 'http://www.w3.org/2000/09/xmldsig#');
 
 // Création de l'élément <ds:SignedInfo> et ses sous-éléments
@@ -834,7 +830,7 @@ $keyInfo->setAttribute('Id', 'KI-8A64C6552EAFBF7166169511421308224');
 $securityTokenReference = $doc->createElement('wsse:SecurityTokenReference');
 $securityTokenReference->setAttribute('wsu:Id', 'STR-8A64C6552EAFBF7166169511421308225');
 $reference = $doc->createElement('wsse:Reference');
-$reference->setAttribute('URI', '#X509-8A64C6552EAFBF7166169511421308223');
+$reference->setAttribute('URI', '#'.$wsuBinarySecurityTokenId2);
 $reference->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
 $securityTokenReference->appendChild($reference);
 $keyInfo->appendChild($securityTokenReference);

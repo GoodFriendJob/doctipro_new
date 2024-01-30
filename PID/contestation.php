@@ -45,6 +45,10 @@ $CCss = $row['ccss_token'];
 $WsuID = $row['wsu_id'];
 $identifiantAnomalieVar = $row['id_memoire_honoraire'];
 
+// Token generate
+$wsuBinarySecurityTokenId2 = generateSecureID('X509-');
+$signatureSecurityToken = generateSecureID('SIG-');
+
 $info = getCertificatGuichet($pshealthid_p12, $p12_password);
 $privateKey = $info['privateKey'];
 $publicCertWithoutTitle = $info['publicCertWithoutTitle'];
@@ -83,12 +87,12 @@ $security->appendChild($binarySecurityToken1);
 $binarySecurityToken2 = $doc->createElement('wsse:BinarySecurityToken', $publicCertWithoutTitle);
 $binarySecurityToken2->setAttribute('EncodingType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary');
 $binarySecurityToken2->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
-$binarySecurityToken2->setAttribute('wsu:Id', 'X509-8A64C6552EAFBF7166169511421308223');
+$binarySecurityToken2->setAttribute('wsu:Id', $wsuBinarySecurityTokenId2);
 $security->appendChild($binarySecurityToken2);
 
 // Création de l'élément <ds:Signature>
 $signature = $doc->createElement('ds:Signature');
-$signature->setAttribute('Id', 'SIG-8A64C6552EAFBF7166169511421308327');
+$signature->setAttribute('Id', $signatureSecurityToken);
 $signature->setAttribute('xmlns:ds', 'http://www.w3.org/2000/09/xmldsig#');
 
 // Création de l'élément <ds:SignedInfo> et ses sous-éléments
@@ -132,7 +136,7 @@ $keyInfo->setAttribute('Id', 'KI-8A64C6552EAFBF7166169511421308224');
 $securityTokenReference = $doc->createElement('wsse:SecurityTokenReference');
 $securityTokenReference->setAttribute('wsu:Id', 'STR-8A64C6552EAFBF7166169511421308225');
 $reference = $doc->createElement('wsse:Reference');
-$reference->setAttribute('URI', '#X509-8A64C6552EAFBF7166169511421308223');
+$reference->setAttribute('URI', '#'.$wsuBinarySecurityTokenId2);
 $reference->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
 $securityTokenReference->appendChild($reference);
 $keyInfo->appendChild($securityTokenReference);
@@ -199,7 +203,7 @@ $soapActionHeaderValue = 'exchange';
 $service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
 // Configurez les options cURL
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
 curl_setopt($ch, CURLOPT_URL, $service_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -268,8 +272,6 @@ function CanoniseBodyContestation($id,$idAnomalie)
       </cns:contestationSimulationMedecin>
     </sync:RequestInfo>
   </soapenv:Body>';
- 
-     
      file_put_contents("logs/BodyCNSBusinessContestation.xml", $CanonizedBody);
 	
 	 return $CanonizedBody;
