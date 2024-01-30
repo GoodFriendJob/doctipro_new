@@ -122,7 +122,10 @@
                             $contenst = !empty($history->contestation_id);
                             $guichet_date = strtotime($history->guichet_date);
                             $guichet_date+= 30*60;
-                            $is_valid = $guichet_date < time() ? true: false;
+                            echo '$guichet_date='.$guichet_date;
+                            echo '  time()='.time();
+                            echo '<br>';
+                            $is_valid = $guichet_date > time() ? true: false;
                         @endphp
                         <tr class="{{ $simulate ? 'bg-light':'' }}">
                             <td>
