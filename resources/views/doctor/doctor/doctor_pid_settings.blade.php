@@ -135,8 +135,8 @@
                             $validate = !empty($history->paye);
                             $contenst = !empty($history->contestation_id);
                             $guichet_date = strtotime($history->guichet_date);
-                            $guichet_date+= 30*60;
-                            $is_expired = $guichet_date < time() ? true: false;
+                            $guichet_date = $guichet_date + (30 * 60);
+                            $is_expired = $guichet_date > time() ? true: false;
                             $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate);
 
                         @endphp
