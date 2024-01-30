@@ -43,13 +43,12 @@ $id_response_simulation = $row['id_response_simulation'];
 $CCss = $row['ccss_token'];
 $WsuID = $row['wsu_id'];
 
-// Token generate
-$wsuBinarySecurityTokenId2 = generateSecureID('X509-');
-$signatureSecurityToken = generateSecureID('SIG-');
-
 $info = getCertificatGuichet($pshealthid_p12, $p12_password);
 $privateKey = $info['privateKey'];
 $publicCertWithoutTitle = $info['publicCertWithoutTitle'];
+
+// $wsuBodyId ='id-8A64C6552EAFBF716616951123186195';
+// $sampleID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
 
 list($created, $expires) = generateTimestamps();
 $dateIssueInstant = getCurrentDateTimeInISO8601();
@@ -85,12 +84,12 @@ $security->appendChild($binarySecurityToken1);
 $binarySecurityToken2 = $doc->createElement('wsse:BinarySecurityToken', $publicCertWithoutTitle);
 $binarySecurityToken2->setAttribute('EncodingType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary');
 $binarySecurityToken2->setAttribute('ValueType', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3');
-$binarySecurityToken2->setAttribute('wsu:Id', $wsuBinarySecurityTokenId2);
+$binarySecurityToken2->setAttribute('wsu:Id', 'X509-8A64C6552EAFBF7166169511421308223');
 $security->appendChild($binarySecurityToken2);
 
 // Création de l'élément <ds:Signature>
 $signature = $doc->createElement('ds:Signature');
-$signature->setAttribute('Id', $signatureSecurityToken);
+$signature->setAttribute('Id', 'SIG-8A64C6552EAFBF7166169511421308327');
 $signature->setAttribute('xmlns:ds', 'http://www.w3.org/2000/09/xmldsig#');
 
 // Création de l'élément <ds:SignedInfo> et ses sous-éléments
