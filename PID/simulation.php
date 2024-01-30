@@ -108,7 +108,8 @@ $wsuBinarySecurityTokenId = generateSecureID('X509-');
 // $wsuBodyId = 'id-8A64C6552EAFBF716616951123186195';
 $wsuBodyId = generateSecureID('id-');
 
-$samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
+// $samlID = 'saml-dea5cdaee319ff3662a81ae1fea6936f';
+$samlID = generateSecureID('saml-');
 
 list($created, $expires) = generateTimestamps();
 $dateIssueInstant = getCurrentDateTimeInISO8601();
