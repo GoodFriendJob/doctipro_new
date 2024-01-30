@@ -38,8 +38,8 @@
         </div>
 
         <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
-        <p style="margin:0;">N° <span></span></p>
-        <p style="margin:0;">du 27.02.2023</p>
+        <p style="margin:0;">N° <span>{{ $doctor_pid['biller_id'] }}</span></p>
+        <p style="margin:0;">du <span>{{ $doctor_pid['act_code'] }}</span></p>
         <p style="margin:0 0 40px;">N° ID 20230227196605306156700337788 </p>
         <table>
             <thead>
@@ -57,7 +57,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $doctor_pid['act_code'] }}</td>
+                    <td>{{ $doctor_pid['medical_code'] }}</td>
                     <td>Consultation</td>
                     <td>1</td>
                     <td>{{ $doctor_pid['part_statutaire'] }}</td>
@@ -66,7 +66,7 @@
                     <td>€</td>
                 </tr>
                 <tr>
-                    <td>{{ $doctor_pid['act_code'] }}</td>
+                    <td>{{ $doctor_pid['medical_code'] }}</td>
                     <td>Consultation</td>
                     <td>1</td>
                     <td>{{ $doctor_pid['recouvrement'] }}</td>
