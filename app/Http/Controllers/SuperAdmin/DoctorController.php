@@ -81,7 +81,7 @@ class DoctorController extends Controller
             'email' => 'bail|required|email|unique:users',
             'pshealthid' => 'bail|required|unique:doctor',
             'pshealthid_p12_pass' => 'bail|required',
-            'treatment_id' => 'bail|required',
+            // 'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required',
             'gender' => 'bail|required',
@@ -92,10 +92,10 @@ class DoctorController extends Controller
             'end_time' => 'bail|required|after:start_time',
             'hospital_id' => 'bail|required',
             'desc' => 'required',
-            'appointment_fees' => 'required|numeric',
-            'experience' => 'bail|required|numeric',
+            // 'appointment_fees' => 'required|numeric',
+            // 'experience' => 'bail|required|numeric',
             'custom_timeslot' => 'bail|required_if:timeslot,other',
-            'commission_amount' => 'bail|required_if:based_on,commission'
+            // 'commission_amount' => 'bail|required_if:based_on,commission'
         ]);
 
         $data = $request->all();
@@ -177,21 +177,21 @@ class DoctorController extends Controller
             $data['commission_amount'] = '10.00';
 
         $doctor = Doctor::create($data);
-        if($doctor->based_on == 'subscription')
-        {
-            $subscription = Subscription::where('name','free')->first();
-            if($subscription)
-            {
-                $doctor_subscription['doctor_id'] = $doctor->id;
-                $doctor_subscription['subscription_id'] = $subscription->id;
-                $doctor_subscription['duration'] = 1;
-                $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
-                $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
-                $doctor_subscription['status'] = 1;
-                $doctor_subscription['payment_status'] = 1;
-                DoctorSubscription::create($doctor_subscription);
-            }
-        }
+        // if($doctor->based_on == 'subscription')
+        // {
+        //     $subscription = Subscription::where('name','free')->first();
+        //     if($subscription)
+        //     {
+        //         $doctor_subscription['doctor_id'] = $doctor->id;
+        //         $doctor_subscription['subscription_id'] = $subscription->id;
+        //         $doctor_subscription['duration'] = 1;
+        //         $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
+        //         $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
+        //         $doctor_subscription['status'] = 1;
+        //         $doctor_subscription['payment_status'] = 1;
+        //         DoctorSubscription::create($doctor_subscription);
+        //     }
+        // }
         $start_time = strtolower($doctor->start_time);
         $end_time = strtolower($doctor->end_time);
         $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
@@ -341,8 +341,7 @@ class DoctorController extends Controller
             'name' => 'bail|required|unique:doctor,name,' . $id . ',id',
             'pshealthid' => 'bail|required|unique:doctor,pshealthid,' . $id . ',id',
             'pshealthid_p12_pass' => 'bail|required',
-            'pshealthid_p12' => 'bail|required',
-            'treatment_id' => 'bail|required',
+            // 'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required',
             'gender' => 'bail|required',
@@ -353,15 +352,15 @@ class DoctorController extends Controller
             'end_time' => 'bail|required|after:start_time',
             'hospital_id' => 'bail|required',
             'desc' => 'required',
-            'appointment_fees' => 'required|numeric',
-            'experience' => 'bail|required|numeric',
+            // 'appointment_fees' => 'required|numeric',
+            // 'experience' => 'bail|required|numeric',
             'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
-            'custom_timeslot' => 'bail|required_if:timeslot,other',
-            'commission_amount' => 'bail|required_if:based_on,commission'
+            // 'custom_timeslot' => 'bail|required_if:timeslot,other',
+            // 'commission_amount' => 'bail|required_if:based_on,commission'
         ],
         [
             'image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.',
-        ]);
+        ]); 
         $doctor = Doctor::find($id);
         $data = $request->all();
 
@@ -376,7 +375,7 @@ class DoctorController extends Controller
         {
             (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
-        }
+        } 
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)
         {
@@ -397,22 +396,23 @@ class DoctorController extends Controller
         $data['is_filled'] = 1;
         $data['custom_timeslot'] = $request->custom_time == '' ? null : $request->custom_time;
         $data['hospital_id'] = implode(',',$request->hospital_id);
-        if ($request->based_on == 'subscription') {
-            if (!DoctorSubscription::where('doctor_id',$id)->exists()) {
-                $subscription = Subscription::where('name','free')->first();
-                if($subscription)
-                {
-                    $doctor_subscription['doctor_id'] = $doctor->id;
-                    $doctor_subscription['subscription_id'] = $subscription->id;
-                    $doctor_subscription['duration'] = 1;
-                    $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
-                    $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
-                    $doctor_subscription['status'] = 1;
-                    $doctor_subscription['payment_status'] = 1;
-                    DoctorSubscription::create($doctor_subscription);
-                }
-            }
-        }
+        // if ($request->based_on == 'subscription') {
+        //     if (!DoctorSubscription::where('doctor_id',$id)->exists()) {
+        //         $subscription = Subscription::where('name','free')->first();
+        //         if($subscription)
+        //         {
+        //             $doctor_subscription['doctor_id'] = $doctor->id;
+        //             $doctor_subscription['subscription_id'] = $subscription->id;
+        //             $doctor_subscription['duration'] = 1;
+        //             $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
+        //             $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
+        //             $doctor_subscription['status'] = 1;
+        //             $doctor_subscription['payment_status'] = 1;
+        //             DoctorSubscription::create($doctor_subscription);
+        //         }
+        //     }
+        // }
+        
         try {
             $doctor->update($data);
         } catch (\Exception $e) {

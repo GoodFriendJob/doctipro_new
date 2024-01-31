@@ -59,7 +59,7 @@
                         <div class="row mt-4">
                             <div class="col-lg-4 form-group">
                                 <label class="col-form-group">{{__('eHealth ID')}}</label>
-                                <input type="text" value="{{ old('pshealthid', $doctor->pshealthid )}}" class="form-control @error('pshealthid') is-invalid @enderror" name="pshealthid">
+                                <input type="number" value="{{ old('pshealthid', $doctor->pshealthid )}}" class="form-control @error('pshealthid') is-invalid @enderror" name="pshealthid">
                                 @error('pshealthid')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -291,7 +291,7 @@
                 {{__('Other information')}}
             </div>
             <div class="card-body">
-                <div class="row mt-4">
+                {{-- <div class="row mt-4">
                     <div class="col-lg-6 form-group">
                         <label class="col-form-group">{{__('Experience (in years)')}}</label>
                         <input type="number" min="1" name="experience" value="{{ old('experience',$doctor->experience) }}" class="form-control @error('experience') is-invalid @enderror">
@@ -310,10 +310,10 @@
                             </div>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row mt-4">
-                    <div class="col-lg-4 form-group">
+                    {{-- <div class="col-lg-4 form-group">
                         <label class="col-form-group">{{__('Treatments')}}</label>
                         <select name="treatment_id" class="select2 @error('treatment_id') is-invalid @enderror">
                             @foreach ($treatments as $treatment)
@@ -325,7 +325,7 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="col-lg-4 form-group">
                         <label class="col-form-group">{{__('Categories')}}</label>
                         <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
@@ -352,8 +352,33 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="col-lg-4 form-group">
+                        <label class="col-form-group">{{__('Timeslots(In minutes)')}}</label>
+                        <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
+                            <option value="15" {{ $doctor->timeslot == 15 ? 'selected' : '' }}>15</option>
+                            <option value="30" {{ $doctor->timeslot == 30 ? 'selected' : '' }}>30</option>
+                            <option value="45" {{ $doctor->timeslot == 45 ? 'selected' : '' }}>45</option>
+                            <option value="60" {{ $doctor->timeslot == 60 ? 'selected' : '' }}>60</option>
+                            <option value="90" {{ $doctor->timeslot == 90 ? 'selected' : '' }}>90</option>
+                            <option value="other" {{ $doctor->timeslot == 'other' ? 'selected' : '' }}>{{__('Other')}}</option>
+                        </select>
+                        @error('timeslot')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4  form-group custom_timeslot {{ $doctor->timeslot != 'other' ? 'hide' : '' }}">
+                        <label class="col-form-group">{{__('Add timeslot value(In minutes)')}}</label>
+                        <input type="text" name="custom_timeslot" value="{{ old('custom_timeslot',$doctor->custom_timeslot) }}" class="form-control custom_timeslot_text @error('custom_timeslot') is-invalid @enderror">
+                        @error('custom_timeslot')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
-
+{{-- 
                 <div class="row mt-4">
                     <div class="col-lg-6 form-group">
                         <label class="col-form-group">{{__('Timeslots(In minutes)')}}</label>
@@ -384,9 +409,9 @@
                             </div>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="row mt-4">
+                {{-- <div class="row mt-4">
                     <div class="col-lg-6  form-group custom_timeslot {{ $doctor->timeslot != 'other' ? 'hide' : '' }}">
                         <label class="col-form-group">{{__('Add timeslot value(In minutes)')}}</label>
                         <input type="text" name="custom_timeslot" value="{{ old('custom_timeslot',$doctor->custom_timeslot) }}" class="form-control custom_timeslot_text @error('custom_timeslot') is-invalid @enderror">
@@ -405,7 +430,7 @@
                             </div>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row mt-4">
                     <div class="col-lg-6 form-group">

@@ -227,7 +227,7 @@
                     {{__('Other information')}}
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-form-label">{{__('Experience (in years)')}}</label>
                         <input type="number" min="1" name="experience" value="{{ old('experience') }}"  class="form-control @error('experience') is-invalid @enderror">
                         @error('number')
@@ -244,10 +244,10 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="row mt-4">
-                        <div class="col-lg-4 form-group">
+                        {{-- <div class="col-lg-4 form-group">
                             <label class="col-form-label">{{__('Treatments')}}</label>
                             <select name="treatment_id" class="select2 @error('treatment_id') is-invalid @enderror">
                                 @foreach ($treatments as $treatment)
@@ -259,7 +259,7 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="col-lg-4 form-group">
                             <label class="col-form-label">{{__('Categories')}}</label>
                             <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
@@ -286,9 +286,34 @@
                                 </div>
                             @enderror
                         </div>
+                        <div class="col-lg-4 form-group">
+                            <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>
+                            <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                                <option value="90">90</option>
+                                <option value="other">{{__('Other')}}</option>
+                            </select>
+                            @error('timeslot')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-4 form-group custom_timeslot hide">
+                            <label class="col-form-label">{{__('Add timeslot value(In minutes)')}}</label>
+                            <input type="number" min="1" value="{{ old('timeslot') }}" class="form-control custom_timeslot_text @error('timeslot') is-invalid @enderror">
+                            @error('timeslot')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="row mt-4">
+                    {{-- <div class="row mt-4">
                         <div class="col-lg-6 form-group">
                             <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>
                             <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
@@ -317,9 +342,9 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="row mt-4">
+                    {{-- <div class="row mt-4">
                         <div class="col-lg-6 form-group custom_timeslot hide">
                             <label class="col-form-label">{{__('Add timeslot value(In minutes)')}}</label>
                             <input type="number" min="1" value="{{ old('timeslot') }}" class="form-control custom_timeslot_text @error('timeslot') is-invalid @enderror">
@@ -338,7 +363,7 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mt-4">
                         <div class="col-lg-6 form-group">
@@ -361,7 +386,7 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <div class="col-lg-12 form-group    ">
+                        <div class="col-lg-12 form-group">
                             <label class="col-form-label">{{__('Popular ?')}}</label>
                             <select name="is_popular" class="form-control">
                                 <option value="1" {{ old('is_popular') == "1" ? 'selected' : '' }}>{{__('yes')}}</option>
