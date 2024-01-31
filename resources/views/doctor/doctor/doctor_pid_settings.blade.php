@@ -141,9 +141,9 @@
                             $is_expired = $guichet_date < time() ? true: false;
                             $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate);
 
-                            echo "<h3>- ".$history->pid_id." - time: ".(time()- strtotime($history->guichet_date))."</h3>";
-                            echo "<h5>".$history->guichet_date." - current: ".date("Y-m-d H:i:s")."</h5>";
-                            echo "<h5>".strtotime($history->guichet_date)." - current: ".time()."</h5>";
+                            // echo "<h3>- ".$history->pid_id." - time: ".(time()- strtotime($history->guichet_date))."</h3>";
+                            // echo "<h5>".$history->guichet_date." - current: ".date("Y-m-d H:i:s")."</h5>";
+                            // echo "<h5>".strtotime($history->guichet_date)." - current: ".time()."</h5>";
                             // echo "<br>simulate=".$simulate;
                             // echo "<br>validate=".$validate;
                             // echo "<br>contenst=".$contenst;
