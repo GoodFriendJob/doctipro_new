@@ -56,10 +56,10 @@
                             @yield('subscription')
                         @endif
                 @elseif(auth()->user()->hasRole('super admin'))
-                    @if (App\Models\Setting::find(1)->license_verify == 1)
+                    {{-- @if (App\Models\Setting::find(1)->license_verify == 1) --}}
                             @yield('content')
                             @yield('setting')
-                    @else
+                    {{-- @else
                         <script>
                             var a = $('input[name=base_url]').val()+'/setting';
                             if (window.location.origin + window.location.pathname != $('input[name=base_url]').val() + '/setting')
@@ -77,7 +77,7 @@
                             }
                         </script>
                         @yield('setting')
-                    @endif
+                    @endif --}}
                 @else
                     @yield('content')
                 @endif

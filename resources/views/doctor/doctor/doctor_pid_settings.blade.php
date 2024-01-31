@@ -120,12 +120,13 @@
                             <th rowspan="2" width='10'><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
                             <th rowspan="2" width='10'><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
                             <th rowspan="2" width='10'><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
-                            <th colspan="3"><i class="fa fa-university"></i> {{__('Action')}}</th>
+                            <th colspan="4"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
                             <th class="border">{{__('Simulate')}}</th>
                             <th class="border">{{__('Validate')}}</th>
                             <th class="border">{{__('Contest')}}</th>
+                            <th class="border"><i class="fa fa-file-pdf"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,7 +175,6 @@
                             @if ($is_valid)
                                 @if ($validate)
                                     <i class="fa fa-circle text-success"></i> <br>
-                                    <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
                                 @else
                                     <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                 @endif
@@ -188,6 +188,11 @@
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                 @endif
                             @endif
+                            </td>
+                            <td>
+                                @if ($is_valid && $validate)
+                                    <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

@@ -299,14 +299,14 @@
             </li>
             @endif
             @if($doctor->based_on == 'commission')
-            @can('commission_details')
+            {{-- @can('commission_details')
             <li class="{{ $activePage == 'commission' ? 'active' : '' }}">
                 <a href="{{ url('commission') }}">
                     <i class="far fa-money-bill-alt"></i>
                     <span>{{__('Commission details')}}</span>
                 </a>
             </li>
-            @endcan
+            @endcan --}}
             @endif
             @else
             <li class="{{ $activePage == 'subscription' ? 'active' : '' }} || {{ $activePage == 'subscription_history' ? 'active' : '' }}">

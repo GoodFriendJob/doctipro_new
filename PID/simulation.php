@@ -384,7 +384,6 @@ if (curl_errno($ch))
     $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     echo json_encode($res); exit;
   } else {
-    // echo '=============  Réponse du serveur : ' . $response;
     // array_push($res['soap']['request'], $doc->saveXML());
     // array_push($res['soap']['response'], $response);
   }
@@ -730,7 +729,6 @@ if (curl_errno($ch))
       $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
       echo json_encode($res); exit;
     } else {
-      // echo '=============  Réponse du serveur : ' . $response;
       // array_push($res['soap']['request'], $a);
       // array_push($res['soap']['response'], $response);
     }
@@ -953,7 +951,6 @@ echo json_encode($res); exit;
     $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     echo json_encode($res); exit;
   } else {
-    // echo '=============  Réponse du serveur : ' . $response;
     // array_push($res['soap']['request'], $a);
     // array_push($res['soap']['response'], $response);
   }
