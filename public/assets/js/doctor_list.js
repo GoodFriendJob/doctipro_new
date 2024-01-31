@@ -30,13 +30,13 @@ $(document).ready(function () {
           $( "#search_type" ).val( ui.item.type );
           $('#gender_all').trigger('click');
           $('input[name="select_specialist"]').prop('checked', false);
-          $('input[name="select_specialist"]').each(function(i)
-          {
-            console.log($(this).next().html());
-            console.log('---', ui.item.name);
-            if ($(this).next().html() == ui.item.name )
-                $(this).prop('checked', true);
-          });
+          if (ui.item.type=='category') {
+            $('input[name="select_specialist"]').each(function(i)
+            {
+                if ($(this).next().html() == ui.item.name )
+                    $(this).prop('checked', true);
+            });
+          }
           searchDoctor();
           return false;
         }
