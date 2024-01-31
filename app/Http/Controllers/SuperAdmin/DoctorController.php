@@ -171,11 +171,12 @@ class DoctorController extends Controller
         $data['status'] = 1;
         $data['subscription_status'] = 1;
         $data['is_filled'] = 1;
-        $data['based_on'] == 'subscription';
         $data['hospital_id'] = implode(',',$request->hospital_id);
         //updated by Polaris
         if (!isset($data['commission_amount']) || empty($data['commission_amount']))
             $data['commission_amount'] = '10.00';
+        if (!isset($data['based_on']) || empty($data['based_on']))
+            $data['based_on'] = 'subscription';
 
         $doctor = Doctor::create($data);
         
@@ -414,7 +415,12 @@ class DoctorController extends Controller
         //         }
         //     }
         // }
-        $data['based_on'] == 'subscription';
+        //updated by Polaris
+        if (!isset($data['commission_amount']) || empty($data['commission_amount']))
+            $data['commission_amount'] = '10.00';
+        if (!isset($data['based_on']) || empty($data['based_on']))
+            $data['based_on'] = 'subscription';
+        
         try {
             $doctor->update($data);
         } catch (\Exception $e) {
