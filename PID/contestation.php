@@ -40,7 +40,7 @@ while($result=$stmt->fetch(PDO::FETCH_ASSOC)){
     $row = $result;
 } 
 
-$identifiantReponseSimulation = $row['id_response_simulation'];
+$identifiantReponseSimulationVar = $row['id_response_simulation'];
 $CCss = $row['ccss_token'];
 $WsuID = $row['wsu_id'];
 $identifiantAnomalieVar = $row['id_memoire_honoraire'];
@@ -183,7 +183,7 @@ $contestationAnomalie->appendChild($codeContestation);
 
 $requestInfo->appendChild($contestationSimulationMedecin);
 
-$bodyNodeCanonized = CanoniseBodyContestation($identifiantReponseSimulationVar,$identifiantAnomalieVar);
+$bodyNodeCanonized = CanoniseBodyContestation($identifiantReponseSimulationVar, $identifiantAnomalieVar);
 $digestBody = openssl_digest($bodyNodeCanonized, 'sha256', true);//ok
 $digestValue = $doc->getElementsByTagName('ds:DigestValue')->item(0);
 $digestValue->nodeValue = base64_encode($digestBody);
@@ -201,8 +201,8 @@ $ch = curl_init();
 $soapActionHeaderValue = 'exchange';
 $service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
 // Configurez les options cURL
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
 curl_setopt($ch, CURLOPT_URL, $service_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
