@@ -146,8 +146,10 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
+            echo 2; exit;
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
         } else {
+            echo 1; exit;
             $data['pshealthid_p12'] = 'MIPIT.p12';
         }
         $education = array();
@@ -420,7 +422,7 @@ class DoctorController extends Controller
             $data['commission_amount'] = '10.00';
         if (!isset($data['based_on']) || empty($data['based_on']))
             $data['based_on'] = 'subscription';
-        
+
         try {
             $doctor->update($data);
         } catch (\Exception $e) {
