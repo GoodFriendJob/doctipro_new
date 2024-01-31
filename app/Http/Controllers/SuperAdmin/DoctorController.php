@@ -381,6 +381,7 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
+            echo 1; exit;
             (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
         } 
