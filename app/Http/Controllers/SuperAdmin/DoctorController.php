@@ -381,9 +381,9 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
-            echo 1; exit;
             (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
+            echo 2; exit;
         } 
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)
