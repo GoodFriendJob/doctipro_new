@@ -76,7 +76,7 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = $request->validate([
             'name' => 'bail|required|unique:doctor',
             'email' => 'bail|required|email|unique:users',
             'pshealthid' => 'bail|required|unique:doctor',
@@ -92,11 +92,16 @@ class DoctorController extends Controller
             'end_time' => 'bail|required|after:start_time',
             'hospital_id' => 'bail|required',
             'desc' => 'required',
+            'pshealthid_p12' => 'required',
             // 'appointment_fees' => 'required|numeric',
             // 'experience' => 'bail|required|numeric',
             'custom_timeslot' => 'bail|required_if:timeslot,other',
             // 'commission_amount' => 'bail|required_if:based_on,commission'
         ]);
+
+        if($request->hasFile('pshealthid_p12')==false) {
+            $validator->errors()->add('pshealthid_p12', 'The pshealthid_p12 field is required.');
+        }
 
         $data = $request->all();
         $password = mt_rand(100000,999999);
@@ -146,10 +151,8 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
-            echo 2; exit;
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
         } else {
-            echo 1; exit;
             $data['pshealthid_p12'] = 'MIPIT.p12';
         }
         $education = array();

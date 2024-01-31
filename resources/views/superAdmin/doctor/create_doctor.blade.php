@@ -80,7 +80,12 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="col-form-group">{{__('eHealth .p12 file')}}</label>
-                                    <input type="file" value="{{ old('pshealthid_p12')}}" id="pshealthid_p12" name="pshealthid_p12" class="form-control form-control-sm" onchange="displayFileName()" />
+                                    <input type="file" value="{{ old('pshealthid_p12')}}" id="pshealthid_p12" name="pshealthid_p12" class="form-control form-control-sm @error('pshealthid_p12') is-invalid @enderror" onchange="displayFileName()" />
+                                    @error('pshealthid_p12')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                     <span id="fileNameLabel"><i class="fa fa-file-powerpoint"></i> {{ old('pshealthid_p12' )}}</span>
                                 </div>
                             </div>
