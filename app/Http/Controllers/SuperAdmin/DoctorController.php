@@ -383,7 +383,6 @@ class DoctorController extends Controller
         {
             (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
-            echo 2; exit;
         } 
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)
