@@ -52,20 +52,9 @@ class DoctorController extends Controller
     {
         abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $countries = Country::get();
-        $treatments = Treatments::whereStatus(1)->get();
-        $treat = [];
-        $categories = [];
-        $expertieses = [];
-        $treat = Treatments::whereStatus(1)->first();
-        if($treat){
-            $categories = Category::whereStatus(1)->where('treatment_id',$treat->id)->get();
-            $cat = Category::whereStatus(1)->where('treatment_id',$treat->id)->first();
-            if($cat){
-                $expertieses = Expertise::whereStatus(1)->where('category_id',$cat->id)->get();
-            }
-        }
+        $categories = Category::whereStatus(1)->get();
         $hospitals = Hospital::whereStatus(1)->get();
-        return view('superAdmin.doctor.create_doctor',compact('countries','treatments','hospitals','categories','expertieses'));
+        return view('superAdmin.doctor.create_doctor',compact('countries', 'hospitals','categories'));
     }
 
     /**
@@ -86,7 +75,7 @@ class DoctorController extends Controller
             'dob' => 'bail|required',
             'gender' => 'bail|required',
             'phone' => 'bail|required|digits_between:6,12',
-            'expertise_id' => 'bail|required',
+            // 'expertise_id' => 'bail|required',
             'timeslot' => 'bail|required',
             'start_time' => 'bail|required',
             'end_time' => 'bail|required|after:start_time',
@@ -354,7 +343,7 @@ class DoctorController extends Controller
             'dob' => 'bail|required',
             'gender' => 'bail|required',
             'phone' => 'bail|required|digits_between:6,12',
-            'expertise_id' => 'bail|required',
+            // 'expertise_id' => 'bail|required',
             'timeslot' => 'bail|required',
             'start_time' => 'bail|required',
             'end_time' => 'bail|required|after:start_time',

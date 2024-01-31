@@ -244,16 +244,16 @@
                     <div class="flex justify-center mt-44 font-fira-sans font-normal text-base text-gray">{{__('No Data Avalaible')}}</div>
                     @endif
                 </div>
-                @if(count($treatments) > 0)
-                @foreach($treatments as $treatment)
+                @if(count($categories) > 0)
+                @foreach($categories as $category)
                 <div class="bg-white shadow-xl p-14 transform w-full h-full hover:bg-white-50 transition duration-500 hover:scale-110 xxsm:mt-10 2xl:mt-0">
                     <div class="justify-center items-center w-full">
-                        <img class="lg:h-16 lg:w-16 xxmd:w-16 xxmd:h-16 md:h-10 md:w-10 sm:h-10 sm:w-10 msm:h-10 msm:w-10 xsm:h-10 xsm:w-10 xxsm:h-10 xxsm:w-10 mx-auto  bg-cover object-cover" src="{{$treatment->fullImage}}" alt="" />
-                        <p class="font-fira-sans font-normal text-xl xxsm:text-base leading-6 text-black text-center md:text-xl py-5">{{$treatment->name}}</p>
+                        <img class="lg:h-16 lg:w-16 xxmd:w-16 xxmd:h-16 md:h-10 md:w-10 sm:h-10 sm:w-10 msm:h-10 msm:w-10 xsm:h-10 xsm:w-10 xxsm:h-10 xxsm:w-10 mx-auto  bg-cover object-cover" src="{{$category->fullImage}}" alt="" />
+                        <p class="font-fira-sans font-normal text-xl xxsm:text-base leading-6 text-black text-center md:text-xl py-5">{{$category->name}}</p>
                         <p class="font-fira-sans text-center md:text-xl">
                         <form action="{{ url('show-doctors') }}" method="post" class="text-center">
                             @csrf
-                            <input type="hidden" name="treatment_id" value="{{ $treatment->id }}">
+                            <input type="hidden" name="category_id" value="{{ $category->id }}">
                             <button type="submit" class="font-medium leading-4 text-sm text-primary text-center font-fira-sans md:text-sm">{{__('Consult Now!')}}
                                 <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.73544 0.852912C8.6542 0.446742 8.25908 0.183329 7.85291 0.264563L1.23399 1.58835C0.827824 1.66958 0.564411 2.0647 0.645646 2.47087C0.72688 2.87704 1.122 3.14045 1.52817 3.05922L7.41165 1.88252L8.58835 7.76601C8.66958 8.17218 9.0647 8.43559 9.47087 8.35435C9.87704 8.27312 10.1405 7.878 10.0592 7.47183L8.73544 0.852912ZM2.62404 10.416L8.62404 1.41602L7.37596 0.583973L1.37596 9.58397L2.62404 10.416Z" />

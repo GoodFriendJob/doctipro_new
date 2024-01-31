@@ -1,11 +1,11 @@
 @extends('layout.mainlayout_admin',['activePage' => 'category'])
 
-@section('title',__('Edit Category'))
+@section('title',__('Edit Expertise'))
 @section('content')
 
 <section class="section">
     @include('layout.breadcrumb',[
-        'title' => __('Edit Category'),
+        'title' => __('Edit Expertise'),
         'url' => url('category'),
         'urlTitle' => __('Category'),
     ])
@@ -20,7 +20,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-2 col-md-6">
+                        <div class="col-lg-3 col-md-6">
                             <label for="app_id" class="col-form-label"> {{__('Category image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -38,7 +38,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-6">
+                        <div class="col-lg-9 col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Name')}}</label>
                                 <input type="text" value="{{ $category->name }}" name="name" class="form-control @error('name') is-invalid @enderror">
@@ -48,11 +48,12 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <input type="hidden" name="treatment_id" value="1" />
+                            {{-- <div class="form-group">
                                 <label class="col-form-label">{{__('Treatments')}}</label>
                                 <select name="treatment_id" class="select2">
                                     @foreach ($treats as $treat)
-                                        <option value="{{ $treat->id }}" {{ $treat->id == $category->treatment_id ? 'selected' : '' }}>{{ $treat->name }}</option>
+                                    <option value="{{ $treat->id }}" {{ $treat->id == $category->treatment_id ? 'selected' : '' }}>{{ $treat->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('name')
@@ -60,7 +61,7 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="text-right">

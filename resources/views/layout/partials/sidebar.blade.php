@@ -100,42 +100,6 @@
             </li>
             @endcan
 
-            @can('treatment_access')
-            <li class="{{ $activePage == 'treatments' ? 'active' : '' }}">
-                <a href="{{ url('treatments') }}">
-                    <i class="fas fa-stethoscope"></i>
-                    <span>{{__('Treatments')}}</span>
-                </a>
-            </li>
-            @endcan
-
-            @can('category_access')
-            <li class="{{ $activePage == 'category' ? 'active' : '' }}">
-                <a href="{{ url('category') }}">
-                    <i class="far fa-list-alt"></i>
-                    <span>{{__('category')}}</span>
-                </a>
-            </li>
-            @endcan
-
-            @can('expertise_access')
-            <li class="{{ $activePage == 'expertise' ? 'active' : '' }}">
-                <a href="{{ url('expertise') }}">
-                    <i class="fas fa-angle-right"></i>
-                    <span>{{__('expertise')}}</span>
-                </a>
-            </li>
-            @endcan
-
-            @can('medicine_category_access')
-            <li class="{{ $activePage == 'medicineCategory' ? 'active' : '' }}">
-                <a href="{{ url('medicineCategory') }}">
-                    <i class="fas fa-tablets"></i>
-                    <span>{{__('medicine Category')}}</span>
-                </a>
-            </li>
-            @endcan
-
             @can('hospital_access')
             <li class="{{ $activePage == 'hospital' ? 'active' : '' }}">
                 <a href="{{ url('hospital') }}">
@@ -145,11 +109,48 @@
             </li>
             @endcan
 
+            {{-- @can('treatment_access')
+            <li class="{{ $activePage == 'treatments' ? 'active' : '' }}">
+                <a href="{{ url('treatments') }}">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>{{__('Treatments')}}</span>
+                </a>
+            </li>
+            @endcan --}}
+
+            @can('category_access')
+            <li class="{{ $activePage == 'category' ? 'active' : '' }}">
+                <a href="{{ url('category') }}">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>{{__('expertise')}}</span>
+                </a>
+            </li>
+            @endcan
+
+            {{-- @can('expertise_access')
+            <li class="{{ $activePage == 'expertise' ? 'active' : '' }}">
+                <a href="{{ url('expertise') }}">
+                    <i class="fas fa-angle-right"></i>
+                    <span>{{__('expertise')}}</span>
+                </a>
+            </li>
+            @endcan --}}
+
             @can('doctor_access')
             <li class="{{ $activePage == 'doctor' ? 'active' : '' }}">
                 <a href="{{ url('doctor') }}">
                     <i class="fas fa-user-md"></i>
                     <span>{{__('doctor')}}</span>
+                </a>
+            </li>
+            @endcan
+
+            {{-- @can('medicine_category_access')
+            <li class="border"></li>
+            <li class="{{ $activePage == 'medicineCategory' ? 'active' : '' }}">
+                <a href="{{ url('medicineCategory') }}">
+                    <i class="fas fa-tablets"></i>
+                    <span>{{__('medicine Category')}}</span>
                 </a>
             </li>
             @endcan
@@ -206,9 +207,10 @@
                     <span>{{__('radiology')}}</span>
                 </a>
             </li>
-            @endcan
+            @endcan --}}
 
             @can('test_report')
+            <li class="border"></li>
             <li class="{{ $activePage == 'test_report' ? 'active' : '' }}">
                 <a href="{{ url('test_reports') }}">
                     <i class="fas fa-file"></i>
@@ -217,7 +219,7 @@
             </li>
             @endcan
 
-            @if (auth()->user()->hasRole('laboratory'))
+            {{-- @if (auth()->user()->hasRole('laboratory'))
             @can('lab_commission')
             <li class="{{ $activePage == 'commission' ? 'active' : '' }}">
                 <a href="{{ url('lab_commission') }}">
@@ -235,7 +237,7 @@
                 </a>
             </li>
             @endcan
-            @endif
+            @endif --}}
 
             @if(auth()->user()->can('patient_access') || auth()->user()->can('admin_user_access'))
             {{-- @canAny(['patient_access,admin_user_access']) --}}
@@ -278,7 +280,7 @@
             </li>
             @endcan
 
-            @if (Gate::check('subscription_access') || Gate::check('subscription_history'))
+            {{-- @if (Gate::check('subscription_access') || Gate::check('subscription_history'))
             @if (auth()->user()->hasRole('doctor'))
             @php
             $doctor = App\Models\Doctor::where('user_id',auth()->user()->id)->first();
@@ -297,16 +299,18 @@
                     </li>
                 </ul>
             </li>
-            @endif
-            @if($doctor->based_on == 'commission')
-            {{-- @can('commission_details')
+            @endif --}}
+
+
+            {{-- @if($doctor->based_on == 'commission')
+            @can('commission_details')
             <li class="{{ $activePage == 'commission' ? 'active' : '' }}">
                 <a href="{{ url('commission') }}">
                     <i class="far fa-money-bill-alt"></i>
                     <span>{{__('Commission details')}}</span>
                 </a>
             </li>
-            @endcan --}}
+            @endcan
             @endif
             @else
             <li class="{{ $activePage == 'subscription' ? 'active' : '' }} || {{ $activePage == 'subscription_history' ? 'active' : '' }}">
@@ -323,7 +327,7 @@
                 </ul>
             </li>
             @endif
-            @endif
+            @endif --}}
 
             @if (Gate::check('doctor_review'))
             @if (auth()->user()->hasRole('doctor'))

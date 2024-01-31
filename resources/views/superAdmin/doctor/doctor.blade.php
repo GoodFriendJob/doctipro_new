@@ -32,7 +32,6 @@
                                 <th>{{__('Doctor Name')}}</th>
                                 <th>{{__('email')}}</th>
                                 <th>{{__('Speciality')}}</th>
-                                <th>{{__('Based On')}}</th>
                                 <th>{{__('Member Since')}}</th>
                                 <th>{{__('Status')}}</th>
                                 @if (Gate::check('doctor_edit') || Gate::check('doctor_delete'))
@@ -59,13 +58,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @if ($doctor->expertise != null)
-                                            {{ $doctor->expertise['name'] }}
+                                        @if ($doctor->category != null)
+                                            {{ $doctor->category['name'] }}
                                         @else
                                             {{__('Not define')}}
                                         @endif
                                     </td>
-                                    <td>{{ $doctor->based_on }}</td>
                                     @php
                                         $since = explode(" , ",$doctor->since)
                                     @endphp

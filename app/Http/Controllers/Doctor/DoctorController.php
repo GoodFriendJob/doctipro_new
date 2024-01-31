@@ -301,12 +301,12 @@ class DoctorController extends Controller
         $request->validate(
             [
                 'name' => 'bail|required|unique:doctor,name,' . $id . ',id',
-                'treatment_id' => 'bail|required',
+                // 'treatment_id' => 'bail|required',
                 'category_id' => 'bail|required',
                 'dob' => 'bail|required',
                 'gender' => 'bail|required',
                 'phone' => 'bail|required|digits_between:6,12',
-                'expertise_id' => 'bail|required',
+                // 'expertise_id' => 'bail|required',
                 'timeslot' => 'bail|required',
                 'start_time' => 'bail|required',
                 'end_time' => 'bail|required|after:start_time',

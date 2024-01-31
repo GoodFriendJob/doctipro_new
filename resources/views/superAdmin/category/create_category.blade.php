@@ -1,11 +1,11 @@
 @extends('layout.mainlayout_admin',['activePage' => 'category'])
 
-@section('title',__('Add Category'))
+@section('title',__('Add Expertise'))
 @section('content')
 
 <section class="section">
     @include('layout.breadcrumb',[
-        'title' => __('Add Category'),
+        'title' => __('Add Expertise'),
         'url' => url('category'),
         'urlTitle' => __('Category'),
     ])
@@ -19,7 +19,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-2 col-md-6">
+                        <div class="col-lg-3 col-md-6">
                             <label for="category_image" class="col-form-label"> {{__('Category image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -37,7 +37,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-6">
+                        <div class="col-lg-9 col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Name')}}</label>
                                 <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">
@@ -47,7 +47,8 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <input type="hidden" name="treatment_id" value="1" />
+                            {{-- <div class="form-group">
                                 <label class="col-form-label">{{__('Treatments')}}</label>
                                 <select name="treatment_id" class="select2">
                                     @foreach ($treats as $treat)
@@ -59,7 +60,7 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="cursor-pointer">
                                     <input type="checkbox" id="status" class="custom-switch-input" name="status">

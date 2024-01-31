@@ -58,12 +58,12 @@ class WebsiteController extends Controller
         //     return view("first_page");
         // }
         $banners = Banner::get();
-        $doctors = Doctor::with('category:id,name')->where([['status', 1], ['is_filled', 1], ['subscription_status', 1]])->get()->take(8);
-        $treatments = Treatments::whereStatus(1)->paginate(6);
+        $doctors = Doctor::with('category:id,name')->where([['status', 1], ['is_filled', 1]])->get()->take(8);
+        $categories = Category::whereStatus(1)->paginate(6);
         $setting = Setting::first();
         $reviews = Review::get();
         $blogs = Blog::get();
-        return view('website.home', compact('banners', 'doctors', 'treatments', 'setting', 'reviews', 'blogs'));
+        return view('website.home', compact('banners', 'doctors', 'categories', 'setting', 'reviews', 'blogs'));
     }
 
     public function sign_up(Request $request)
@@ -248,13 +248,17 @@ class WebsiteController extends Controller
                     $query->where('name', 'like', '%' . $searchText . '%');
                 });
             }
-        } 
+        } else if (isset($data['category'])) {
+            if (isset($data['search_type']) && $data['search_type'] == 'category') {
+                $doctor->whereIn('category_id', $data['category']);
+            }
+        }
         if (isset($data['gender_type']) && $data['gender_type'] != '') {
             $doctor->where('gender', $data['gender_type']);
         }
-        if (isset($data['category'])) {
-            $doctor->whereIn('category_id', $data['category']);
-        }
+        // if (isset($data['category'])) {
+        //     $doctor->whereIn('category_id', $data['category']);
+        // }
         if (isset($data['treatment_id'])) {
             $doctor->where('treatment_id', $data['treatment_id']);
         } elseif (isset($data['sort_by']) && $data['sort_by'] != '') {

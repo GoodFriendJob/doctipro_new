@@ -1,11 +1,11 @@
 @extends('layout.mainlayout_admin',['activePage' => 'category'])
 
-@section('title',__('All Category'))
+@section('title',__('All expertise'))
 @section('content')
 
 <section class="section">
     @include('layout.breadcrumb',[
-        'title' => __('Category'),
+        'title' => __('Expertise'),
     ])
     @if (session('status'))
     @include('superAdmin.auth.status',[
@@ -30,8 +30,8 @@
                                 </th>
                                 <th> # </th>
                                 <th>{{__('Image')}}</th>
-                                <th>{{__('category name')}}</th>
-                                <th>{{__('treatment Name')}}</th>
+                                <th>{{__('expertise name')}}</th>
+                                {{-- <th>{{__('treatment Name')}}</th> --}}
                                 <th>{{__('Status')}}</th>
                                 @if (Gate::check('category_edit') || Gate::check('category_delete'))
                                     <th> {{__('Action')}} </th>
@@ -53,11 +53,11 @@
                                 </td>
                                 <td>
                                     {{$category->name}}
-                                    </td>
-                                <td>
+                                </td>
+                                {{-- <td>
                                     <a href="{{url('category/'.$category->id.'/edit')}}">
                                     {{$category->treatment['name']}}</a>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <label class="cursor-pointer">
                                         <input type="checkbox" id="status{{$category->id}}" class="custom-switch-input" name="status" onchange="change_status('category',{{ $category->id }})" {{ $category->status == 1 ? 'checked' : '' }}>

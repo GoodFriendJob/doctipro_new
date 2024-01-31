@@ -26,11 +26,8 @@
                 <div class="bg-white-50 2xl:w-96 xl:w-80 xlg:w-72 xl:h-80 xlg:h-80 lg:h-80 lg:w-64 xmd:w-60 xmd:h-72 md:w-full md:h-72 sm:w-full sm:h-72 msm:w-96 msm:h-72 xsm:w-full xsm:h-72 xxsm:w-full xxsm:h-72">
                     <div class="flex flex-col justify-center xmd:mt-5 md:mt-5 lg:mt-10 sm:mt-11 msm:mt-5 xsm:mt-5 xxsm:mt-1 border-l border-white-light overflow-y-scroll h-64">
                         <div class="2xl:px-10 xl:px-10 xlg:px-10 lg:px-10 xmd:px-10 md:px-10 xxsm:px-5">
-                            @if (isset($doctor->expertise) && isset($doctor->category))
+                            @if (isset($doctor->category))
                             <div class="flex">
-                                <p class=" font-fira-sans font-normal text-sm leading-4 text-gray text-left pt-5 pr-2 border-r">
-                                    {{$doctor->expertise['name']}}
-                                </p>
                                 <img src="{{ $doctor->category['fullImage'] }}" class="ml-2 pt-5 pr-2 h-10 w-8" alt="">
                                 <p class="ml-2 mr-2 font-fira-sans font-normal text-sm leading-4 text-gray text-left pt-5">
                                     {{$doctor->category['name']}}

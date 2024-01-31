@@ -8,8 +8,8 @@
                 <h3>{{ $doctor->name }}</h3>
 
                 <div class="patient-details">
-                    @if (isset($doctor->expertise['name']))
-                    <h5 class="mb-0">{{ $doctor->expertise['name'] }}</h5>
+                    @if (isset($doctor->category['name']))
+                    <h5 class="mb-0">{{ $doctor->category['name'] }}</h5>
                     @endif
                 </div>
             </div>

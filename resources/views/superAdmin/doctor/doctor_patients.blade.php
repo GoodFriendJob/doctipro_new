@@ -28,9 +28,9 @@
             </div>
             <div class="profile-widget-description">
                 <div class="profile-widget-name">{{ $doctor->name }}
-                    @if (isset($doctor->expertise['name']))
+                    @if (isset($doctor->category['name']))
                         <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> 
-                            {{ $doctor->expertise['name'] }}
+                            {{ $doctor->category['name'] }}
                         </div>
                     @endif
                 </div>

@@ -29,6 +29,14 @@ $(document).ready(function () {
           $( "#search_doctor" ).val( ui.item.name );
           $( "#search_type" ).val( ui.item.type );
           $('#gender_all').trigger('click');
+          $('input[name="select_specialist"]').prop('checked', false);
+          $('input[name="select_specialist"]').each(function(i)
+          {
+            console.log($(this).next().html());
+            console.log('---', ui.item.name);
+            if ($(this).next().html() == ui.item.name )
+                $(this).prop('checked', true);
+          });
           searchDoctor();
           return false;
         }
@@ -45,7 +53,8 @@ $(document).ready(function () {
             .appendTo( ul );
         } else {
             return $( "<li>" )
-            .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
+            // .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
+            .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>[Expertise]</div></div>" )
             .appendTo( ul );
         }
         
@@ -76,7 +85,9 @@ $(document).ready(function () {
             alert('Server error');
         })
     });
-
+    $('input[name="select_specialist"]').change(function () {
+        $('#search_doctor').val('');
+    });
     $('#filter_form').change(function () {
         searchDoctor();
     });

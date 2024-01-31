@@ -38,7 +38,7 @@ class HomeController extends Controller
         $orderCharts = $this->orderChart();
         $users = $this->userChart();
         $allUsers = User::doesntHave('roles')->orderBy('id','DESC')->get()->take(10);
-        $allDoctors = Doctor::with('treatment')->orderBy('id','DESC')->get()->take(10);
+        $allDoctors = Doctor::with('category')->orderBy('id','DESC')->get()->take(10);
         $totalDoctors = Doctor::count();
         $totalUsers = User::doesntHave('roles')->count();
         $totalAppointments = Appointment::count();

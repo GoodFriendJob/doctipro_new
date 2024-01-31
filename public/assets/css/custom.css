@@ -17,7 +17,7 @@
 
 [type='checkbox']:checked, [type='radio']:checked, .dark [type='checkbox']:checked, .dark [type='radio']:checked
 {
-    background-color: var(--site_color) !important;
+    background-color: #184394 !important;
 }
 
 [type='checkbox']:focus, [type='radio']:focus

@@ -97,7 +97,7 @@
                                   <tr>
                                       <th>{{__('Doctor Name')}}</th>
                                       <th>{{__('Doctor Base on')}}</th>
-                                      <th>{{__('Treatments')}}</th>
+                                      <th>{{__('Expertise')}}</th>
                                       <th>{{__('Reviews')}}</th>
                                   </tr>
                               </thead>
@@ -111,8 +111,8 @@
                                           </td>
                                           <td>{{ $doctor->based_on }}</td>
                                           <td>
-                                              @if(isset($doctor->treatment['name']))
-                                                  {{ $doctor->treatment['name'] }}
+                                              @if(isset($doctor->category['name']))
+                                                  {{ $doctor->category['name'] }}
                                               @endif
                                           </td>
                                           <td>

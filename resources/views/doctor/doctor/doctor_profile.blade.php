@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-4 form-group">
                         <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
                         <div class="d-flex">
                             <select name="phone_code" class="phone_code_select2" disabled>
@@ -76,7 +76,21 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-4 form-group">
+                        <label class="col-form-label">{{__('Expertise')}}</label>
+                        <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
+                            @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ $doctor->category_id == $category->id ? 'selected' :
+                                '' }}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4 form-group">
                         <label class="col-form-label">{{__('Hospital')}}</label>
                         <select name="hospital_id[]" class="select2 @error('hospital_id') is-invalid @enderror" multiple>
                             @foreach ($hospitals as $hospital)
@@ -287,51 +301,6 @@
                         <label class="col-form-label">{{__('Appointment fees')}}</label>
                         <input type="number" name="appointment_fees" value="{{ $doctor->appointment_fees }}" class="form-control @error('appointment_fees') is-invalid @enderror">
                         @error('appointment_fees')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-lg-4 form-group">
-                        <label class="col-form-label">{{__('Treatments')}}</label>
-                        <select name="treatment_id" class="select2 @error('treatment_id') is-invalid @enderror">
-                            @foreach ($treatments as $treatment)
-                            <option value="{{ $treatment->id }}" {{ $doctor->treatment_id == $treatment->id ? 'selected'
-                                : '' }}>{{ $treatment->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('treatment_id')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <label class="col-form-label">{{__('Categories')}}</label>
-                        <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
-                            @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ $doctor->category_id == $category->id ? 'selected' :
-                                '' }}>{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('category_id')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <label class="col-form-label">{{__('Expertise')}}</label>
-                        <select name="expertise_id" class="select2 @error('expertise_id') is-invalid @enderror">
-                            @foreach ($expertieses as $experties)
-                            <option value="{{ $experties->id }}" {{ $doctor->expertise_id == $experties->id ? 'selected'
-                                : '' }}>{{ $experties->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('expertise_id')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

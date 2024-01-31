@@ -199,23 +199,21 @@
                             </label>
                         </div>
                     </div>
-                    <!-- <div>
+                    <div>
                         <h1 class="font-fira-sans font-medium text-base leading-5 text-black-dark mt-5">
                             {{ __('Select Specialist') }}
                         </h1>
-                        /* @foreach ($categories as $category)
+                        @foreach ($categories as $category)
                             <div class="form-check p-1">
                                 <input name="select_specialist"
                                     class="form-check-input appearance-none h-4 w-4 border border-white-light rounded-sm bg-white checked:bg-primary checked:border-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                    type="checkbox" value="{{ $category->id }}" id="category{{ $category->id }}">
+                                    type="checkbox" value="{{ $category->id }}" id="category_{{ $category->id }}">
                                 <label
                                     class="font-fira-sans form-check-label inline-block font-normal text-black text-sm leading-4"
-                                    for="category{{ $category->id }}">
-                                    {{ $category->name }}
-                                </label>
+                                    for="category{{ $category->id }}">{{ $category->name }}</label>
                             </div>
-                        @endforeach */
-                    </div> -->
+                        @endforeach
+                    </div>
                 </form>
             </div>
 

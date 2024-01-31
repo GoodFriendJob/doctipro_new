@@ -94,19 +94,16 @@
 
                     <div class="row mt-4">
                         <div class="col-lg-6 form-group">
-                            <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
-                            <div class="d-flex @error('phone') is-invalid @enderror">
-                                <select name="phone_code" class="phone_code_select2" value="{{ old('phone_code') }}">
-                                    @foreach ($countries as $country)
-                                        <option value="+{{$country->phonecode}}" {{(old('phone_code') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="number" min="1" name="phone" class="form-control" value="{{old('phone')}}" >
-                            </div>
-                            @error('phone')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                            <label class="col-form-label">{{__('Expertise')}}</label>
+                            <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                         <div class="col-lg-6 form-group">
@@ -125,7 +122,23 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-4 form-group">
+                            <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
+                            <div class="d-flex @error('phone') is-invalid @enderror">
+                                <select name="phone_code" class="phone_code_select2" value="{{ old('phone_code') }}">
+                                    @foreach ($countries as $country)
+                                        <option value="+{{$country->phonecode}}" {{(old('phone_code') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" min="1" name="phone" class="form-control" value="{{old('phone')}}" >
+                            </div>
+                            @error('phone')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-4 form-group">
                             <label class="col-form-label">{{__('Date of birth')}}</label>
                             <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" value="{{old('dob')}}" name="dob" >
                             @error('dob')
@@ -134,7 +147,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label class="col-form-label">{{__('Gender')}}</label>
                             <select name="gender" class="form-control @error('gender') is-invalid @enderror" >
                                 <option value="male" {{ old('gender') == "male" ? 'selected' : '' }}>{{__('male')}}</option>
@@ -152,7 +165,7 @@
                     <div class="row mt-4">
                         <div class="col-lg-12 form-group">
                             <label class="col-form-label">{{__('Professional Bio')}}</label>
-                            <textarea name="desc" rows="10" cols="10"  class="form-control @error('desc') is-invalid @enderror">{{old('desc')}}</textarea>
+                            <textarea style="min-height:84px;" name="desc" rows="10" cols="10"  class="form-control @error('desc') is-invalid @enderror">{{old('desc')}}</textarea>
                             @error('desc')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -177,19 +190,19 @@
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label>{{__('Degree')}}</label>
-                                                <input type="text"  required name="degree[]" value="bca" class="form-control">
+                                                <input type="text"  required name="degree[]" value="no degree" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label>{{__('College/Institute')}}</label>
-                                                <input type="text" required name="college[]" value="saurastra university" class="form-control">
+                                                <input type="text" required name="college[]" value="university" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label>{{__('Year of Completion')}}</label>
-                                                <input type="text" maxlength="4" pattern="^[0-9]{4}$"  required name="year[]" value="2022" class="form-control">
+                                                <input type="text" maxlength="4" pattern="^[0-9]{4}$"  required name="year[]" value="2024" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -208,13 +221,13 @@
                                     <div class="col-12 col-md-5">
                                         <div class="form-group">
                                             <label>{{__('certificate')}}</label>
-                                            <input type="text"  required name="certificate[]" value="bca" class="form-control">
+                                            <input type="text"  required name="certificate[]" value="no certificate" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-5">
                                         <div class="form-group">
                                             <label>{{__('Year')}}</label>
-                                            <input type="text" required  name="certificate_year[]" maxlength="4" value="2022" pattern="^[0-9]{4}$" class="form-control">
+                                            <input type="text" required  name="certificate_year[]" maxlength="4" value="2024" pattern="^[0-9]{4}$" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -252,46 +265,7 @@
                     </div> --}}
 
                     <div class="row mt-4">
-                        {{-- <div class="col-lg-4 form-group">
-                            <label class="col-form-label">{{__('Treatments')}}</label>
-                            <select name="treatment_id" class="select2 @error('treatment_id') is-invalid @enderror">
-                                @foreach ($treatments as $treatment)
-                                    <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('treatment_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-                        <div class="col-lg-4 form-group">
-                            <label class="col-form-label">{{__('Categories')}}</label>
-                            <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <label class="col-form-label">{{__('Expertise')}}</label>
-                            <select name="expertise_id" class="select2 @error('expertise_id') is-invalid @enderror">
-                                @foreach ($expertieses as $experties)
-                                    <option value="{{ $experties->id }}">{{ $experties->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('expertise_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-4 form-group">
+                        <div class="col-lg-3 form-group">
                             <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>
                             <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
                                 <option value="15">15</option>
@@ -307,7 +281,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-4 form-group custom_timeslot hide">
+                        <div class="col-lg-3 form-group custom_timeslot hide">
                             <label class="col-form-label">{{__('Add timeslot value(In minutes)')}}</label>
                             <input type="number" min="1" value="{{ old('timeslot') }}" class="form-control custom_timeslot_text @error('timeslot') is-invalid @enderror">
                             @error('timeslot')
@@ -316,62 +290,7 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
-
-                    {{-- <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>
-                            <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                                <option value="60">60</option>
-                                <option value="90">90</option>
-                                <option value="other">{{__('Other')}}</option>
-                            </select>
-                            @error('timeslot')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="col-form-label">{{__('Based On')}}</label>
-                            <select name="based_on" class="form-control @error('based_on') is-invalid @enderror">
-                                <option value="subscription" {{ old('based_on') == "subscription" ? 'selected' : '' }}>{{__('subscription')}}</option>
-                                <option value="commission" {{ old('based_on') == "commission" ? 'selected' : '' }}>{{__('commission')}}</option>
-                            </select>
-                            @error('based_on')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div> --}}
-
-                    {{-- <div class="row mt-4">
-                        <div class="col-lg-6 form-group custom_timeslot hide">
-                            <label class="col-form-label">{{__('Add timeslot value(In minutes)')}}</label>
-                            <input type="number" min="1" value="{{ old('timeslot') }}" class="form-control custom_timeslot_text @error('timeslot') is-invalid @enderror">
-                            @error('timeslot')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6 form-group base_on_com hide">
-                            <label class="col-form-label">{{__('Commission Amount ( pr appointment ) ( in % )')}}</label>
-                            <input type="number" min="1" step="any" value="{{ old('commission') }}" name="commission_amount" class="form-control base_on_com_text @error('commission') is-invalid @enderror">
-                            @error('commission')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div> --}}
-
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-3 form-group">
                             <label class="col-form-label">{{__('Start Time')}}</label>
                             <input class="form-control timepicker @error('start_time') is-invalid @enderror"  name="start_time" value="{{old('start_time')}}" type="time">
                             @error('start_time')
@@ -380,7 +299,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-3 form-group">
                             <label class="col-form-label">{{__('End Time')}}</label>
                             <input class="form-control timepicker @error('end_time') is-invalid @enderror" name="end_time"  value="{{old('end_time')}}" type="time">
                             @error('end_time')
