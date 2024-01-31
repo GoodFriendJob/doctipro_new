@@ -178,7 +178,9 @@
                                 @if ($validate)
                                     <i class="fa fa-circle text-success"></i> <br>
                                 @else
+                                    @if (!$is_expired)
                                     <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
+                                    @endif
                                 @endif
                             @endif
                             </td>
@@ -187,7 +189,9 @@
                                 @if ($contenst)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
+                                    @if (!$is_expired)
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
+                                    @endif
                                 @endif
                             @endif
                             </td>
