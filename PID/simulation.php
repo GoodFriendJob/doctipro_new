@@ -694,8 +694,8 @@ $a = str_replace('
 $ch = curl_init();
 $service_url = 'https://ws.mysecu.lu:7443/ws/soap/trust';
 
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
 curl_setopt($ch, CURLOPT_URL, $service_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -918,8 +918,8 @@ $ch = curl_init();
 $soapActionHeaderValue = 'exchange';
 $service_url = 'https://ws.mysecu.lu:7443/ws/soap/espinst/syncexchange';
 // Configurez les options cURL
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
 curl_setopt($ch, CURLOPT_URL, $service_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
