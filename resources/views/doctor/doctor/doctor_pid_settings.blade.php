@@ -137,11 +137,11 @@
                             $contenst = !empty($history->contestation_id);
                             $guichet_date = strtotime($history->guichet_date);
                             // $guichet_date = $guichet_date + (30 * 60);
-                            $guichet_date = $guichet_date + (30 * 60) + 13*3600;
+                            $guichet_date = $guichet_date + (30 * 60) + 1*3600;
                             $is_expired = $guichet_date < time() ? true: false;
                             $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate);
 
-                            echo "<h2>".$history->pid_id." - time: ".(time()- strtotime($history->guichet_date))."</h1>";
+                            // echo "<h2>".$history->pid_id." - time: ".(time()- strtotime($history->guichet_date))."</h1>";
                             // echo "<br>simulate=".$simulate;
                             // echo "<br>validate=".$validate;
                             // echo "<br>contenst=".$contenst;
