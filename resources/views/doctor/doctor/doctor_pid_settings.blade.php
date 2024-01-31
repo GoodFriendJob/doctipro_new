@@ -164,7 +164,7 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><span class="text-danger">&pound; {{ $history->paye }}</span></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><span class="text-danger">€ {{ $history->paye }}</span></td>
                             <td>
                                 @if ($is_valid)
                                     <i class="fa fa-circle text-success"></i>
