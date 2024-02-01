@@ -213,6 +213,24 @@ class DoctorController extends Controller
                 $h = $h->where($data['date_type'], '<=', $data['end_date'].' 23.59.59');
         }        
         $histories = $h->get();
+        foreach ($histories as $history)
+        {
+            $is_simulation = !empty($history->ccss_token);
+            $is_validation = !empty($history->paye);
+            $is_contestation = !empty($history->contestation_id);
+            // $guichet_date = Carbon::parse($history->guichet_date)->setTimezone(env('timezone'));
+            $guichet_date = Carbon::parse($history->guichet_date);
+            $expiredDate = $guichet_date->copy()->addMinutes(30);
+            // $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
+            $is_expired = Carbon::now()->greaterThan($expiredDate);
+            $is_valid = $is_validation || $is_contestation || (!$is_validation && !$is_contestation && !$is_expired && $is_simulation);
+
+            $history['is_simulation'] = $is_simulation;
+            $history['is_validation'] = $is_validation;
+            $history['is_contestation'] = $is_contestation;
+            $history['is_expired'] = $is_expired;
+            $history['is_valid'] = $is_valid;
+        }
         return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
     }
 

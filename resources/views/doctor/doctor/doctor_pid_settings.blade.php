@@ -134,27 +134,8 @@
                     </thead>
                     <tbody>
                         @foreach ($histories as $history)
-                        @php
-                            $simulate = !empty($history->ccss_token);
-                            $validate = !empty($history->paye);
-                            $contenst = !empty($history->contestation_id);
-                            $guichet_date = strtotime($history->guichet_date);
-                            // $guichet_date = $guichet_date + (30 * 60);
-                            $guichet_date = $guichet_date + (30 * 60) + 13*3600;
-                            $is_expired = $guichet_date < time() ? true: false;
-                            $is_valid = $validate || $contenst || (!$validate && !$contenst && !$is_expired && $simulate);
-
-                            // echo "<h3>- ".$history->pid_id." - time: ".(time()- strtotime($history->guichet_date))."</h3>";
-                            // echo "<h5>".$history->guichet_date." - current: ".date("Y-m-d H:i:s")."</h5>";
-                            // echo "<h5>".strtotime($history->guichet_date)." - current: ".time()."</h5>";
-                            // echo "<br>simulate=".$simulate;
-                            // echo "<br>validate=".$validate;
-                            // echo "<br>contenst=".$contenst;
-                            // echo "<br>is_expired=".$is_expired;
-                            // echo "<br>is_valid=".$is_valid;
-                        @endphp
-                        <tr class="{{ $validate ? 'bg-light':'' }} {{ $is_valid ? '':'text-warning' }}">
-                            <td>
+                        <tr class="{{ $history->is_validation ? 'bg-light':'' }} {{ $history->is_valid ? '':'text-warning' }}">
+                            <td data-sort="{{ $loop->iteration }}">
                                 <input type="checkbox" style="height:20px;" class="float-left form-control-sm pid_id_check cursor-pointer" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <span class="pt-2">{{ $loop->iteration }}</span>
                             </td>
@@ -169,37 +150,40 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
                             <td>
-                                @if ($is_valid)
+                                @if ($history->is_valid)
                                     <i class="fa fa-circle text-success"></i>
+                                @elseif($history->is_expired)
+                                    <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
+                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                 @else
-                                    <i class="fa fa-exclamation-triangle text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
+                                    <i class="fa fa-exclamation-triangle text-danger"></i><span class="text-danger">{{__('Auth Fail')}}</span><br>
                                     <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                 @endif
                             </td>
                             <td>
-                            @if ($is_valid)
-                                @if ($validate)
+                            @if ($history->is_valid)
+                                @if ($history->is_validation)
                                     <i class="fa fa-circle text-success"></i> <br>
                                 @else
-                                    @if (!$is_expired)
+                                    @if (!$history->is_expired)
                                     <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                     @endif
                                 @endif
                             @endif
                             </td>
                             <td>
-                            @if ($is_valid)
-                                @if ($contenst)
+                            @if ($history->is_valid)
+                                @if ($history->is_contestation)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    @if (!$is_expired)
+                                    @if (!$history->is_expired)
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                     @endif
                                 @endif
                             @endif
                             </td>
                             <td>
-                                @if ($is_valid && $validate)
+                                @if ($history->is_valid && $history->is_validation)
                                     <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
                                 @endif
                             </td>

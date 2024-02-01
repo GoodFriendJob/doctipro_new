@@ -252,12 +252,14 @@ class CustomController extends Controller
                             if ($start_time >= $end_time) {
                                 break;
                             } else {
-                                $temp['start_time'] = $start_time->format('h:i a');
-                                $temp['end_time'] = $start_time->addMinutes($timeslot)->format('h:i a');
+                                $temp['start_time'] = $start_time->format('h:i');
+                                $temp['end_time'] = $start_time->addMinutes($timeslot)->format('h:i');
                                 $time = strval($temp['start_time']);
                                 $appointment = Appointment::where([['doctor_id', $doctor->id], ['time', $time], ['date', $date]])->first();
                                 if ($appointment) {
                                 } else {
+                                    //updated by Poliars
+                                    $temp['start_time'] = $start_time->format('H').'h'.$start_time->format('i');
                                     array_push($master, $temp);
                                 }
                             }
@@ -291,7 +293,7 @@ class CustomController extends Controller
                                 $add = 60 - $minutes;
                             }
                             $add += 60;
-                            $d = $t->addMinutes($add)->format('h:i a');
+                            $d = $t->addMinutes($add)->format('h:i');
                             $start_time = new Carbon($date . ' ' . $d);
                         }
                         $end_time = new Carbon($date . ' ' . $value->end_time);
@@ -300,8 +302,8 @@ class CustomController extends Controller
                             if ($start_time >= $end_time) {
                                 break;
                             } else {
-                                $temp['start_time'] = $start_time->format('h:i a');
-                                $temp['end_time'] = $start_time->addMinutes($timeslot)->format('h:i a');
+                                $temp['start_time'] = $start_time->format('h:i');
+                                $temp['end_time'] = $start_time->addMinutes($timeslot)->format('h:i');
                                 $time = strval($temp['start_time']);
                                 $appointment = Report::where([['lab_id', $lab->id], ['time', $time], ['date', $date]])->first();
                                 if ($appointment) {
