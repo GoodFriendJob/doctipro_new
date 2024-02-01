@@ -26,12 +26,12 @@
     <script type="text/javascript" src="{{ url('assets_admin/js/sweetalert2@10.js') }}"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YNNEPV7VW0"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-YNNEPV7VW0');
     </script>
     @yield('css')
     <style>
