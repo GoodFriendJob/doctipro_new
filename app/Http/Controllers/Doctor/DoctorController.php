@@ -222,9 +222,9 @@ class DoctorController extends Controller
             $guichet_date = Carbon::parse($history->guichet_date);
             $expiredDate = $guichet_date->copy()->addMinutes(30);
 
-            echo $guichet_date->time();
+            echo $guichet_date->timestamp();
             echo '<br>';
-            echo Carbon::now()->time();
+            echo Carbon::now()->timestamp();
             exit;
             // $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
             $is_expired = Carbon::now()->greaterThan($expiredDate);
