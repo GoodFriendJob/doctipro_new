@@ -219,7 +219,7 @@ class DoctorController extends Controller
             $is_validation = !empty($history->paye);
             $is_contestation = !empty($history->contestation_id);
             // $guichet_date = Carbon::parse($history->guichet_date)->setTimezone(env('timezone'));
-            $guichet_date = Carbon::parse($history->guichet_date);
+            $guichet_date = Carbon::parse($history->guichet_date)->setTimezone(env('timezone'));
             $expiredDate = $guichet_date->copy()->addMinutes(30);
 
             echo $guichet_date->timestamp;
