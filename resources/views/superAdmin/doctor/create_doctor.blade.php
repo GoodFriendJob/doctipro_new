@@ -245,25 +245,6 @@
                     {{__('Other information')}}
                 </div>
                 <div class="card-body">
-                    {{-- <div class="form-group">
-                        <label class="col-form-label">{{__('Experience (in years)')}}</label>
-                        <input type="number" min="1" name="experience" value="{{ old('experience') }}"  class="form-control @error('experience') is-invalid @enderror">
-                        @error('number')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">{{__('Appointment fees')}}</label>
-                        <input type="number" min="1" name="appointment_fees" value="{{ old('appointment_fees') }}"  class="form-control @error('appointment_fees') is-invalid @enderror">
-                        @error('appointment_fees')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
-
                     <div class="row mt-4">
                         <div class="col-lg-3 form-group">
                             <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>

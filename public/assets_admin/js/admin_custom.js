@@ -137,6 +137,7 @@ $(document).ready(function()
             }
         },
         pagingType: "full_numbers",
+        order: [[0, 'asc']]
     });
     $('#export_print').on('click', function(e) {
         e.preventDefault();

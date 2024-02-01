@@ -160,7 +160,7 @@
                 <div class="row mt-4">
                     <div class="col-lg-12 form-group">
                         <label class="col-form-group">{{__('Professional Bio')}}</label>
-                        <textarea style="min-height:84px;"  name="desc" rows="10" cols="10" class="form-control @error('desc') is-invalid @enderror">{{ old('desc',$doctor->desc) }}</textarea>
+                        <textarea style="min-height:84px;" name="desc" rows="10" cols="10" class="form-control @error('desc') is-invalid @enderror">{{ old('desc',$doctor->desc) }}</textarea>
                         @error('desc')
                             <div class="invalid-feedback">
                                 {{ $message }}

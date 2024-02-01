@@ -12,7 +12,10 @@
         td, th {
             border: 1px solid #aaa;
             text-align: left;
-            padding: 8px;
+            padding: 6px !important;
+        }
+        .sorting_1 {
+            min-width:40px;
         }
     </style>
 @endsection
@@ -109,17 +112,17 @@
                 <table class="datatable table table-hover table-center mb-0 text-center">
                     <thead>
                         <tr>
-                            <th rowspan="2" width='30'>{{__('ID')}}</th>
+                            <th rowspan="2" width='40'>{{__('ID')}}</th>
                             <th rowspan="2" width='50'><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
-                            <th rowspan="2" width='10'><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
+                            <th rowspan="2"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
+                            <th rowspan="2"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
+                            <th rowspan="2"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
+                            <th rowspan="2"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
+                            <th rowspan="2"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
+                            <th rowspan="2"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
+                            <th rowspan="2"><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
+                            <th rowspan="2"><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
+                            <th rowspan="2"><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
                             <th colspan="4"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
@@ -152,8 +155,8 @@
                         @endphp
                         <tr class="{{ $validate ? 'bg-light':'' }} {{ $is_valid ? '':'text-warning' }}">
                             <td>
-                                <input type="checkbox" class="float-left form-control-sm pid_id_check" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
-                                <label class="pt-2" for="pid_id_{{ $history->pid_id }}">{{ $loop->iteration }}</label>
+                                <input type="checkbox" style="height:20px;" class="float-left form-control-sm pid_id_check cursor-pointer" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
+                                <span class="pt-2">{{ $loop->iteration }}</span>
                             </td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
@@ -162,9 +165,9 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><span class="text-danger">€ {{ $history->paye }}</span></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
                             <td>
                                 @if ($is_valid)
                                     <i class="fa fa-circle text-success"></i>

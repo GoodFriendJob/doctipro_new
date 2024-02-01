@@ -212,7 +212,6 @@ class DoctorController extends Controller
             if (isset($data['end_date']) && $data['end_date']!='')
                 $h = $h->where($data['date_type'], '<=', $data['end_date'].' 23.59.59');
         }        
-
         $histories = $h->get();
         return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
     }
@@ -311,9 +310,9 @@ class DoctorController extends Controller
                 'start_time' => 'bail|required',
                 'end_time' => 'bail|required|after:start_time',
                 'hospital_id' => 'bail|required',
-                'desc' => 'required',
-                'appointment_fees' => 'required|numeric',
-                'experience' => 'bail|required|numeric',
+                // 'desc' => 'required',
+                // 'appointment_fees' => 'required|numeric',
+                // 'experience' => 'bail|required|numeric',
                 'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
                 'custom_timeslot' => 'bail|required_if:timeslot,other'
             ],

@@ -80,8 +80,8 @@ class DoctorController extends Controller
             'start_time' => 'bail|required',
             'end_time' => 'bail|required|after:start_time',
             'hospital_id' => 'bail|required',
-            'desc' => 'required',
             'pshealthid_p12' => 'required',
+            // 'desc' => 'required',
             // 'appointment_fees' => 'required|numeric',
             // 'experience' => 'bail|required|numeric',
             'custom_timeslot' => 'bail|required_if:timeslot,other',
@@ -348,11 +348,11 @@ class DoctorController extends Controller
             'start_time' => 'bail|required',
             'end_time' => 'bail|required|after:start_time',
             'hospital_id' => 'bail|required',
-            'desc' => 'required',
+            // 'desc' => 'required',
             // 'appointment_fees' => 'required|numeric',
             // 'experience' => 'bail|required|numeric',
             'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
-            // 'custom_timeslot' => 'bail|required_if:timeslot,other',
+            'custom_timeslot' => 'bail|required_if:timeslot,other',
             // 'commission_amount' => 'bail|required_if:based_on,commission'
         ],
         [

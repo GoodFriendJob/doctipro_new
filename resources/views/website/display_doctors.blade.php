@@ -32,9 +32,9 @@ $data = $doctors;
                         <h5 class="font-fira-sans font-normal text-xl leading-6 text-black-dark pt-5">{{$doctor['name'] }}</h5>
                         <p class="font-normal leading-4 text-sm text-primary font-fira-sans py-2">{{$doctor['category']['name'] ?? 'N/A' }}</p>
                         <p class="font-normal leading-4 text-sm text-gray"><i class="fa-solid fa-star text-yellow"></i> {{ $doctor['rate'] }} ({{ $doctor['review']}}{{__(' reviews') }})</p>
-                        <h1 class="font-fira-sans font-semibold text-2xl text-primary leading-7 pt-4 xmd:pt-2 sm:pt-1 mb-5">
+                        {{-- <h1 class="font-fira-sans font-semibold text-2xl text-primary leading-7 pt-4 xmd:pt-2 sm:pt-1 mb-5">
                             <span class="font-light">{{ $currency }}</span> {{ $doctor['appointment_fees'] }}
-                        </h1>
+                        </h1> --}}
                     </div>
                 </div>
             </div>

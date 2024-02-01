@@ -23,6 +23,7 @@ $(document).ready(function () {
         },
         focus: function( event, ui ) {
           $( "#search_doctor" ).val( ui.item.name );
+          $( "#search_type" ).val('doctor');
           return false;
         },
         select: function( event, ui ) {
@@ -60,6 +61,9 @@ $(document).ready(function () {
         
       };
 
+    $('#search_doctor').on('change', function(){
+        $("#search_type").val('doctor');
+    });
 
     var page = 1;
     $("#more-doctor").click(function ()

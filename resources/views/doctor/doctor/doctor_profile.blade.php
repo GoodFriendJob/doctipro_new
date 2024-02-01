@@ -146,7 +146,7 @@
 
                 <div class="form-group">
                     <label class="col-form-label">{{__('Professional Bio')}}</label>
-                    <textarea name="desc" rows="10" cols="10" class="form-control @error('desc') is-invalid @enderror">{{ $doctor->desc }}</textarea>
+                    <textarea name="desc" style="min-height:84px;" rows="10" cols="10" class="form-control @error('desc') is-invalid @enderror">{{ $doctor->desc }}</textarea>
                     @error('desc')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -288,28 +288,7 @@
             </div>
             <div class="card-body">
                 <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
-                        <label class="col-form-label">{{__('Experience (in years)')}}</label>
-                        <input type="number" name="experience" value="{{ $doctor->experience }}" class="form-control @error('experience') is-invalid @enderror">
-                        @error('number')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col-lg-6 form-group">
-                        <label class="col-form-label">{{__('Appointment fees')}}</label>
-                        <input type="number" name="appointment_fees" value="{{ $doctor->appointment_fees }}" class="form-control @error('appointment_fees') is-invalid @enderror">
-                        @error('appointment_fees')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-3 form-group">
                         <label class="col-form-label">{{__('Timeslots(In minutes)')}}</label>
                         <select name="timeslot" class="form-control @error('timeslot') is-invalid @enderror">
                             <option value="15" {{ $doctor->timeslot == 15 ? 'selected' : '' }}>15</option>
@@ -327,24 +306,7 @@
                         @enderror
 
                     </div>
-                    <div class="col-lg-6 form-group">
-                        <label class="col-form-label">{{__('Based On')}}</label>
-                        <select name="based_on" disabled class="form-control @error('based_on') is-invalid @enderror">
-                            <option value="subscription" {{ $doctor->based_on == 'subscription' ? 'selected' : ''
-                                }}>{{__('subscription')}}</option>
-                            <option value="commission" {{ $doctor->based_on == 'commission' ? 'selected' : ''
-                                }}>{{__('commission')}}</option>
-                        </select>
-                        @error('based_on')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-lg-6  form-group custom_timeslot {{ $doctor->timeslot != 'other' ? 'hide' : '' }}">
+                    <div class="col-lg-3  form-group custom_timeslot {{ $doctor->timeslot != 'other' ? 'hide' : '' }}">
                         <label class="col-form-label">{{__('Add timeslot value(In minutes)')}}</label>
                         <input type="number" name="custom_timeslot" value="{{ $doctor->custom_timeslot }}" class="form-control custom_timeslot_text @error('custom_timeslot') is-invalid @enderror">
                         @error('custom_timeslot')
@@ -353,21 +315,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-6 form-group base_on_com {{ $doctor->based_on != 'commission' ? 'hide' : '' }}">
-                        <label class="col-form-label">{{__('Commission Amount ( pr appointment ) ( in % )')}}</label>
-                        <input type="text" step="any" name="commission_amount" disabled {{ $doctor->based_on == 'commission_amount'
-                        ? 'required' : '' }} value="{{ $doctor->commission_amount }}" class="form-control
-                        base_on_com_text @error('commission_amount') is-invalid @enderror">
-                        @error('commission_amount')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-3 form-group">
                         <label class="col-form-label">{{__('Start Time')}}</label>
                         <input class="form-control timepicker @error('start_time') is-invalid @enderror" value="{{ $doctor->start_time }}" name="start_time" type="time">
                         @error('start_time')
@@ -376,7 +324,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-3 form-group">
                         <label class="col-form-label">{{__('End Time')}}</label>
                         <input class="form-control timepicker @error('end_time') is-invalid @enderror" value="{{ $doctor->end_time }}" name="end_time" type="time">
                         @error('end_time')
@@ -386,6 +334,7 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-form-label">{{__('Popular ?')}}</label>
                     <select name="is_popular" class="form-control">

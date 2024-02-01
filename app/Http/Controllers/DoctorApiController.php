@@ -380,18 +380,18 @@ class DoctorApiController extends Controller
         $id = Doctor::where('user_id',auth()->user()->id)->first();
         $request->validate([
             'name' => 'bail|required',
-            'treatment_id' => 'bail|required',
+            // 'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
             'dob' => 'bail|required|date_format:Y-m-d',
             'gender' => 'bail|required',
-            'expertise_id' => 'bail|required',
+            // 'expertise_id' => 'bail|required',
             'timeslot' => 'bail|required',
             'start_time' => 'bail|required|date_format:h:i a',
             'end_time' => 'bail|required|date_format:h:i a|after:start_time',
             'hospital_id' => 'bail|required',
-            'desc' => 'required',
-            'appointment_fees' => 'required|numeric',
-            'experience' => 'bail|required|numeric',
+            // 'desc' => 'required',
+            // 'appointment_fees' => 'required|numeric',
+            // 'experience' => 'bail|required|numeric',
             'education' => 'bail|required',
             'certificate' => 'bail|required',
         ]);
