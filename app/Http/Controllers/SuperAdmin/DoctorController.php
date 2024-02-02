@@ -50,8 +50,6 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        echo env('p12_path'); 
-        echo env('timezone'); exit;
         abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $countries = Country::get();
         $categories = Category::whereStatus(1)->get();
