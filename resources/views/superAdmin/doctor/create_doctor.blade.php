@@ -92,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
+                    {{-- <div class="row mt-4">
                         <div class="col-lg-6 form-group">
                             <label class="col-form-label">{{__('Expertise')}}</label>
                             <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
@@ -119,10 +119,10 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mt-4">
-                        <div class="col-lg-4 form-group">
+                        <div class="col-lg-6 form-group">
                             <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
                             <div class="d-flex @error('phone') is-invalid @enderror">
                                 <select name="phone_code" class="phone_code_select2" value="{{ old('phone_code') }}">
@@ -138,7 +138,7 @@
                             </div>
                             @enderror
                         </div>
-                        <div class="col-lg-4 form-group">
+                        {{-- <div class="col-lg-4 form-group">
                             <label class="col-form-label">{{__('Date of birth')}}</label>
                             <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" value="{{old('dob')}}" name="dob" >
                             @error('dob')
@@ -159,10 +159,13 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+                        </div> --}}
+                        <div class="col-lg-6 text-right p-2">
+                            <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                         </div>
                     </div>
 
-                    <div class="row mt-4">
+                    {{-- <div class="row mt-4">
                         <div class="col-lg-12 form-group">
                             <label class="col-form-label">{{__('Professional Bio')}}</label>
                             <textarea style="min-height:84px;" name="desc" rows="10" cols="10"  class="form-control @error('desc') is-invalid @enderror">{{old('desc')}}</textarea>
@@ -172,11 +175,11 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header text-primary">
                     {{__('Education and certificate(award details)')}}
                 </div>
@@ -238,9 +241,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header text-primary">
                     {{__('Other information')}}
                 </div>
@@ -308,7 +311,7 @@
                 <div class="text-right p-2">
                     <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                 </div>
-            </div>
+            </div> --}}
         </form>
     </div>
 </section>

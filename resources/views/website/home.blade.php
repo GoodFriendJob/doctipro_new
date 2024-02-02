@@ -213,7 +213,7 @@
                         {{ $doctor->name }}
                     </h5>
                     <p class="font-normal leading-4 text-sm text-primary text-center font-fira-sans md:text-md py-2">
-                        {{$doctor['expertise']['name'] }}
+                        {{$doctor['category']['name'] }}
                     </p>
                     <p class="font-normal leading-4 text-sm text-gray text-center md:text-md"><i class="fa-solid fa-star text-yellow"></i> {{ $doctor['rate'] }} ({{$doctor['review'] }} {{
                  __('reviews') }})</p>
