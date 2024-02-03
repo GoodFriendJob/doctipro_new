@@ -24,7 +24,7 @@
 @php
     $is_p12_exist = false;
     if (!empty($doctor->pshealthid_p12)) {
-        if (File::exists(env('p12_path') . $doctor->pshealthid_p12))
+        if (File::exists(env('p12_path') .'/'. $doctor->pshealthid_p12))
             $is_p12_exist = true;
     }
 @endphp
