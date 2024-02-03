@@ -108,9 +108,18 @@
                             @enderror
                         </div>
                         <div class="pt-3">
-                            <label for="password" class="font-fira-sans text-black text-sm font-normal">{{__('Create Password')}}</label>
-                            <input type="password" name="doc_password" class="@error('doc_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
+                            <label for="doc_password" class="font-fira-sans text-black text-sm font-normal">{{__('Create Password')}}</label>
+                            <input type="password" name="doc_password" id="doc_password" class="@error('doc_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
                             @error('doc_password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="pt-3">
+                            <label for="doc_confirm_password" class="font-fira-sans text-black text-sm font-normal">{{__('Confirm Password')}}</label>
+                            <input type="password" name="doc_confirm_password" id="doc_confirm_password" class="@error('doc_confirm_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Confirm password')}}">
+                            @error('doc_confirm_password')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -184,8 +193,17 @@
                         </div>
                         <div class="pt-3">
                             <label for="password" class="font-fira-sans text-black text-sm font-normal">{{__('Create Password')}}</label>
-                            <input type="password" name="password" class="@error('password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
+                            <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
                             @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="pt-3">
+                            <label for="confirm_password" class="font-fira-sans text-black text-sm font-normal">{{__('Confirm Password')}}</label>
+                            <input type="password" name="confirm_password" id="confirm_password" class="@error('confirm_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Confirm password')}}">
+                            @error('confirm_password')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
