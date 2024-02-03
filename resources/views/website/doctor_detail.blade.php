@@ -56,13 +56,7 @@
                         {{ $currency }}{{ $doctor->appointment_fees }}
                     </h1> --}}
                     @if (isset($doctor->hospital) && count($doctor->hospital)>0)
-                    <form class="addAddress" method="post">
-                        <div class="w-auto border border-gray-light" id="map" style="height: 200px">{{__('Rajkot') }}</div>
-                        <input type="hidden" name="lat" id="lat" value="{{$doctor->hospital[0]['lat']}}">
-                        <input type="hidden" name="lang" id="lng" value="{{$doctor->hospital[0]['lng']}}">
-                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                        <textarea name="address" class="mt-2 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus focus:border-primary focus:outline-none" id="exampleFormControlTextarea1" rows="3">{{__('Rajkot,Gujrat') }}</textarea>
-                    </form>
+                    <div id="map" style="height: 400px;"></div>
                     @endif
 
                     <div class="2xl:mx-11 xl:mx-11 xlg:mx-11 lg:mx-11 xmd:mx-11 md:mx-10 sm:mx-10 msm:mx-2 xsm:mx-5 xxsm:mx-5 2xl:mt-40 xl:mt-40 xlg:mt-40 lg:mt-40 xmd:mt-40 md:mt-40 sm:mt-40 msm:mt-10 xsm:mt-5 xxsm:mt-10">
@@ -320,4 +314,21 @@
 </div>
 @endsection
 @section('js')
+<script>
+    function initMap() {
+        var mapOptions = {
+            center: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+            zoom: 15,
+        };
+
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+            map: map,
+            title: {`${doctor->hospital[0]['name']}`}
+        });
+    }
+    initMap();
+</script>
 @endsection
