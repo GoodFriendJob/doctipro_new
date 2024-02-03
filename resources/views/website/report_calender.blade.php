@@ -123,7 +123,7 @@
                 Mexico 31134')}}</p>
 
             <p class="text-white font-semibold text-sm leading-4 font-fira-sans pt-5">{{__('Contact:')}}</p>
-            <p class="text-white text-sm leading-4 font-fira-sans font-normal underline pt-2">{{__('+91 9876543210')}}</p>
+            <p class="text-white text-sm leading-4 font-fira-sans font-normal underline pt-2">{{__('+352 9876543210')}}</p>
             <p class="text-white text-sm leading-4 font-fira-sans font-normal underline pt-2">
                 {{__('info@support@doctro.com')}}</p>
 
