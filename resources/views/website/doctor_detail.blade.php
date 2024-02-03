@@ -315,21 +315,21 @@
 @endsection
 @section('js')
 <script>
-    function initMap() {
-        var mapOptions = {
-            center: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
-            zoom: 15,
-        };
+function initMap() {
+    var mapOptions = {
+        center: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+        zoom: 15,
+    };
 
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
-            map: map,
-            title: {`${doctor->hospital[0]['name']}`}
-        });
-    }
-    initMap();
+    var marker = new google.maps.Marker({
+        position: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+        map: map,
+        // title: '{{$doctor->hospital[0]['name']}}'
+        title: 'Current Place'
+    });
+}
 </script>
 @if (App\Models\Setting::first()->map_key)
 <script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&libraries=places&callback=initMap" async></script>
