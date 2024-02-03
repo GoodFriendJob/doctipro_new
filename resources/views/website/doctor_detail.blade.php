@@ -176,8 +176,12 @@
                                 <div class="w-36">
                                     @foreach (json_decode($workHour['period_list']) as $period_list)
                                     @if ($workHour->status)
+                                    @php
+                                        $start_time = \Carbon\Carbon::parse($period_list->start_time)->format('g\hi');
+                                        $end_time = \Carbon\Carbon::parse($period_list->end_time)->format('g\hi');
+                                    @endphp
                                     <p class="font-fira-sans text-right text-sm font-normal text-gray ">
-                                        {{$period_list->start_time.' - '.$period_list->end_time}}
+                                        {{$start_time.' - '.$end_time}}
                                     </p>
                                     @else
                                     <div>
