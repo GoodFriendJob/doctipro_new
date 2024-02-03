@@ -913,7 +913,9 @@ function show_pid_step(pid_step, show=0) {
 function open_detail_dlg()
 {
     $('#view_pid_dlg').modal('hide');
-    show_pid_step(1, 1);
+    setTimeout(()=>{
+        show_pid_step(1, 1);
+    }, 300)
 }
 
 function open_view_dlg(pid)
