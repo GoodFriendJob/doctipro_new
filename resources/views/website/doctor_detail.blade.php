@@ -1,9 +1,5 @@
 @extends('layout.mainlayout',['activePage' => 'doctors'])
 
-@if (App\Models\Setting::first()->map_key)
-<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&libraries=places&v=weekly" async></script>
-@endif
-
 @section('content')
 
 {{-- Doctor Profile --}}
@@ -335,4 +331,7 @@
     }
     initMap();
 </script>
+@if (App\Models\Setting::first()->map_key)
+<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&libraries=places&callback=initMap" async></script>
+@endif
 @endsection
