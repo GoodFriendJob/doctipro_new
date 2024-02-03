@@ -332,6 +332,6 @@ function initMap() {
 }
 </script>
 @if (App\Models\Setting::first()->map_key)
-<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&libraries=places&callback=initMap" async></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&callback=initMap"></script>
 @endif
 @endsection
