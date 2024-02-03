@@ -165,8 +165,10 @@
                                 @if ($history->is_validation)
                                     <i class="fa fa-circle text-success"></i> <br>
                                 @else
-                                    @if (!$history->is_expired)
-                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
+                                    @if ($history->is_expired)
+                                        <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span>
+                                    @else
+                                        <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                     @endif
                                 @endif
                             @endif
@@ -176,7 +178,9 @@
                                 @if ($history->is_contestation)
                                     <i class="fa fa-circle text-success"></i>
                                 @else
-                                    @if (!$history->is_expired)
+                                    @if ($history->is_expired)
+                                    <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
+                                    @else
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                     @endif
                                 @endif
