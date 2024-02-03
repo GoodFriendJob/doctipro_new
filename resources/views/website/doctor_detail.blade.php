@@ -49,7 +49,7 @@
             <div class="bg-white-50 2xl:w-96 xl:w-80 xlg:w-72 xl:h-80 xlg:h-80 lg:h-80 lg:w-64 xmd:w-52 xmd:h-72 md:w-full md:h-72 sm:w-full sm:h-72 msm:w-96 msm:h-72 xsm:w-full xsm:h-72 xxsm:w-full xxsm:h-40">
                 <div class="flex flex-col items-end 2xl:mt-10 xl:mt-10 xlg:mt-10  lg:mt-10 xmd:mt-8 md:mt-8 sm:mt-11 msm:mt-8 xsm:mt-0 xxsm:mt-0">
                     @if (isset($doctor->hospital) && count($doctor->hospital)>0)
-                    <div id="map" style="with: 100%; height: 270px;"></div>
+                    <div id="map" style="width:100%; height:270px;"></div>
                     @endif
                     {{-- <h1 class="font-fira-sans font-semibold text-xl text-primary leading-7 pt-5 xmd:pt-2 sm:pt-1 2xl:mx-11 xl:mx11 xl:mx-11 lg:mx-11 xmd:mx-11 md:mx-11 sm:mx-10 msm:mx-2 xsm:mx-5 xxsm:mx-5">
                         {{ $currency }}{{ $doctor->appointment_fees }}
