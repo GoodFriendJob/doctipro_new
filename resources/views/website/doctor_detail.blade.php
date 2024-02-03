@@ -1,9 +1,5 @@
 @extends('layout.mainlayout',['activePage' => 'doctors'])
 
-@if (App\Models\Setting::first()->map_key)
-<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&libraries=places&v=weekly" async></script>
-@endif
-
 @section('content')
 
 {{-- Doctor Profile --}}
@@ -24,7 +20,7 @@
                     </div>
                 </div>
                 <div class="bg-white-50 2xl:w-96 xl:w-80 xlg:w-72 xl:h-80 xlg:h-80 lg:h-80 lg:w-64 xmd:w-60 xmd:h-72 md:w-full md:h-72 sm:w-full sm:h-72 msm:w-96 msm:h-72 xsm:w-full xsm:h-72 xxsm:w-full xxsm:h-72">
-                    <div class="flex flex-col justify-center xmd:mt-5 md:mt-5 lg:mt-10 sm:mt-11 msm:mt-5 xsm:mt-5 xxsm:mt-1 border-l border-white-light overflow-y-scroll h-64">
+                    <div class="flex flex-col justify-center xmd:mt-5 md:mt-5 lg:mt-10 sm:mt-11 msm:mt-5 xsm:mt-5 xxsm:mt-1 border-l border-white-light h-64">
                         <div class="2xl:px-10 xl:px-10 xlg:px-10 lg:px-10 xmd:px-10 md:px-10 xxsm:px-5">
                             @if (isset($doctor->category))
                             <div class="flex">
@@ -50,16 +46,13 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white-50 2xl:w-96 xl:w-80 xlg:w-72 xl:h-80 xlg:h-80 lg:h-80 lg:w-64 xmd:w-52 xmd:h-72 md:w-full md:h-72 sm:w-full sm:h-72 msm:w-96 msm:h-72 xsm:w-full xsm:h-72 xxsm:w-full xxsm:h-40">
-                <div class="flex flex-col items-end 2xl:mt-10 xl:mt-10 xlg:mt-10  lg:mt-10 xmd:mt-8 md:mt-8 sm:mt-11 msm:mt-8 xsm:mt-0 xxsm:mt-0">
+            <div class="bg-white-50 2xl:w-full xl:w-full xlg:w-full xl:h-80 xlg:h-80 lg:h-80 lg:w-full xmd:w-full xmd:h-72 md:w-full md:h-72 sm:w-full sm:h-72 msm:w-full msm:h-72 xsm:w-full xsm:h-72 xxsm:w-full xxsm:h-40">
+                <div class="flex flex-col items-end">
                     {{-- <h1 class="font-fira-sans font-semibold text-xl text-primary leading-7 pt-5 xmd:pt-2 sm:pt-1 2xl:mx-11 xl:mx11 xl:mx-11 lg:mx-11 xmd:mx-11 md:mx-11 sm:mx-10 msm:mx-2 xsm:mx-5 xxsm:mx-5">
                         {{ $currency }}{{ $doctor->appointment_fees }}
                     </h1> --}}
-                    @if (isset($doctor->hospital) && count($doctor->hospital)>0)
-                    <div id="map" style="height: 400px;"></div>
-                    @endif
 
-                    <div class="2xl:mx-11 xl:mx-11 xlg:mx-11 lg:mx-11 xmd:mx-11 md:mx-10 sm:mx-10 msm:mx-2 xsm:mx-5 xxsm:mx-5 2xl:mt-40 xl:mt-40 xlg:mt-40 lg:mt-40 xmd:mt-40 md:mt-40 sm:mt-40 msm:mt-10 xsm:mt-5 xxsm:mt-10">
+                    <div>
                         <a href="javascript:void(0)" class="text-primary add-favourite" data-id="{{ $doctor['id'] }}"><i class="{{ $doctor['is_fav'] == 'true' ? 'fa fa-bookmark' : 'fa-regular fa-bookmark' }} border border-primary 2xl:p-2 xl:p-2 xlg:p-2 lg:p-2 xmd:p-1 xxsm:p-2"></i></a>
                         @if(auth()->user())
                         <a href="mailto:{{ $doctor->user['email'] }}" class="text-primary"><i class="fa fa-envelope border border-primary 2xl:p-2 xl:p-2 xlg:p-2 lg:p-2 xmd:p-1 xxsm:p-2"></i></a>
@@ -69,6 +62,9 @@
                         <a href="" class="text-primary"><i class="fa-solid fa-phone border border-primary 2xl:p-2 xl:p-2 xlg:p-2 lg:p-2 xmd:p-1 xxsm:p-2"></i></a>
                         @endif
                     </div>
+                    @if (isset($doctor->hospital) && count($doctor->hospital)>0)
+                    <div id="map" style="width:100%; height:270px;"></div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -176,8 +172,12 @@
                                 <div class="w-36">
                                     @foreach (json_decode($workHour['period_list']) as $period_list)
                                     @if ($workHour->status)
+                                    @php
+                                        $start_time = \Carbon\Carbon::parse($period_list->start_time)->format('H\hi');
+                                        $end_time = \Carbon\Carbon::parse($period_list->end_time)->format('H\hi');
+                                    @endphp
                                     <p class="font-fira-sans text-right text-sm font-normal text-gray ">
-                                        {{$period_list->start_time.' - '.$period_list->end_time}}
+                                        {{$start_time.' - '.$end_time}}
                                     </p>
                                     @else
                                     <div>
@@ -315,20 +315,23 @@
 @endsection
 @section('js')
 <script>
-    function initMap() {
-        var mapOptions = {
-            center: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
-            zoom: 15,
-        };
+function initMap() {
+    var mapOptions = {
+        center: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+        zoom: 15,
+    };
 
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
-            map: map,
-            title: {`${doctor->hospital[0]['name']}`}
-        });
-    }
-    initMap();
+    var marker = new google.maps.Marker({
+        position: { lat: {{$doctor->hospital[0]['lat']}}, lng: {{$doctor->hospital[0]['lng']}} },
+        map: map,
+        // title: '{{$doctor->hospital[0]['name']}}'
+        title: 'Current Place'
+    });
+}
 </script>
+@if (App\Models\Setting::first()->map_key)
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&callback=initMap"></script>
+@endif
 @endsection

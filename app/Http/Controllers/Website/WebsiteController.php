@@ -75,7 +75,8 @@ class WebsiteController extends Controller
                 'dob' => 'bail|required|date_format:Y-m-d',
                 'gender' => 'bail|required',
                 'phone' => 'bail|required|numeric',
-                'password' => 'bail|required|min:6'
+                'password' => 'bail|required|min:6',
+                'confirm_password' => 'bail|required|min:6|same:password'
             ],
             [
                 'dob.before' => 'Date is invalid.',
@@ -115,7 +116,8 @@ class WebsiteController extends Controller
             'doc_dob' => 'bail|required',
             'doc_gender' => 'bail|required',
             'doc_phone' => 'bail|required|numeric',
-            'doc_password' => 'bail|required|min:6'
+            'doc_password' => 'bail|required|min:6',
+            'doc_confirm_password' => 'bail|required|min:6|same:doc_password'
         ]);
         $data['name'] = $request->doc_name;
         $data['email'] = $request->doc_email;
