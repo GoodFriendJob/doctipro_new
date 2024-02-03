@@ -258,7 +258,7 @@ class CustomController extends Controller
                                 if ($appointment) {
                                 } else {
                                     //updated by Poliars
-                                    $temp['start_time'] = $start_time->format('g\hi');
+                                    $temp['start_time'] = $start_time->format('H\hi');
                                     array_push($master, $temp);
                                 }
                             }
