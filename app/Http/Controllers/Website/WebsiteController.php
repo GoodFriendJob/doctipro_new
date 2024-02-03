@@ -373,8 +373,15 @@ class WebsiteController extends Controller
         $today_timeslots = (new CustomController)->timeSlot($id, Carbon::today(env('timezone'))->format('Y-m-d'));
         $tomorrow_timeslots = (new CustomController)->timeSlot($id, Carbon::tomorrow()->format('Y-m-d'));
         $today_date[] = Carbon::now(env('timezone'))->format('M d, Y');
-        $today_date[] =  WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first()->period_list;
-        $today = WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first()->status;
+        $tmp = WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first();
+        $today = 0;
+        if ($tmp)
+        {
+            $today_date[] =  $tmp->period_list;
+            $today = $tmp->status;
+        } else {
+            $today_date[] = '[]';
+        }
         $currently_open = 0;
         foreach (json_decode($today_date[1]) as $tDate) {
             if (Carbon::now(env('timezone'))->between(Carbon::parse($tDate->start_time), Carbon::parse($tDate->end_time))) {

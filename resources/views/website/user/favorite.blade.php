@@ -40,7 +40,7 @@
                                     <p class="font-fira-sans font-medium text-base leading-5 text-black-dark text-left pt-3">{{ $hospital['name'] }}</p>
                                     <p class="font-fira-sans font-normal text-sm leading-4 text-gray text-left pt-2"><span class="mr-2"><i class="fa-solid fa-location-dot"></i></span class="ml-2">{{ $hospital['address'] }}</p>
                                     @endforeach
-                                    <h1 class="font-fira-sans font-semibold text-xl text-primary leading-7 pt-5 xmd:pt-2 sm:pt-1">{{ $currency }}{{ $doctor['appointment_fees'] }}</h1>
+                                    {{-- <h1 class="font-fira-sans font-semibold text-xl text-primary leading-7 pt-5 xmd:pt-2 sm:pt-1">{{ $currency }}{{ $doctor['appointment_fees'] }}</h1> --}}
                                 </div>
                                 <div class="flex mt-5 mb-2">
                                     <a href="{{ url('booking/'.$doctor['id'].'/'.Str::slug($doctor['name'])) }}" data-te-ripple-init data-te-ripple-color="light" class="font-fira-sans lg:px-1 lg:w-44 xsm:w-36 md:px-3 text-sm xl:py-3 xlg:py-3 xl:px-4 xlg:px-4 lg:py-3 xmd:py-1 md:py-3 sm:py-3 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make Appointment')}}</a>

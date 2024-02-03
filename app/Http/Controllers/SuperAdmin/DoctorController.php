@@ -69,22 +69,24 @@ class DoctorController extends Controller
             'name' => 'bail|required|unique:doctor',
             'email' => 'bail|required|email|unique:users',
             'pshealthid' => 'bail|required|unique:doctor',
-            'pshealthid_p12_pass' => 'bail|required',
-            // 'treatment_id' => 'bail|required',
-            'category_id' => 'bail|required',
-            'dob' => 'bail|required',
-            'gender' => 'bail|required',
-            'phone' => 'bail|required|digits_between:6,12',
-            // 'expertise_id' => 'bail|required',
-            'timeslot' => 'bail|required',
-            'start_time' => 'bail|required',
-            'end_time' => 'bail|required|after:start_time',
-            'hospital_id' => 'bail|required',
             'pshealthid_p12' => 'required',
+            'pshealthid_p12_pass' => 'bail|required',
+            'phone' => 'bail|required|digits_between:6,12',
+            // 'category_id' => 'bail|required',
+            // 'dob' => 'bail|required',
+            // 'gender' => 'bail|required',
+            // 'timeslot' => 'bail|required',
+            // 'start_time' => 'bail|required',
+            // 'end_time' => 'bail|required|after:start_time',
+            // 'hospital_id' => 'bail|required',
+            // 'custom_timeslot' => 'bail|required_if:timeslot,other',
+            
+            
+            // 'treatment_id' => 'bail|required',
+            // 'expertise_id' => 'bail|required',
             // 'desc' => 'required',
             // 'appointment_fees' => 'required|numeric',
             // 'experience' => 'bail|required|numeric',
-            'custom_timeslot' => 'bail|required_if:timeslot,other',
             // 'commission_amount' => 'bail|required_if:based_on,commission'
         ]);
 
@@ -128,6 +130,16 @@ class DoctorController extends Controller
         }
         $user->assignRole('doctor');
         $data['user_id'] = $user->id;
+        //updated by Polaris
+        if (!isset($data['dob'])) $data['dob'] = Carbon::now();
+        if (!isset($data['gender'])) $data['gender'] = "male";
+        if (!isset($data['hospital_id'])) $data['hospital_id'] = 1;
+        if (!isset($data['start_time'])) $data['start_time'] = '08:00';
+        if (!isset($data['end_time'])) $data['end_time'] = '17:00';
+        if (!isset($data['degree'])) $data['degree'] = [];
+        if (!isset($data['certificate'])) $data['certificate'] = [];
+
+
         $data['start_time'] = strtolower(Carbon::parse($data['start_time'])->format('h:i a'));
         $data['end_time'] = strtolower(Carbon::parse($data['end_time'])->format('h:i a'));
         if($request->hasFile('image'))
@@ -140,7 +152,7 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
-            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
+            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload(env('p12_path'), $request->pshealthid_p12, $data['pshealthid']);
         } else {
             $data['pshealthid_p12'] = 'MIPIT.p12';
         }
@@ -165,7 +177,7 @@ class DoctorController extends Controller
         $data['status'] = 1;
         $data['subscription_status'] = 1;
         $data['is_filled'] = 1;
-        $data['hospital_id'] = implode(',',$request->hospital_id);
+        // $data['hospital_id'] = implode(',',$request->hospital_id);
         //updated by Polaris
         if (!isset($data['commission_amount']) || empty($data['commission_amount']))
             $data['commission_amount'] = '10.00';
@@ -370,8 +382,8 @@ class DoctorController extends Controller
         }
         if($request->hasFile('pshealthid_p12'))
         {
-            (new CustomController)->ext_deleteFile("/opt/doctipro", $doctor->pshealthid_p12);
-            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload("/opt/doctipro", $request->pshealthid_p12, $data['pshealthid']);
+            (new CustomController)->ext_deleteFile(env('p12_path'), $doctor->pshealthid_p12);
+            $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload(env('p12_path'), $request->pshealthid_p12, $data['pshealthid']);
         } 
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)

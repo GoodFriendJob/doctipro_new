@@ -57,7 +57,7 @@
                             <label for="phoneNumber" class="form-label inline-block mb-2 text-gray">{{ __('Phone
                             number') }}</label>
                             <input type="text" name="phone" value="{{ auth()->user()->phone_code }}&nbsp;{{ auth()->user()->phone }}" class="phone form-control block w-full px-3 py-1.5 text-base font-normal text-gray  bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray focus:outline-none" id="phoneNumber" placeholder="{{ __('Phone number') }}" />
-                            <input type="hidden" name="phone_code" value="+91">
+                            <input type="hidden" name="phone_code" value="+352">
                         </div>
                         <div class="mb-3 sm:w-1/2 xxsm:w-full sm:ml-2 xxsm:ml-0">
                             <label for="language" class="form-label inline-block mb-2 text-gray">{{ __('Language')
@@ -134,8 +134,8 @@
 <script>
     const phoneInputField = document.querySelector(".phone");
     const phoneInput = window.intlTelInput(phoneInputField, {
-        preferredCountries: ["us", "co", "in", "de"],
-        initialCountry: "in",
+        preferredCountries: ["lu", "be", "fr", "de"],
+        initialCountry: "lu",
         separateDialCode: true,
         utilsScript: "{{url('assets/js/utils.js')}}",
     });

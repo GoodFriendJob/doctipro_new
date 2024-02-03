@@ -51,7 +51,6 @@ class CustomController extends Controller
     {
         $file = $image;
         $fileName = $filename . '.' . $image->getClientOriginalExtension();
-        $path = $path;
         $file->move($path, $fileName);
         return $fileName;
     }

@@ -100,7 +100,7 @@
                         <div class="pt-3">
                             <label for="phone" class="font-fira-sans text-black text-sm font-normal">{{__('Phone Number')}}</label>
                             <input type="number" name="doc_phone" value="{{ old('doc_phone') }}" class="@error('doc_phone') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light doc_phone" placeholder="{{__('Enter Phone Number')}}">
-                            <input type="hidden" name="phone_code" value="+91">
+                            <input type="hidden" name="phone_code" value="+352">
                             @error('doc_phone')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -175,7 +175,7 @@
                         <div class="pt-3">
                             <label for="phone" class="font-fira-sans text-black text-sm font-normal">{{__('Phone Number')}}</label>
                             <input type="number" name="phone" value="{{ old('phone') }}" class="@error('phone') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light phone" placeholder="{{__('Enter Phone Number')}}">
-                            <input type="hidden" name="phone_code" value="+91">
+                            <input type="hidden" name="phone_code" value="+352">
                             @error('phone')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -253,8 +253,8 @@
     });
     const phoneInputField = document.querySelector(".phone");
     const phoneInput = window.intlTelInput(phoneInputField, {
-        preferredCountries: ["us", "co", "in", "de"],
-        initialCountry: "in",
+        preferredCountries: ["lu", "be", "fr", "de"],
+        initialCountry: "lu",
         separateDialCode: true,
         utilsScript: "{{url('assets/js/utils.js')}}",
     });
@@ -265,8 +265,8 @@
 
     const DocphoneInputField = document.querySelector(".doc_phone");
     const docphoneInput = window.intlTelInput(DocphoneInputField, {
-        preferredCountries: ["us", "co", "in", "de"],
-        initialCountry: "in",
+        preferredCountries: ["lu", "be", "fr", "de"],
+        initialCountry: "lu",
         separateDialCode: true,
         utilsScript: "{{url('assets/js/utils.js')}}",
     });

@@ -37,6 +37,8 @@ $(document).ready(function () {
                 if ($(this).next().html() == ui.item.name )
                     $(this).prop('checked', true);
             });
+          } else {
+            $('input[name="select_specialist"]').prop('checked', false);
           }
           searchDoctor();
           return false;
@@ -89,10 +91,9 @@ $(document).ready(function () {
             alert('Server error');
         })
     });
-    $('input[name="select_specialist"]').change(function () {
-        $('#search_doctor').val('');
-    });
     $('#filter_form').change(function () {
+        $("#search_type").val('category');
+        $('#search_doctor').val('');
         searchDoctor();
     });
 });
