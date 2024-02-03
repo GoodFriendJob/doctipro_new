@@ -874,7 +874,7 @@ function export_excel() {
         }
     });
 }
-function show_pid_step(pid_step) {
+function show_pid_step(pid_step, show=0) {
     $('#pid_xml').html('<div class="ajax-loading"><svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><path id="pulsar" stroke="rgb(57 108 240)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path></svg></div>');
     $('.pid_step_btn').removeClass('active');
     $('.pid_step_btn'+pid_step).addClass('active');
@@ -896,6 +896,7 @@ function show_pid_step(pid_step) {
             } else {
                 $('#pid_xml').html('');
             }
+            if (show==1) $('#detail_pid_dlg').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // console.error('Error:', textStatus, errorThrown);
@@ -905,14 +906,14 @@ function show_pid_step(pid_step) {
                 textStatus + "<br>" + errorThrown,
                 'warnning'
             )
+            if (show==1) $('#detail_pid_dlg').modal('show');
         }
     });
 }
 function open_detail_dlg()
 {
     $('#view_pid_dlg').modal('hide');
-    show_pid_step(1);
-    $('#detail_pid_dlg').modal('show');
+    show_pid_step(1, 1);
 }
 
 function open_view_dlg(pid)
