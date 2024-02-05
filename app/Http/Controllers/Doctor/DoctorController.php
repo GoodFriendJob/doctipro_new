@@ -218,16 +218,16 @@ class DoctorController extends Controller
             $is_simulation = !empty($history->ccss_token);
             $is_validation = !empty($history->paye);
             $is_contestation = !empty($history->contestation_id);
-            // $guichet_date = Carbon::parse($history->guichet_date)->setTimezone(env('timezone'));
             $guichet_date = Carbon::parse($history->guichet_date);
-            $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(16);
+            // $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(16);
+            $expiredDate = $guichet_date->copy()->addHours(17);
 
-            echo '<br>original: ' . $guichet_date->format('Y-m-d H:i');
-            echo '<br>original (timezone): ' . $guichet_date->setTimezone(env('timezone'))->format('Y-m-d H:i');
-            echo '<br>now: '.Carbon::now()->format('Y-m-d H:i');
-            echo '<br>now (timezone): '.Carbon::now(env('timezone'))->format('Y-m-d H:i');
-             exit;
-            // $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
+            // echo '<br>original: ' . $guichet_date->format('Y-m-d H:i');
+            // echo '<br>original (timezone): ' . $guichet_date->setTimezone(env('timezone'))->format('Y-m-d H:i');
+            // echo '<br>now: '.Carbon::now()->format('Y-m-d H:i');
+            // echo '<br>now (timezone): '.Carbon::now(env('timezone'))->format('Y-m-d H:i');
+            //  exit;
+            
             $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
             $is_valid = $is_validation && $is_contestation || (!$is_validation && !$is_contestation && !$is_expired && $is_simulation);
 
