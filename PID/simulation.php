@@ -1,6 +1,8 @@
 <?php
 require_once 'config.php';
 require_once 'functions.php';
+
+date_default_timezone_set('Europe/Amsterdam');
 $now = date('Y-m-d h:i:s', time());
 $OPC = ConnexionBdd($db_host, $db_name, $db_user, $db_pass);
 $lastInsertId = 0;
