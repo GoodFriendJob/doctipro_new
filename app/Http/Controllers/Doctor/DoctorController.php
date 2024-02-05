@@ -224,7 +224,7 @@ class DoctorController extends Controller
 
             echo $expiredDate->format('Y-m-d h:i A');
             echo '<br>';
-            echo Carbon::now();
+            echo  Carbon::now(env('timezone'));
              exit;
             // $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
             $is_expired = Carbon::now()->greaterThan($expiredDate);
