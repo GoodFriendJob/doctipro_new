@@ -222,12 +222,7 @@ class DoctorController extends Controller
             $guichet_date = Carbon::parse($history->guichet_date);
             $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(17);
 
-            echo $expiredDate->format('Y-m-d h:i A');
-            echo '<br>';
-            echo  Carbon::now(env('timezone'));
-             exit;
-            // $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
-            $is_expired = Carbon::now()->greaterThan($expiredDate);
+            $is_expired = Carbon::now(env('timezone'))->greaterThan($expiredDate);
             $is_valid = $is_validation && $is_contestation || (!$is_validation && !$is_contestation && !$is_expired && $is_simulation);
 
             $history['is_simulation'] = $is_simulation;
