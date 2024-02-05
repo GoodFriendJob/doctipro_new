@@ -185,7 +185,8 @@
                                     <i class="fa fa-circle text-success"></i> <br>
                                 @else
                                     @if ($history->is_expired)
-                                        <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span>
+                                        <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
+                                        <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                     @else
                                         <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                     @endif
@@ -199,6 +200,7 @@
                                 @else
                                     @if ($history->is_expired)
                                     <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
+                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
                                     @else
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                     @endif
