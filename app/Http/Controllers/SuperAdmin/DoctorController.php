@@ -68,11 +68,12 @@ class DoctorController extends Controller
         $validator = $request->validate([
             'name' => 'bail|required|unique:doctor',
             'email' => 'bail|required|email|unique:users',
+            'biller_id' => 'bail|required|unique:doctor',
             'pshealthid' => 'bail|required|unique:doctor',
             'pshealthid_p12' => 'required',
             'pshealthid_p12_pass' => 'bail|required',
             'phone' => 'bail|required|digits_between:6,12',
-            // 'category_id' => 'bail|required',
+            'category_id' => 'bail|required',
             // 'dob' => 'bail|required',
             // 'gender' => 'bail|required',
             // 'timeslot' => 'bail|required',
@@ -138,6 +139,9 @@ class DoctorController extends Controller
         if (!isset($data['end_time'])) $data['end_time'] = '17:00';
         if (!isset($data['degree'])) $data['degree'] = [];
         if (!isset($data['certificate'])) $data['certificate'] = [];
+        if (!isset($data['language'])) $data['language'] = "English";
+        if (!isset($data['timeslot'])) $data['timeslot'] = "30";
+        if (!isset($data['experience'])) $data['experience'] = "5";
 
 
         $data['start_time'] = strtolower(Carbon::parse($data['start_time'])->format('h:i a'));
@@ -349,6 +353,7 @@ class DoctorController extends Controller
         $request->validate([
             'name' => 'bail|required|unique:doctor,name,' . $id . ',id',
             'pshealthid' => 'bail|required|unique:doctor,pshealthid,' . $id . ',id',
+            'biller_id' => 'bail|required|unique:doctor,biller_id,' . $id . ',id',
             'pshealthid_p12_pass' => 'bail|required',
             // 'treatment_id' => 'bail|required',
             'category_id' => 'bail|required',
@@ -377,7 +382,6 @@ class DoctorController extends Controller
         $data['end_time'] = Carbon::parse($data['end_time'])->format('h:i A');
         if($request->hasFile('image'))
         {
-            (new CustomController)->imageUpload($doctor->image);
             $data['image'] = (new CustomController)->imageUpload($request->image);
         }
         if($request->hasFile('pshealthid_p12'))
@@ -385,6 +389,12 @@ class DoctorController extends Controller
             (new CustomController)->ext_deleteFile(env('p12_path'), $doctor->pshealthid_p12);
             $data['pshealthid_p12'] = (new CustomController)->ext_fileUpload(env('p12_path'), $request->pshealthid_p12, $data['pshealthid']);
         } 
+
+        //updated by Polaris
+        if ($data['pshealthid'] != $doctor->pshealthid) {
+            //pshealthid updated
+            $data['pshealthid_p12'] = (new CustomController)->ext_renameFile(env('p12_path'), $doctor->pshealthid_p12, $data['pshealthid'].'.p12');
+        }
         $education = array();
         for ($i=0; $i < count($data['degree']); $i++)
         {
@@ -426,9 +436,16 @@ class DoctorController extends Controller
             $data['commission_amount'] = '10.00';
         if (!isset($data['based_on']) || empty($data['based_on']))
             $data['based_on'] = 'subscription';
-
         try {
             $doctor->update($data);
+            $user = User::find($doctor->user_id);
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'phone_code' => $data['phone_code'],
+                'image' => isset($data['image']) ? $data['image']:$doctor->image
+            ]);
         } catch (\Exception $e) {
             // Log or handle the exception
             dd($e->getMessage());

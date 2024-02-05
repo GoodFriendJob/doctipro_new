@@ -19,21 +19,18 @@ if (isset($_POST['pshealthid_p12'])) $pshealthid_p12 = $p12_path . '/' . $_POST[
 $p12_password = '';
 if (isset($_POST['pshealthid_p12_pass'])) $p12_password = $_POST['pshealthid_p12_pass'];
 
-////////////////////////////////////////////////////////////////
-$medical_code = 'C1';
-if (isset($_POST['medical_code'])) $medical_code = $_POST['medical_code'];
-
-$biller_id = '90812100';
+$biller_id = '90813319';
 if (isset($_POST['biller_id'])) $biller_id = $_POST['biller_id'];
 
-$service_place = '01';
-if (isset($_POST['service_place'])) $service_place = $_POST['service_place'];
-
+////////////////////////////////////////////////////////////////
 $patient_number = '1900123456712';
 if (isset($_POST['patient_number'])) $patient_number = $_POST['patient_number'];
 
-$act_code="90813319";
-if (isset($_POST['act_code'])) $act_code = $_POST['act_code'];
+$medical_code = 'C1';
+if (isset($_POST['medical_code'])) $medical_code = $_POST['medical_code'];
+
+$service_place = '01';
+if (isset($_POST['service_place'])) $service_place = $_POST['service_place'];
 
 $act_number = '1';
 if (isset($_POST['act_number'])) $act_number = $_POST['act_number'];
@@ -56,7 +53,6 @@ if ($pid>0) {
     $biller_id = $row['biller_id'];
     $service_place = $row['service_place'];
     $patient_number = $row['patient_number'];
-    $act_code = $row['act_code'];
     $act_number = $row['act_number'];
     $lastInsertId = $row['pid_id'];
   }
@@ -397,8 +393,8 @@ try {
     ]);
   } else {
     $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
-    (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_code, act_number, guichet_date, date_modified) 
-  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_code, :act_number, '".$now."', NOW())");
+    (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_number, guichet_date, date_modified) 
+  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_number, '".$now."', NOW())");
     $req1->execute([
       'doctor_id' => $doctor_id,	
       'pshealthid' => $psEHealthID,	
@@ -406,7 +402,6 @@ try {
       'service_place' => $service_place,	
       'patient_number' => $patient_number,	
       'biller_id' => $biller_id,	
-      'act_code' => $act_code,	
       'act_number' => $act_number,	
     ]);
     $lastInsertId = $OPC->lastInsertId();
@@ -541,7 +536,7 @@ $digestMethod1->setAttribute('Algorithm', 'http://www.w3.org/2001/04/xmlenc#sha2
 $reference1->appendChild($digestMethod1);
 
 $dateIssueInstant = getCurrentDateTimeInISO8601Z();
-$BodyCanonized = CanoniseBody2($act_code);
+$BodyCanonized = CanoniseBody2($biller_id);
 
 $SamlCanonized = canoniserSAMLresponse($dateIssueInstant,$assertionID,$signatureValueX,$x509Certificate,$signatureId,$digestValueX,$notBefore,$notOnAfter,$keyInfoId);
 $digestAssertion = openssl_digest($SamlCanonized, 'sha256', true);//ok
@@ -654,7 +649,7 @@ $claims = $doc->createElement('ns:Claims');
 $claims->setAttribute('Dialect', 'http://schemas.xmlsoap.org/ws/2006/12/authorization/authclaims');
 $claimType = $doc->createElement('auth:ClaimType');
 $claimType->setAttribute('Uri', 'http://ws.mysecu.lu/trust/prodo/espaceid');
-$value = $doc->createElement('auth:Value', $act_code);
+$value = $doc->createElement('auth:Value', $biller_id);
 
 // Construction de la structure XML en ajoutant les éléments les uns aux autres
 $claimType->appendChild($value);
@@ -899,7 +894,7 @@ $acte->appendChild($nombre);
 $lieuDePrestation = $doc->createElement('cns:lieuDePrestation', '01');
 $ligneUTA->appendChild($lieuDePrestation);
 
-$bodyNodeCanonized = CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number);
+$bodyNodeCanonized = CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number);
 
 $digestBody = openssl_digest($bodyNodeCanonized, 'sha256', true);//ok
 
@@ -1056,7 +1051,7 @@ $CanonizedBody = '<soapenv:Body xmlns:saml2="urn:oasis:names:tc:SAML:2.0:asserti
 
    return $CanonizedBody;
 }
-function CanoniseBody2($act_code)
+function CanoniseBody2($biller_id)
 {
 	$CanonizedBody ='<soapenv:Body xmlns:auth="http://schemas.xmlsoap.org/ws/2006/12/authorization" xmlns:ns="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054522149119">
     <ns:RequestSecurityToken>
@@ -1069,7 +1064,7 @@ function CanoniseBody2($act_code)
       </wsp:AppliesTo>
       <ns:Claims Dialect="http://schemas.xmlsoap.org/ws/2006/12/authorization/authclaims">
         <auth:ClaimType Uri="http://ws.mysecu.lu/trust/prodo/espaceid">
-          <auth:Value>'.$act_code.'</auth:Value>
+          <auth:Value>'.$biller_id.'</auth:Value>
         </auth:ClaimType>
       </ns:Claims>
     </ns:RequestSecurityToken>
@@ -1079,13 +1074,13 @@ function CanoniseBody2($act_code)
 	
 	 return $CanonizedBody;
 }
-function CanoniseBody3($varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number)
+function CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number)
 {  
   $CanonizedBody = '<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
     <sync:RequestInfo modelUID="2023-CNS-PID-SIM-V1">
       <cns:simulationMedecin xmlns:cns="http://www.secu.lu/ciss/cns">
         <cns:UTA>
-          <cns:identifiantFacturier>90812100</cns:identifiantFacturier>
+          <cns:identifiantFacturier>'.$biller_id.'</cns:identifiantFacturier>
           <cns:matricule>'.$patient_number.'</cns:matricule>
           <cns:idMemoireHonoraire>'.$varIdMemoireHonoraire.'</cns:idMemoireHonoraire>
           <cns:dateEtablissementMemoireHonoraire>'.$varDateEtablissementMemoireHonoraire.'</cns:dateEtablissementMemoireHonoraire>

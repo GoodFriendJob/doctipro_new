@@ -949,8 +949,8 @@ function open_view_dlg(pid)
 function call_pid_simulate(pid)
 {
     $('#pid').val(pid);
-    if ($('#medical_code').val()=='' || $('#biller_id').val()=='' || $('#patient_number').val()==''
-    || $('#service_place').val()=='' || $('#act_code').val()=='' || $('#act_number').val()=='' ) {
+    if ($('#medical_code').val()=='' || $('#patient_number').val()==''
+    || $('#service_place').val()=='' || $('#act_number').val()=='' ) {
         Swal.fire(
             'Please check Fields',
             'Please fill whole informations',

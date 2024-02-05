@@ -57,12 +57,25 @@ class CustomController extends Controller
 
     public function ext_deleteFile($path, $file_name)
     {
-        if ($file_name != 'prod_default.png' && $file_name != 'default_doctor.jpg') {
+        if ($file_name != 'MIPIT.p12' && $file_name != 'default_doctor.jpg') {
             if (File::exists($path . '/' . $file_name)) {
                 File::delete($path . '/' . $file_name);
             }
             return true;
         }
+    }
+
+    public function ext_renameFile($path, $old_name, $new_name)
+    {
+        if ($old_name != 'MIPIT.p12' && $old_name != 'default_doctor.jpg') {
+            if (File::exists($path . '/' . $old_name)) {
+                File::move($path . '/' . $old_name, $path . '/' . $new_name);
+                return $new_name;
+            } else {
+                return $old_name;
+            }
+        } 
+        return $old_name;
     }
 
     public function display_category($id)

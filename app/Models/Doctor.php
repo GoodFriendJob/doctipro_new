@@ -11,13 +11,13 @@ class Doctor extends Model
 
     protected $table = 'doctor';
 
-    protected $fillable = ['name','is_filled','treatment_id','category_id','custom_timeslot','dob','gender','expertise_id','timeslot','start_time','end_time','hospital_id','image','user_id','desc','education','certificate','appointment_fees','experience','since','status','based_on','commission_amount','is_popular','subscription_status','language','pshealthid','pshealthid_p12', 'pshealthid_p12_pass'];
+    protected $fillable = ['name','is_filled','treatment_id','category_id','custom_timeslot','dob','gender','expertise_id','timeslot','start_time','end_time','hospital_id','image','user_id','desc','education','certificate','appointment_fees','experience','since','status','based_on','commission_amount','is_popular','subscription_status','language','pshealthid','pshealthid_p12', 'biller_id', 'pshealthid_p12_pass'];
 
     protected $appends = ['fullImage', 'rate','review'];
 
     protected function getFullImageAttribute()
     {
-        return url('uploads/doctor/avatar').'/'.$this->image;
+        return url('images/upload').'/'.$this->image;
     }
 
     public function expertise()

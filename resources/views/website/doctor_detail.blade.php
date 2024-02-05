@@ -136,8 +136,8 @@
                         </div>
                     </div>
 
-                    <h1 class="font-fira-sans leading-5 text-base font-medium text-black pt-4 mt-2">{{__('Tomorrow’s
-                    Available Slots')}}</h1>
+                    <h1 class="font-fira-sans leading-5 text-base font-medium text-black pt-4 mt-2">
+                        {{__('Tomorrow’s Available Slots')}}</h1>
                     <div class="flex flex-wrap h-48 overflow-hidden	overflow-y-scroll mt-5">
                         <div class="flex flex-wrap">
                             @foreach ($tomorrow_timeslots as $tomorrow_timeslot)
@@ -155,20 +155,21 @@
                                 <h1 class="text-base font-fira-sans leading-5 font-normal text-black"><span class="text-primary">{{__('Today • ')}}</span> {{ $today_date[0] }}</h1>
                                 @foreach (json_decode($today_date[1]) as $itemssss)
                                 <p class="font-fira-sans leading-4 text-sm font-normal text-gray pt-2">
-                                    {{$itemssss->start_time.' - '.$itemssss->end_time}}
+                                    {{\Carbon\Carbon::parse($itemssss->start_time)->format('H\hi').' - '.\Carbon\Carbon::parse($itemssss->end_time)->format('H\hi')}}
                                 </p>
                                 @endforeach
                             </div>
                             <div class="xlg:pt-2">
-                                <a href="javascipt:void(0)" class="text-white {{ $today == 1 ? 'bg-primary' : 'bg-red'  }} text-center py-2 px-2 text-xs font-normal leading-3 font-fira-sans rounded-full">{{$today == 1 ? 'Open Now' : 'Closed' }}</a>
+                                <a href="javascipt:void(0)" class="text-white {{ $today == 1 ? 'bg-primary' : 'bg-red'  }} text-center py-2 px-2 text-xs font-normal leading-3 font-fira-sans rounded-full">{{$today == 1 ? __('Open Now') : __('Closed') }}</a>
                             </div>
                         </div>
 
                         <div class="pt-6">
                             @foreach ($doctor->workHour as $workHour)
                             <div class="flex justify-between pt-5 flex-row">
-                                <h1 class="font-fira-sans text-left text-sm font-normal text-black">{{ $workHour->day_index
-                                }}</h1>
+                                <h1 class="font-fira-sans text-left text-sm font-normal text-black">
+                                    {{ __($workHour->day_index) }}
+                                </h1>
                                 <div class="w-36">
                                     @foreach (json_decode($workHour['period_list']) as $period_list)
                                     @if ($workHour->status)
@@ -209,8 +210,8 @@
                         $url = 'https://www.google.com/maps/dir/?api=1&destination='.$hospital->lat.','.$hospital->lng;
                         @endphp
 
-                        <a href="{{ $url }}" target="_blank" class="font-fira-sans text-sm font-medium text-primary leading-5 py-2">{{__('Get
-                        Directions')}}</a>
+                        <a href="{{ $url }}" target="_blank" class="font-fira-sans text-sm font-medium text-primary leading-5 py-2">
+                        {{__('Get Directions')}}</a>
 
                         <div class="flex space-x-1 mb-5">
                             @foreach ($hospital->hospital_gallery as $gallery)

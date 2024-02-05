@@ -111,10 +111,10 @@
     @if(!isset($setting->banner_image))
     <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload/'.$setting->banner_image) }}" alt="">
     @else
-    <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload_empty/hero.png') }}" alt="">
+    <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload_empty/hero.jpg') }}" alt="">
     @endif
     <div class="btn-appointment mx-0  mt-3  absolute xxsm:relative xsm:relative sm:absolute">
-        <a class="btn btn-link text-center mt-0 rounded-none bg-primary text-white font-normal font-fira-sans text-sm py-3.5 px-7" target="_blank" href="{{ $setting->banner_url }}" role="button">{{__('Make Appointment') }}</a>
+        {{-- <a class="btn btn-link text-center mt-0 rounded-none bg-primary text-white font-normal font-fira-sans text-sm py-3.5 px-7" target="_blank" href="{{ $setting->banner_url }}" role="button">{{__('Make Appointment') }}</a> --}}
     </div>
 </div>
 <!-- <div class="w-full bg-cover bg-no-repeat" style="height:1000px;background-image: url({{asset('/assets/image/Banner.png')}})">
@@ -340,7 +340,7 @@
     </div>
 
     {{-- Download the Doctro --}}
-    <div class="xl:w-3/4 mx-auto rounded-lg mb-20" style="background-color: aliceblue;">
+    {{-- <div class="xl:w-3/4 mx-auto rounded-lg mb-20" style="background-color: aliceblue;">
         <div class="rounded-xl">
             <div class="grid xxsm:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 3xl:grid-cols-2 self-center relative">
                 <div class="mt-20 xl:w-96 xxsm:w-full mx-auto">
@@ -366,7 +366,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 

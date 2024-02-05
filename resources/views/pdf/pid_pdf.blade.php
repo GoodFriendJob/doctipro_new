@@ -39,7 +39,7 @@
 
         <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
         <p style="margin:0;">N° <span>{{ $doctor_pid['biller_id'] }}</span></p>
-        <p style="margin:0;">du <span>{{ $doctor_pid['act_code'] }}</span></p>
+        <p style="margin:0;">du <span>{{ $doctor_pid['biller_id'] }}</span></p>
         <p style="margin:0 0 40px;">N° ID 20230227196605306156700337788 </p>
         <table>
             <thead>

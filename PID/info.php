@@ -47,12 +47,11 @@ if ($pid_step==1) {
         $res_xml = beautify_xml($res_xml);
     }
     $message .='<div class="pid_request_params"><h1>Guichet</h1><h3>Request</h3><p>Params: '
+    .' Code Prestataire: <span>'.$row['biller_id'].'</span>'
     .' pshealthid: <span>'.$row['pshealthid'].'</span>'
     .' codeMedical: <span>'.$row['medical_code'].'</span>'
     .' Lieu De Prestation: <span>'.$row['service_place'].'</span>'
     .' Matricule Du Patient: <span>'.$row['patient_number'].'</span>'
-    .' Identifiant Facturier: <span>'.$row['biller_id'].'</span>'
-    .' Type De Consultation (Code Acte): <span>'.$row['act_code'].'</span>'
     .' Type De Consultation (Code Number): <span>'.$row['act_number'].'</span>'
     .'</p></div>'
     .'<div class="pid_request_xml">'.$req_xml.'</div>'
@@ -71,12 +70,11 @@ if ($pid_step==1) {
         $res_xml = beautify_xml($res_xml);
     }
     $message .='<div class="pid_request_params"><h1>CNS Request</h1><h3>Request</h3><p>Params: '
+    .' Code Prestataire: <span>'.$row['biller_id'].'</span>'
     .' pshealthid: <span>'.$row['pshealthid'].'</span>'
     .' codeMedical: <span>'.$row['medical_code'].'</span>'
     .' Lieu De Prestation: <span>'.$row['service_place'].'</span>'
     .' Matricule Du Patient: <span>'.$row['patient_number'].'</span>'
-    .' Identifiant Facturier: <span>'.$row['biller_id'].'</span>'
-    .' Type De Consultation (Code Acte): <span>'.$row['act_code'].'</span>'
     .' Type De Consultation (Code Number): <span>'.$row['act_number'].'</span>'
     .'</p></div>'
     .'<div class="pid_request_xml">'.$req_xml.'</div>'
@@ -96,12 +94,11 @@ if ($pid_step==1) {
         $res_xml = beautify_xml($res_xml);
     }
     $message .='<div class="pid_request_params"><h1>Business Request</h1><h3>Request</h3><p>Params: '
-    .' pshealthid: <span>'.$row['pshealthid'].'</span>'
-    .' codeMedical: <span>'.$row['medical_code'].'</span>'
+    .' Code Prestataire: <span>'.$row['biller_id'].'</span>'
+    .' Pshealthid: <span>'.$row['pshealthid'].'</span>'
+    .' Code Medical: <span>'.$row['medical_code'].'</span>'
     .' Lieu De Prestation: <span>'.$row['service_place'].'</span>'
     .' Matricule Du Patient: <span>'.$row['patient_number'].'</span>'
-    .' Identifiant Facturier: <span>'.$row['biller_id'].'</span>'
-    .' Type De Consultation (Code Acte): <span>'.$row['act_code'].'</span>'
     .' Type De Consultation (Code Number): <span>'.$row['act_number'].'</span>'
     .'</p></div>'
     .'<div class="pid_request_xml">'.$req_xml.'</div>'

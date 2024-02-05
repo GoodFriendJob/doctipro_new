@@ -41,26 +41,59 @@
                             @enderror
                         </div>
                         <div class="col-lg-9 col-md-8">
-                            <div class="form-group">
-                                <label class="col-form-label">{{__('Name')}}</label>
-                                <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
-                                @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                            <div class="row">
+                                <div class="col-lg-6 form-group">
+                                    <label class="col-form-label">{{__('Name')}}</label>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
+                                    @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">{{__('email')}}</label>
-                                <input type="email"  name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
-                                @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                <div class="col-lg-6 form-group">
+                                    <label class="col-form-label">{{__('Expertise')}}</label>
+                                    <select name="category_id" class="select2 @error('category_id') is-invalid @enderror">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
-                                @enderror
                             </div>
-                            <div class="row mt-4">
-                                <div class="col-lg-4 form-group">
+                            <div class="row">
+                                <div class="col-lg-6 form-group">
+                                    <label class="col-form-label">{{__('email')}}</label>
+                                    <input type="email"  name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
+                                    @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
+                                    <div class="d-flex @error('phone') is-invalid @enderror">
+                                        <select name="phone_code" class="phone_code_select2">
+                                            @foreach ($countries as $country)
+                                                <option value="+{{$country->phonecode}}" {{(old('phone_code', '352') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="number" min="1" name="phone" class="form-control" value="{{old('phone')}}" >
+                                    </div>
+                                    @error('phone')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 form-group">
                                     <label class="col-form-group">{{__('eHealth ID')}}</label>
                                     <input type="text" value="{{ old('pshealthid')}}" class="form-control @error('pshealthid') is-invalid @enderror" name="pshealthid">
                                     @error('pshealthid')
@@ -69,7 +102,18 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-lg-4 form-group">
+                                <div class="col-lg-6 form-group">
+                                    <label class="col-form-group">{{__('Biller ID')}}</label>
+                                    <input type="number" value="{{ old('biller_id' )}}" class="form-control @error('biller_id') is-invalid @enderror" name="biller_id">
+                                    @error('biller_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 form-group">
                                     <label class="col-form-group">{{__('eHealth P12 Password')}}</label>
                                     <input type="text" value="{{ old('pshealthid_p12_pass')}}" class="form-control @error('pshealthid_p12_pass') is-invalid @enderror" name="pshealthid_p12_pass">
                                     @error('pshealthid_p12_pass')
@@ -78,7 +122,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-lg-4 form-group">
+                                <div class="col-lg-6 form-group">
                                     <label class="col-form-group">{{__('eHealth .p12 file')}}</label>
                                     <input type="file" value="{{ old('pshealthid_p12')}}" id="pshealthid_p12" name="pshealthid_p12" class="form-control form-control-sm @error('pshealthid_p12') is-invalid @enderror" onchange="displayFileName()" />
                                     @error('pshealthid_p12')
@@ -91,7 +135,9 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="text-right p-2">
+                        <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
+                    </div>
                     {{-- <div class="row mt-4">
                         <div class="col-lg-6 form-group">
                             <label class="col-form-label">{{__('Expertise')}}</label>
@@ -121,24 +167,8 @@
                         </div>
                     </div> --}}
 
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label for="phone_number" class="col-form-label"> {{__('Phone number')}}</label>
-                            <div class="d-flex @error('phone') is-invalid @enderror">
-                                <select name="phone_code" class="phone_code_select2" value="{{ old('phone_code') }}">
-                                    @foreach ($countries as $country)
-                                        <option value="+{{$country->phonecode}}" {{(old('phone_code') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="number" min="1" name="phone" class="form-control" value="{{old('phone')}}" >
-                            </div>
-                            @error('phone')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        {{-- <div class="col-lg-4 form-group">
+                    {{-- <div class="row mt-4">
+                        <div class="col-lg-4 form-group">
                             <label class="col-form-label">{{__('Date of birth')}}</label>
                             <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" value="{{old('dob')}}" name="dob" >
                             @error('dob')
@@ -159,11 +189,8 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-                        </div> --}}
-                        <div class="col-lg-6 text-right p-2">
-                            <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- <div class="row mt-4">
                         <div class="col-lg-12 form-group">

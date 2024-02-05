@@ -27,6 +27,9 @@
         if (File::exists(env('p12_path') .'/'. $doctor->pshealthid_p12))
             $is_p12_exist = true;
     }
+    $is_pid_active = true;
+    if (empty($doctor->pshealthid) || empty($doctor->biller_id) || empty($doctor->pshealthid_p12_pass) || $is_p12_exist==false)
+        $is_pid_active = false;
 @endphp
 <section class="section">
     @include('layout.breadcrumb',[
@@ -34,19 +37,27 @@
     ])
     <div class="card">
         <div class="card-body pt-0">
+            @if (!$is_pid_active)
             <div class="row">
-            @if (empty($doctor->pshealthid) || empty($doctor->pshealthid_p12_pass) || $is_p12_exist==false)
                 <div class="col text-center alert-warning p-2 mb-2 text-danger">
-                    {{__("It seems that the PsHealth ID and .p12 file are not configured for you.")}}
+                    @if ($is_p12_exist==false)
+                    {{__(".p12 file is not existed.")}}
+                    @else
+                    {{__("PsHealth ID | Password | Biller ID are not set.")}}
+                    @endif
                     <br>
                     {{__("Please reach out to the site administrator for assistance with this matter.")}}
                 </div>
-            @else
+            </div>
+            @endif
+            <div class="row">
+                @if ($is_pid_active)
                 <div class="col-md-3 pb-2">
                     <a class="edit-link btn btn-primary" data-toggle="modal" href="#request_pid_dlg">
                         <i class="fa fa-calendar-plus mr-1"></i> {{__('Request A Simulation')}}
                     </a>
                 </div>
+                @endif
                 <div class="col-md-3 form-group">
                     <p><i class="fa fa-user-md"></i>&nbsp; {{__('PsHealth ID')}} : 
                         @if (!empty($doctor->pshealthid))
@@ -57,24 +68,36 @@
                     </p>
                 </div>
                 <div class="col-md-3 form-group">
-                    <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
-                        @if ($is_p12_exist)
-                        <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
+                    <p><i class="fa fa-credit-card"></i>&nbsp; {{__('Biller ID')}} : 
+                        @if (!empty($doctor->biller_id))
+                        <span class="border text-primary py-1 px-2">{{ $doctor->biller_id }}<span>
                         @else
                         <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
                         @endif
                     </p>
                 </div>
-                <div class="col-md-3 form-group">
-                    <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
-                        @if (!empty($doctor->pshealthid_p12_pass))
-                        <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
-                        @else
-                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
-                        @endif
-                    </p>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
+                                @if ($is_p12_exist)
+                                <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
+                                @else
+                                <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
+                                @endif
+                            </p>
+                        </div>
+                        <div class="col-6 form-group">
+                            <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
+                                @if (!empty($doctor->pshealthid_p12_pass))
+                                <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
+                                @else
+                                <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            @endif
             </div>
             <form action="{{ url('pid_settings') }}" method="get" class="form">
                 <div class="row">
@@ -117,9 +140,7 @@
                             <th rowspan="2"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
                             <th rowspan="2"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
-                            <th rowspan="2"><i class="fa fa-credit-card"></i><br>{{__('Biller ID')}}</th>
-                            <th rowspan="2"><i class="fa fa-code"></i><br>{{__('Act Code')}}</th>
-                            <th rowspan="2"><i class="fa fa-list"></i><br>{{__('Act Number')}}</th>
+                            <th rowspan="2"><i class="fa fa-code"></i><br>{{__('Act Number')}}</th>
                             <th rowspan="2"><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
                             <th rowspan="2"><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
                             <th rowspan="2"><i class="fa fa-shopping-cart"></i><br>{{__('Paye')}}</th>
@@ -143,8 +164,6 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->biller_id }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
@@ -201,126 +220,111 @@
             </div>
         </div>
     </div>
+</section>
+    <div class="modal fade" id="request_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form method="post" class="myform" onsubmit="return false">
+                    <input type="hidden" name="pid" id="pid" value="0" />
+                    <input type="hidden" name="doctor_id" value={{$doctor->id}} />
+                    <input type="hidden" name="psEHealthID" id="psEHealthID" value={{$doctor->pshealthid}} />
+                    <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
+                    <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
+                    <input type="hidden" name="biller_id" value={{$doctor->biller_id}} />
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('New Simulation')}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
+                        <div class="row mt-4">
+                            <div class="col-lg-6 form-group">
+                                <label for="patient_number" class="col-form-label"> {{__('Patient Number')}}</label>
+                                <div class="d-flex">
+                                    <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="service_place" class="col-form-label"> {{__('Place of Service')}}</label>
+                                <div class="d-flex">
+                                    <input type="text" value="01" id="service_place" name="service_place" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <label for="medical_code" class="col-form-label"> {{__('Medical Code')}}</label>
+                                <div class="d-flex">
+                                    <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
+                                <div class="d-flex">
+                                    <input type="text" value="1" id="act_number" name="act_number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                        <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-</div>
-
-<div class="modal fade" id="request_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form method="post" class="myform" onsubmit="return false">
-                <input type="hidden" name="pid" id="pid" value="0" />
-                <input type="hidden" name="doctor_id" value={{$doctor->id}} />
-                <input type="hidden" name="psEHealthID" id="psEHealthID" value={{$doctor->pshealthid}} />
-                <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
-                <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
+    <div class="modal fade" id="detail_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('New Simulation')}}</h5>
+                    <h5 class="modal-title" id="detail_pid_dlg_title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID Detail')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="px-1 py-2 row">
+                    <input type="hidden" name="detail_pid" id="detail_pid" value="" />
+                    <div class="col-sm-2 text-center">
+                        <div class="pid-steps">
+                            <p class="mb-0"><a href="javascript:show_pid_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
+                            <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
+                            <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validate')}}</a></p>
+                            <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
+                            <p class="mb-0"><a href="javascript:show_pid_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div id="pid_xml"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="view_pid_dlg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID')}} : <span id="pid_view_title"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label for="medical_code" class="col-form-label"> {{__('Medical Code')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label for="biller_id" class="col-form-label"> {{__('Biller ID')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="90812100" id="biller_id" name="biller_id" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label for="patient_number" class="col-form-label"> {{__('Patient Number')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label for="service_place" class="col-form-label"> {{__('Place of Service')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="01" id="service_place" name="service_place" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label for="act_code" class="col-form-label"> {{__('Type of Consultation (Act Code)')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="90813319" id="act_code" name="act_code" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
-                            <div class="d-flex">
-                                <input type="text" value="1" id="act_number" name="act_number" class="form-control">
-                            </div>
-                        </div>
+                    <div class="row-fluid" id="view_pid_body">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="detail_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detail_pid_dlg_title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID Detail')}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="px-1 py-2 row">
-                <input type="hidden" name="detail_pid" id="detail_pid" value="" />
-                <div class="col-sm-2 text-center">
-                    <div class="pid-steps">
-                        <p class="mb-0"><a href="javascript:show_pid_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
-                        <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
-                        <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validate')}}</a></p>
-                        <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
-                        <p class="mb-0"><a href="javascript:show_pid_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div id="pid_xml"></div>
+                    <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="view_pid_dlg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> {{__('PID')}} : <span id="pid_view_title"></span></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row-fluid" id="view_pid_body">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection
 @section('js')
