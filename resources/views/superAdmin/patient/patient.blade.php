@@ -29,7 +29,7 @@
                                     <input name="select_all" value="1" id="master" type="checkbox" />
                                     <label for="master"></label>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('Patient ID')}}</th>
                                 <th>{{__('User Name')}}</th>
                                 <th>{{__('email')}}</th>
                                 <th>{{__('Status')}}</th>
@@ -46,13 +46,13 @@
                                         data-id="{{ $user->id }}" class="sub_chk">
                                     <label for="{{$user->id}}"></label>
                                 </td>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $user->patient_id }}</td>
                                 <td>
                                     <p class="table-avatar">
                                         <a href="{{ url('patient/'.$user->id) }}" class="avatar avatar-sm mr-2">
                                             <img class="avatar-img rounded-circle" src="{{ $user->fullImage }}"
                                                 alt="patient Image"></a>
-                                        <a href="{{ url('patient/'.$user->id) }}">{{ $user->name }}</a>
+                                        <a href="{{ url('patient/'.$user->id) }}">{{ $user->name }} {{ $user->last_name }}</a>
                                     </p>
                                 </td>
                                 <td>
