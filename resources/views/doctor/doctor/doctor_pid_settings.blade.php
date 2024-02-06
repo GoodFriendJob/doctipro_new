@@ -102,7 +102,7 @@
             <form action="{{ url('pid_settings') }}" method="get" class="form">
                 <div class="row">
                     <div class="col-sm-3 form-group mb-0">
-                        <label for="date_type" class="col-form-label"> {{__('Date Type')}}</label>
+                        <label class="col-form-label"> {{__('Date Type')}}</label>
                         <div class="d-flex date-type">
                             <select class="form-control" id="date_type" name="date_type">
                                 <option value="guichet_date" {{(!isset($data['data_type']) || $data['data_type'] == 'guichet_date') ? 'selected':''}}>Guichet</option>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 form-group mb-0">
-                        <label for="start_date" class="col-form-label"> {{__('Start Date')}}</label>
+                        <label class="col-form-label"> {{__('Start Date')}}</label>
                         <div class="d-flex input-group date" id='start_date'>
                             <input type='text' name='start_date' class="form-control" value="{{ isset($data['start_date']) ? $data['start_date']:'' }}" />
                             <button class="btn btn-outline-primary" type="button" id="start_date_btn"><i class="fa fa-calendar"></i></button>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="col-sm-1 form-group text-center mb-0"><h1 class="mt-4"> ~ </h1></div>
                     <div class="col-sm-3 form-group mb-0">
-                        <label for="end_date" class="col-form-label"> {{__('End Date')}}</label>
+                        <label class="col-form-label"> {{__('End Date')}}</label>
                         <div class="d-flex input-group date" id='end_date'>
                             <input type='text' name='end_date' class="form-control" value="{{ isset($data['end_date']) ? $data['end_date']:'' }}" />
                             <button class="btn btn-outline-primary" type="button" id="end_date_btn"><i class="fa fa-calendar"></i></button>
@@ -234,32 +234,37 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
-                        <div class="row mt-4">
-                            <div class="col-lg-6 form-group">
-                                <label for="patient_number" class="col-form-label"> {{__('Patient Number')}}</label>
-                                <div class="d-flex">
-                                    <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
+                        <div class="form-group">
+                            <label class="col-form-label"> {{__('Patient Number')}} <b>*</b></label>
+                            <div class="input-group">
+                                <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="search-icon">
+                                        <i class="fa fa-search"></i>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label for="service_place" class="col-form-label"> {{__('Place of Service')}}</label>
+                        </div>
+                        <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
+                        <div class="row mt-4">
+                            <div class="col-lg-4 form-group">
+                                <label class="col-form-label"> {{__('Place of Service')}} <b>*</b></label>
                                 <div class="d-flex">
                                     <input type="text" value="01" id="service_place" name="service_place" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label for="medical_code" class="col-form-label"> {{__('Medical Code')}}</label>
-                                <div class="d-flex">
-                                    <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control">
-                                </div>
+                            <div class="col-lg-4 form-group">
+                                <label class="col-form-label"> {{__('Medical Code')}} <b>*</b></label>
+                                <select id="medical_code" name="medical_code" class="form-control">
+                                    <option value="C1">C1</option>
+                                    <option value="C41">C41</option>
+                                    <option value="C43">C43</option>
+                                </select>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label for="act_number" class="col-form-label"> {{__('Act Number')}}</label>
+                            <div class="col-lg-4 form-group">
+                                <label class="col-form-label"> {{__('Act Number')}} <b>*</b></label>
                                 <div class="d-flex">
-                                    <input type="text" value="1" id="act_number" name="act_number" class="form-control">
+                                    <input type="number" min="1" value="1" id="act_number" name="act_number" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -327,6 +332,7 @@
     <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script>
     $(document).ready(function () {
+        $('#request_pid_dlg').modal('show');
         $('#start_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
