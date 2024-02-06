@@ -58,7 +58,7 @@ class UserController extends Controller
                 'name' => 'bail|required',
                 // 'last_name' => 'bail|required',
                 'email' => 'bail|required|email|unique:users',
-                'patient_id' => 'bail|required|patient_id|unique:users',
+                'patient_id' => 'bail|required',
                 'dob' => 'bail|required',
                 'gender' => 'bail|required',
                 // 'phone' => 'bail|required|digits_between:6,12',
