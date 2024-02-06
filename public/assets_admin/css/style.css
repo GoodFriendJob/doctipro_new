@@ -168,6 +168,10 @@ select.form-control:not([size]):not([multiple]) {
     color: #34395e;
     font-size: 12px;
     letter-spacing: .5px; }
+    .form-group .control-label > b,
+    .form-group > label > b {
+      color:#e63c3c;
+    }
   .form-group.floating-addon {
     position: relative; }
     .form-group.floating-addon .input-group-prepend {

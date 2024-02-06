@@ -36,7 +36,7 @@
                         <div class="col-lg-9 col-md-8">
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label class="col-form-label">{{__('Name')}}</label>
+                                    <label class="col-form-label">{{__('Name')}} <b>*</b></label>
                                     <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">
                                     @error('name')
                                     <div class="invalid-feedback">
@@ -56,7 +56,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-5 form-group">
-                                    <label class="col-form-label">{{__('Patient ID')}}</label>
+                                    <label class="col-form-label">{{__('Patient ID')}} <b>*</b></label>
                                     <input type="text" value="{{ old('patient_id') }}" name="patient_id" class="form-control @error('patient_id') is-invalid @enderror">
                                     @error('patient_id')
                                     <div class="invalid-feedback">
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label for="col-form-label">{{__('Date of birth')}}</label>
-                                    <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" name="dob">
+                                    <input type="text" id="dob" class="form-control datePicker @error('dob') is-invalid @enderror" name="dob">
                                     @error('dob')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -91,9 +91,9 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="form-group col-6">
+                        <div class="form-group col-7">
                             <div class="row">
-                                <div class="col-3 form-group">
+                                <div class="col-4 form-group">
                                     <label for="phone_number" class="col-form-label"> {{__('Phone Code')}}</label><br>
                                     <select name="phone_code" class="form-control phone_code_select2">
                                         @foreach ($countries as $country)
@@ -101,7 +101,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-9 form-group">
+                                <div class="col-8 form-group">
                                     <label for="phone_number" class="col-form-label"> {{__('Phone Number')}}</label>
                                     <input type="number" min="1" value="{{ old('phone') }}" name="phone" class="form-control @error('phone') is-invalid @enderror">
                                     @error('phone')
@@ -112,8 +112,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-6">
-                            <label class="col-form-label">{{__('Email')}}</label>
+                        <div class="form-group col-5">
+                            <label class="col-form-label">{{__('Email')}} <b>*</b></label>
                             <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') is-invalid @enderror">
                             @error('email')
                             <div class="invalid-feedback">
@@ -131,4 +131,23 @@
     </div>
 </section>
 
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function () {
+        $('input[name="patient_id"]').on('input', function(){
+            var newValue = $(this).val()+""; // Get the new value of the input field
+            if (newValue.length>12) {
+                let newDate = newValue.slice(0, 4)+'-'+newValue.slice(4, 6)+'-'+newValue.slice(6, 8);
+                if (isValidDateString(newDate))
+                    $('#dob').val(newDate);
+            }
+        });
+    });
+    function isValidDateString(dateString) {
+        let date = new Date(dateString);
+        return date instanceof Date && !isNaN(date);
+    }
+</script>
 @endsection
