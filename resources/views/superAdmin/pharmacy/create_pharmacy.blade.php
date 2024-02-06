@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-2 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <label for="pharmacy_image" class="col-form-label"> {{__('pharmacy image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -38,7 +38,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-8">
+                        <div class="col-lg-9 col-md-8">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Name')}}</label>
                                 <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">
@@ -66,7 +66,7 @@
                             <select name="phone_code" class="phone_code_select2" >
                                 @foreach ($countries as $country)
                                     {{-- <option value="+{{$country->phonecode}}">+{{ $country->phonecode }}</option> --}}
-                                    <option value="+{{$country->phonecode}}" {{(old('phone_code') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
+                                    <option value="+{{$country->phonecode}}" {{(old('phone_code', '352') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
                                 @endforeach
                             </select>
                             <input type="number" min="1" name="phone" class="form-control" value="{{ old('phone') }}">

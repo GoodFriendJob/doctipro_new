@@ -70,7 +70,7 @@
                                     <select name="phone_code" class="phone_code_select2">
                                         @foreach ($countries as $country)
                                             <option value="+{{ $country->phonecode }}"
-                                                {{ old('phone_code') == $country->phonecode ? 'selected' : '' }}>
+                                                {{ old('phone_code', '352') == $country->phonecode ? 'selected' : '' }}>
                                                 +{{ $country->phonecode }}</option>
                                         @endforeach
                                     </select>

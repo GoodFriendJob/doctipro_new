@@ -182,14 +182,11 @@
                             <td>
                             @if ($history->is_valid)
                                 @if ($history->is_validation)
-                                    <i class="fa fa-circle text-success"></i> <br>
+                                    <i class="fa fa-circle text-success"></i>
+                                @elseif ($history->is_contestation)
+                                    <b> - </b>
                                 @else
-                                    @if ($history->is_expired)
-                                        <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
-                                        <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
-                                    @else
-                                        <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
-                                    @endif
+                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                 @endif
                             @endif
                             </td>
@@ -197,18 +194,15 @@
                             @if ($history->is_valid)
                                 @if ($history->is_contestation)
                                     <i class="fa fa-circle text-success"></i>
+                                @elseif ($history->is_validation)
+                                    <b> - </b>
                                 @else
-                                    @if ($history->is_expired)
-                                    <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
-                                    <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a>
-                                    @else
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
-                                    @endif
                                 @endif
                             @endif
                             </td>
                             <td>
-                                @if ($history->is_valid && $history->is_validation)
+                                @if ($history->is_validation)
                                     <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
                                 @endif
                             </td>

@@ -15,7 +15,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row mt-4">
-                        <div class="col-lg-2 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <label for="patient_image" class="col-form-label"> {{__('patient image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -33,69 +33,92 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-8">
-                            <div class="form-group">
-                                <label class="col-form-label">{{__('Name')}}</label>
-                                <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">
-                                @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                        <div class="col-lg-9 col-md-8">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="col-form-label">{{__('Name')}}</label>
+                                    <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">
+                                    @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
+                                <div class="col-md-6 form-group">
+                                    <label class="col-form-label">{{__('Last Name')}}</label>
+                                    <input type="text" value="{{ old('last_name') }}" name="last_name" class="form-control @error('last_name') is-invalid @enderror">
+                                    @error('last_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-form-label">{{__('Email')}}</label>
-                                <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') is-invalid @enderror">
-                                @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                            <div class="row">
+                                <div class="col-lg-5 form-group">
+                                    <label class="col-form-label">{{__('Patient ID')}}</label>
+                                    <input type="text" value="{{ old('patient_id') }}" name="patient_id" class="form-control @error('patient_id') is-invalid @enderror">
+                                    @error('patient_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
+                                <div class="col-lg-4 form-group">
+                                    <label for="col-form-label">{{__('Date of birth')}}</label>
+                                    <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" name="dob">
+                                    @error('dob')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-3 form-group">
+                                    <label for="col-form-label">{{__('Gender')}}</label>
+                                    <select name="gender" class="form-control @error('gender') is-invalid @enderror">
+                                        <option value="male">{{__('male')}}</option>
+                                        <option value="female">{{__('female')}}</option>
+                                        <option value="other">{{__('other')}}</option>
+                                    </select>
+                                    @error('gender')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-lg-2 form-group">
-                            <label for="phone_number" class="col-form-label"> {{__('Phone Code')}}</label><br>
-                            <select name="phone_code" class="form-control phone_code_select2">
-                                @foreach ($countries as $country)
-                                    <option value="+{{$country->phonecode}}" {{ old('phone_code') == $country->phonecode ? 'selected' : '' }}>+{{ $country->phonecode }}</option>
-                                @endforeach
-                            </select>
+                        <div class="form-group col-6">
+                            <div class="row">
+                                <div class="col-3 form-group">
+                                    <label for="phone_number" class="col-form-label"> {{__('Phone Code')}}</label><br>
+                                    <select name="phone_code" class="form-control phone_code_select2">
+                                        @foreach ($countries as $country)
+                                            <option value="+{{$country->phonecode}}" {{ old('phone_code', '352') == $country->phonecode ? 'selected' : '' }}>+{{ $country->phonecode }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-9 form-group">
+                                    <label for="phone_number" class="col-form-label"> {{__('Phone Number')}}</label>
+                                    <input type="number" min="1" value="{{ old('phone') }}" name="phone" class="form-control @error('phone') is-invalid @enderror">
+                                    @error('phone')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-10 form-group">
-                            <label for="phone_number" class="col-form-label"> {{__('Phone Number')}}</label>
-                            <input type="number" min="1" value="{{ old('phone') }}" name="phone" class="form-control @error('phone') is-invalid @enderror">
-                            @error('phone')
+                        <div class="form-group col-6">
+                            <label class="col-form-label">{{__('Email')}}</label>
+                            <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') is-invalid @enderror">
+                            @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-6 form-group">
-                            <label for="col-form-label">{{__('Date of birth')}}</label>
-                            <input type="text" class="form-control datePicker @error('dob') is-invalid @enderror" name="dob">
-                            @error('dob')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label for="col-form-label">{{__('Gender')}}</label>
-                            <select name="gender" class="form-control @error('gender') is-invalid @enderror">
-                                <option value="male">{{__('male')}}</option>
-                                <option value="female">{{__('female')}}</option>
-                                <option value="other">{{__('other')}}</option>
-                            </select>
-                            @error('gender')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
                             @enderror
                         </div>
                     </div>

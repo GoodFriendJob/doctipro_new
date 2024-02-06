@@ -18,7 +18,7 @@
                     <div class="col-lg-12 col-md-4">
                         <label for="category_image" class="ul-form__label"> {{__('Medicine image')}}</label>
                     </div>
-                    <div class="col-lg-2 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         <div class="avatar-upload avatar-box avatar-box-left">
                             <div class="avatar-edit">
                                 <input type='file' id="image" name="image" accept=".png, .jpg, .jpeg" />

@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-2 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <label for="pharmacy_image" class="col-form-label"> {{__('pharmacy image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -34,7 +34,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-8">
+                        <div class="col-lg-9 col-md-8">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Name')}}</label>
                                 <input type="text" value="{{ old('name',$pharmacy->name) }}" name="name" class="form-control @error('name') is-invalid @enderror">

@@ -56,10 +56,12 @@ class UserController extends Controller
         $request->validate(
             [
                 'name' => 'bail|required',
+                // 'last_name' => 'bail|required',
                 'email' => 'bail|required|email|unique:users',
+                'patient_id' => 'bail|required|patient_id|unique:users',
                 'dob' => 'bail|required',
                 'gender' => 'bail|required',
-                'phone' => 'bail|required|digits_between:6,12',
+                // 'phone' => 'bail|required|digits_between:6,12',
                 'image' => 'bail|mimes:jpeg,png,jpg|max:1000'
             ],
             ['image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.']

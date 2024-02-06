@@ -24,7 +24,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row mt-4">
-                        <div class="col-lg-2 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <label for="offer_image" class="ul-form__label"> {{__('Offer image')}}</label>
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
@@ -42,7 +42,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-8">
+                        <div class="col-lg-9 col-md-8">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Offer name')}}</label>
                                 <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">

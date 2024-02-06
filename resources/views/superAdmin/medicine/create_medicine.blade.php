@@ -20,7 +20,7 @@
                         <div class="col-lg-12 col-md-4">
                             <label for="category_image" class="ul-form__label"> {{__('Medicine image')}}</label>
                         </div>
-                        <div class="col-lg-2 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <div class="avatar-upload avatar-box avatar-box-left">
                                 <div class="avatar-edit">
                                     <input type='file' id="image" name="image" accept=".png, .jpg, .jpeg" />
@@ -37,7 +37,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-lg-10 col-md-8">
+                        <div class="col-lg-9 col-md-8">
                             <div class="form-group">
                                 <label class="col-form-label">{{__('Name')}}</label>
                                 <input type="text" value="{{ old('name') }}" name="name" class="form-control @error('name') is-invalid @enderror">

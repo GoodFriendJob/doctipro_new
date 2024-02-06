@@ -47,7 +47,7 @@
                     <div class="d-flex @error('phone') is-invalid @enderror">
                         <select name="phone_code" class="phone_code_select2">
                             @foreach ($countries as $country)
-                                <option value="+{{$country->phonecode}}" {{(old('phone_code') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
+                                <option value="+{{$country->phonecode}}" {{(old('phone_code', '352') == $country->phonecode) ? 'selected':''}}>+{{ $country->phonecode }}</option>
                             @endforeach
                         </select>
                         <input type="number" value="{{ old('phone') }}" name="phone" class="form-control">
