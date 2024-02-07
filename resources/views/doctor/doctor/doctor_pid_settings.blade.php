@@ -22,6 +22,8 @@
 @section('title',__('pid settings'))
 @section('content')
 @php
+echo env('p12_path') .'/'. $doctor->pshealthid_p12;
+var_dump(File::exists(env('p12_path') .'/'. $doctor->pshealthid_p12));
     $is_p12_exist = false;
     if (!empty($doctor->pshealthid_p12)) {
         if (File::exists(env('p12_path') .'/'. $doctor->pshealthid_p12))
