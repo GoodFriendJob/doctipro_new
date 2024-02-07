@@ -332,7 +332,6 @@
     <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script>
     $(document).ready(function () {
-        $('#request_pid_dlg').modal('show');
         $('#start_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
