@@ -177,7 +177,7 @@ class UserApiController extends Controller
             'lat' => 'bail|required',
             'lang' => 'bail|required',
         ]);
-        $doctor = Doctor::with('treatment:id,name')->whereStatus(1)->where([['is_filled',1],['treatment_id',$treatment_id]])->whereSubscriptionStatus(1)->get(['id','status','image','name','treatment_id','hospital_id'])->makeHidden(['rate','review']);
+        $doctor = Doctor::with('treatment:id,name')->whereStatus(1)->where([['treatment_id',$treatment_id]])->whereSubscriptionStatus(1)->get(['id','status','image','name','treatment_id','hospital_id'])->makeHidden(['rate','review']);
         $data = $request->all();
         $doctors = $this->getNearDoctor($doctor,$data['lat'],$data['lang']);
         foreach ($doctors as $doctor)
@@ -195,7 +195,7 @@ class UserApiController extends Controller
             'lat' => 'bail|required',
             'lang' => 'bail|required',
         ]);
-        $doctor = Doctor::with('treatment:id,name')->whereStatus(1)->where('is_filled',1)->whereSubscriptionStatus(1)->get(['id','status','image','name','treatment_id','hospital_id'])->makeHidden(['rate','review']);
+        $doctor = Doctor::with('treatment:id,name')->whereStatus(1)->whereSubscriptionStatus(1)->get(['id','status','image','name','treatment_id','hospital_id'])->makeHidden(['rate','review']);
         $data = $request->all();
         $doctors = $this->getNearDoctor($doctor,$data['lat'],$data['lang']);
         foreach ($doctors as $doctor)
@@ -227,7 +227,7 @@ class UserApiController extends Controller
         $data = $request->all();
         if(isset($data['lat']) && isset($data['lang']))
         {
-            $doctor = Doctor::whereStatus(1)->where('is_filled',1)->whereSubscriptionStatus(1)->get(['id','name','image','hospital_id'])->makeHidden(['rate','review']);
+            $doctor = Doctor::whereStatus(1)->whereSubscriptionStatus(1)->get(['id','name','image','hospital_id'])->makeHidden(['rate','review']);
             $doctors = $this->getNearDoctor($doctor,$data['lat'],$data['lang']);
             return response(['success' => true , 'data' => $doctors , 'msg' => 'show all doctors']);
         }

@@ -367,7 +367,6 @@ class DoctorController extends Controller
             array_push($certificate, $temp1);
         }
         $data['certificate'] = json_encode($certificate);
-        $data['is_filled'] = 1;
         $data['hospital_id'] = implode(',', $request->hospital_id);
         $data['custom_timeslot'] = $data['custom_timeslot'] == "" ? null : $data['custom_timeslot'];
         if ($data['timeslot'] != 'other')

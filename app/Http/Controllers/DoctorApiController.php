@@ -396,7 +396,7 @@ class DoctorApiController extends Controller
             'certificate' => 'bail|required',
         ]);
         $data = $request->all();
-        $data['is_filled'] = 1;
+        // $data['is_filled'] = 1;
         $id->update($data);
         return response(['success' => true, 'msg' => 'successfully Update']);
     }

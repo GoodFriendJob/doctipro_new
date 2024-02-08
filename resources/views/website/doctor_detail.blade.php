@@ -40,8 +40,12 @@
                             @endforeach
                         </div>
                         <div class="2xl:px-10 xl:px-10 xlg:px-10 lg:px-10 xmd:px-10 md:px-10 xxsm:px-5 lg:mt-10 md:mt-5 sm:mt-5 msm:mt-6 xsm:mt-6 xxsm:mt-6">
-                            <a href="{{ url('booking/'.$doctor->id.'/'.Str::slug($doctor->name)) }}" data-te-ripple-init data-te-ripple-color="light" class="lg:px-1 lg:w-44 xsm:w-36 md:px-2 text-sm xl:py-2 xlg:py-2 xl:px-4 xlg:px-4 lg:py-2 xmd:py-1 md:py-2 sm:py-2 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make
-                            Appointment')}}</a>
+                            @if ($doctor->is_filled)
+                                <a href="{{ url('booking/'.$doctor->id.'/'.Str::slug($doctor->name)) }}" data-te-ripple-init data-te-ripple-color="light" class="lg:px-1 lg:w-44 xsm:w-36 md:px-2 text-sm xl:py-2 xlg:py-2 xl:px-4 xlg:px-4 lg:py-2 xmd:py-1 md:py-2 sm:py-2 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make Appointment')}}</a>
+                            @else
+                                {{-- <button disabled class="disabled lg:px-1 lg:w-44 xsm:w-36 md:px-2 text-sm xl:py-2 xlg:py-2 xl:px-4 xlg:px-4 lg:py-2 xmd:py-1 md:py-2 sm:py-2 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make Appointment')}}</button> --}}
+                                <p class="border text-warning py-1 px-2"><i class="fa fa-warning"></i> {{__('This doctor does not allow to make appointment on doctipro.com yet')}}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -119,6 +123,7 @@
             {{-- second part --}}
             <div class="lg:w-[30%] xmd:w-[40%] border-b-0 mb-10 border-white-light ml-2">
                 <div class="xmd:pl-[10px] pt-6 xxsm:pl-0">
+                    @if ($doctor->is_filled)
                     <h1 class="text-xl font-normal leading-6 font-fira-sans text-black pb-4">{{__('Availablity')}}</h1>
                     <h1 class="font-fira-sans leading-5 text-base font-medium text-black">{{__('Today\'s Available Slots')}}
                     </h1>
@@ -146,8 +151,14 @@
                             @endforeach
                         </div>
                     </div>
+                    @else
+                    <p class="border text-info py-2 px-4">
+                    <i class="fa fa-bullhorn"></i> &nbsp;Are you this practitioner? <br>
+                    Please contact us to register for free to the doctor's attention, and for patients, a message like, this doctor doesn't currently allow appointments via our Doctipro platform.
+                    </p>
+                    @endif
                     {{-- <hr class="mt-3 border border-white-light"> --}}
-                    <div class="">
+                    <div class="row" style="min-width:720px;">
                         <h1 class="text-xl font-normal leading-6 font-fira-sans text-black pt-10">{{__('Business Hours')}}
                         </h1>
                         <div class="flex 2xl:flex-row xl:flex-row xlg:flex-col lg:flex-row xsm:flex-row xxsm:flex-row justify-between items-start pt-6 2xl:px-3">

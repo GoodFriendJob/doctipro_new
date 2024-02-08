@@ -360,7 +360,19 @@
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-lg-12 form-group">
+                    <div class="col-lg-6 form-group">
+                        <label class="col-form-group">{{__('Verified From Agenda?')}}</label>
+                        <select name="is_filled" class="form-control">
+                            <option value="1" {{ $doctor->is_filled == 1 ? 'selected' : '' }}>{{__('yes')}}</option>
+                            <option value="0" {{ $doctor->is_filled == 0 ? 'selected' : '' }}>{{__('no')}}</option>
+                        </select>
+                        @error('is_filled')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-6 form-group">
                         <label class="col-form-group">{{__('Popular ?')}}</label>
                         <select name="is_popular" class="form-control">
                             <option value="1" {{ $doctor->is_popular == 1 ? 'selected' : '' }}>{{__('yes')}}</option>

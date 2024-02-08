@@ -391,7 +391,7 @@ class CustomController extends Controller
         $data['timeslot'] = 15;
         $data['gender'] = $data['gender'];
         $data['subscription_status'] = 1;
-        $data['is_filled'] = 0;
+        // $data['is_filled'] = 0;
         $doctor = Doctor::create($data);
         if ($doctor->based_on == 'subscription') {
             $subscription = Subscription::where('name', 'free')->first();

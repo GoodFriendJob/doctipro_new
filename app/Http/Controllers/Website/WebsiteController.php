@@ -58,7 +58,7 @@ class WebsiteController extends Controller
         //     return view("first_page");
         // }
         $banners = Banner::get();
-        $doctors = Doctor::with('category:id,name')->where([['status', 1], ['is_filled', 1]])->get()->take(8);
+        $doctors = Doctor::with('category:id,name')->where([['status', 1]])->get()->take(8);
         $categories = Category::whereStatus(1)->paginate(6);
         $setting = Setting::first();
         $reviews = Review::get();
@@ -185,7 +185,7 @@ class WebsiteController extends Controller
         $currency = $setting->currency_symbol;
 
         $category = Category::with(['treatment'])->whereStatus(1);
-        $doctor = Doctor::with(['treatment', 'category', 'expertise'])->whereStatus(1)->where('is_filled', 1)->whereSubscriptionStatus(1);
+        $doctor = Doctor::with(['treatment', 'category', 'expertise'])->whereStatus(1)->whereSubscriptionStatus(1);
         $data = $request->all();
         $getSet = 0;
         if (isset($data['search_doctor']) && $data['search_doctor'] != '') {
@@ -228,7 +228,7 @@ class WebsiteController extends Controller
         $setting = Setting::first();
         $currency = $setting->currency_symbol;
         $categories = Category::whereStatus(1)->get();
-        $doctor = Doctor::with(['treatment', 'category', 'expertise'])->whereStatus(1)->where('is_filled', 1)->whereSubscriptionStatus(1);
+        $doctor = Doctor::with(['treatment', 'category', 'expertise'])->whereStatus(1)->whereSubscriptionStatus(1);
         $data = $request->all();
         $getSet = 0; 
         if (isset($data['doc_lat']) && isset($data['doc_lang']) && $data['doc_lang'] != '' && $data['doc_lat'] != '') {

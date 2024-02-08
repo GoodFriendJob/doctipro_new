@@ -180,7 +180,7 @@ class DoctorController extends Controller
         $data['since'] = Carbon::now(env('timezone'))->format('Y-m-d , h:i A');
         $data['status'] = 1;
         $data['subscription_status'] = 1;
-        $data['is_filled'] = 1;
+        // $data['is_filled'] = 1;
         // $data['hospital_id'] = implode(',',$request->hospital_id);
         //updated by Polaris
         if (!isset($data['commission_amount']) || empty($data['commission_amount']))
@@ -412,7 +412,7 @@ class DoctorController extends Controller
             array_push($certificate,$temp1);
         }
         $data['certificate'] = json_encode($certificate);
-        $data['is_filled'] = 1;
+        // $data['is_filled'] = 1;
         $data['custom_timeslot'] = $request->custom_time == '' ? null : $request->custom_time;
         $data['hospital_id'] = implode(',',$request->hospital_id);
         // if ($request->based_on == 'subscription') {
