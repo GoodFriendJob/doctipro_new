@@ -107,6 +107,9 @@
                 padding: 4px 25px;
             }
         }
+        .ui-widget.ui-widget-content {
+            z-index:9999;
+        }
     </style>
 @endsection
 @section('title',__('pid settings'))
