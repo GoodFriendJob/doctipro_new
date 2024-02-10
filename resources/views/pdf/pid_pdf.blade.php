@@ -21,8 +21,8 @@
     </head>
     <body>
         <h3 style="font-size:26px; margin-bottom:20px; text-align:center; border-bottom:1px solid #111;">PAIEMENT IMMÉDIAT DIRECT</h3>
-        <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name">{{ $doctor['name'] }}</span></h3>
-        <p style="margin:0;">Service Imagerie :<span id="detail_service_name">{{ $doctor['treatment']['name'] }}, </span></p>
+        <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name">{{ $doctor['name'] }} {{ $doctor['last_name'] }}</span></h3>
+        <p style="margin:0;">Service Imagerie :<span id="detail_service_name">{{ $doctor['category']['name'] }}, </span></p>
         <p style="margin:0;">
             <span id="detail_hospital_name">
             @foreach ($hospitals as $hospital)
@@ -34,13 +34,14 @@
         <p style="margin:0;"><span id="detail_hospital_location"></span></p>
         <div style="width:60%; margin-top:30px; margin-left:40%;">
             <p style="margin:0;">Matricule :<span id="detail_patient_id">{{ $doctor_pid['patient_id'] }}</span></p>
-            <p style="margin:0;">Patient : <span id="detail_patient_name">NOM Prénom</span></p>
+            <p style="margin:0;">Patient : <span id="detail_patient_name">{{ $patient['name'] }} {{ $patient['last_name'] }}</span></p>
         </div>
 
         <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
-        <p style="margin:0;">N° <span>{{ $doctor_pid['biller_id'] }}</span></p>
-        <p style="margin:0;">du <span>{{ $doctor_pid['biller_id'] }}</span></p>
-        <p style="margin:0 0 40px;">N° ID 20230227196605306156700337788 </p>
+        <p style="margin:0;">N° <span>{{ $patient['lat'] }}</span></p>
+        <p style="margin:0;">du <span>{{ $patient['lng'] }}</span></p>
+        <p style="margin:0;"><span>{{ $doctor_pid['address'] }}</span></p>
+        <p style="margin:0 0 40px;">N° ID {{ $patient['patient_id'] }} </p>
         <table>
             <thead>
                 <tr>

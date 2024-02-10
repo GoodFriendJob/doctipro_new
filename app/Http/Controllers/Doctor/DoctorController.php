@@ -277,9 +277,10 @@ class DoctorController extends Controller
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
         $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
         $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
-        $languages = Language::whereStatus(1)->get();
+        $patient = User::where('patient_id', $doctor_pid->patient_number)->first();
+        if (empty($patient)) exit;
 
-        return view('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'languages'));
+        return view('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
     }
 
     public function pid_pdf_download($id)
@@ -295,9 +296,10 @@ class DoctorController extends Controller
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
         $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
         $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
-        $languages = Language::whereStatus(1)->get();
+        $patient = User::where('patient_id', $doctor_pid->patient_number)->first();
+        if (empty($patient)) exit;
 
-        $pdf = PDF::loadView('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'languages'));
+        $pdf = PDF::loadView('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
         return $pdf->download('doctor_pid_ticket_'.$id.'.pdf');
     }
 
