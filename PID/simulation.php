@@ -25,8 +25,8 @@ $biller_id = '90813319';
 if (isset($_POST['biller_id'])) $biller_id = $_POST['biller_id'];
 
 ////////////////////////////////////////////////////////////////
-$patient_number = '1900123456712';
-if (isset($_POST['patient_number'])) $patient_number = $_POST['patient_number'];
+$patient_id = '1900123456712';
+if (isset($_POST['patient_id'])) $patient_id = $_POST['patient_id'];
 
 $medical_code = 'C1';
 if (isset($_POST['medical_code'])) $medical_code = $_POST['medical_code'];
@@ -54,7 +54,7 @@ if ($pid>0) {
     $medical_code = $row['medical_code'];
     $biller_id = $row['biller_id'];
     $service_place = $row['service_place'];
-    $patient_number = $row['patient_number'];
+    $patient_id = $row['patient_id'];
     $act_number = $row['act_number'];
     $lastInsertId = $row['pid_id'];
   }
@@ -395,14 +395,14 @@ try {
     ]);
   } else {
     $req1 = $OPC->prepare(" INSERT INTO doctor_pid 
-    (doctor_id, pshealthid, medical_code, service_place, patient_number, biller_id, act_number, guichet_date, date_modified) 
-  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_number, :biller_id, :act_number, '".$now."', NOW())");
+    (doctor_id, pshealthid, medical_code, service_place, patient_id, biller_id, act_number, guichet_date, date_modified) 
+  VALUES (:doctor_id, :pshealthid, :medical_code, :service_place, :patient_id, :biller_id, :act_number, '".$now."', NOW())");
     $req1->execute([
       'doctor_id' => $doctor_id,	
       'pshealthid' => $psEHealthID,	
       'medical_code' => $medical_code,	
       'service_place' => $service_place,	
-      'patient_number' => $patient_number,	
+      'patient_id' => $patient_id,	
       'biller_id' => $biller_id,	
       'act_number' => $act_number,	
     ]);
@@ -860,7 +860,7 @@ $simulationMedecin->appendChild($uta);
 $identifiantFacturier = $doc->createElement('cns:identifiantFacturier', $biller_id);
 $uta->appendChild($identifiantFacturier);
 
-$matricule = $doc->createElement('cns:matricule', $patient_number);
+$matricule = $doc->createElement('cns:matricule', $patient_id);
 $uta->appendChild($matricule);
 
 $varIdMemoireHonoraire = format_uuidv4(random_bytes(16));
@@ -896,7 +896,7 @@ $acte->appendChild($nombre);
 $lieuDePrestation = $doc->createElement('cns:lieuDePrestation', '01');
 $ligneUTA->appendChild($lieuDePrestation);
 
-$bodyNodeCanonized = CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number);
+$bodyNodeCanonized = CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_id,$act_number);
 
 $digestBody = openssl_digest($bodyNodeCanonized, 'sha256', true);//ok
 
@@ -1076,14 +1076,14 @@ function CanoniseBody2($biller_id)
 	
 	 return $CanonizedBody;
 }
-function CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_number,$act_number)
+function CanoniseBody3($biller_id, $varIdMemoireHonoraire,$varDateEtablissementMemoireHonoraire,$varIdentifiantExternePrestation,$varDateDebutPrestation,$medical_code,$service_place,$patient_id,$act_number)
 {  
   $CanonizedBody = '<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sync="http://ws.mysecu.lu/generic/sync" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="id-36854EF7B992756406157054655293757">
     <sync:RequestInfo modelUID="2023-CNS-PID-SIM-V1">
       <cns:simulationMedecin xmlns:cns="http://www.secu.lu/ciss/cns">
         <cns:UTA>
           <cns:identifiantFacturier>'.$biller_id.'</cns:identifiantFacturier>
-          <cns:matricule>'.$patient_number.'</cns:matricule>
+          <cns:matricule>'.$patient_id.'</cns:matricule>
           <cns:idMemoireHonoraire>'.$varIdMemoireHonoraire.'</cns:idMemoireHonoraire>
           <cns:dateEtablissementMemoireHonoraire>'.$varDateEtablissementMemoireHonoraire.'</cns:dateEtablissementMemoireHonoraire>
           <cns:Lignes>

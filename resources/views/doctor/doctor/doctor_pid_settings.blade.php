@@ -1,6 +1,7 @@
 @extends('layout.mainlayout_admin',['activePage' => 'pid_settings'])
 @section('css')
-    <link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
+<link rel="stylesheet" href="{{ url('assets/plugins/jquery-ui/jquery-ui.min.css') }}" />
+<link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
     <style>
         table {
             font-family: arial, sans-serif;
@@ -8,7 +9,9 @@
             width: 100%;
             border: 1px solid #aaa;
         }
-
+        .ui-autocomplete {
+            z-index: 99999;
+        }
         td, th {
             border: 1px solid #aaa;
             text-align: left;
@@ -16,6 +19,93 @@
         }
         .sorting_1 {
             min-width:40px;
+        }
+        ul.ui-autocomplete {
+            background-color: rgb(255, 255, 255);
+            box-sizing: border-box;
+            left: 0px;
+            position: absolute;
+            /* width: 100%; */
+            width: 288px !important;
+            z-index: 99;
+            --webkit-overflow-scrolling: touch;
+            box-shadow: none;
+            overflow-y: auto;
+            padding: 11px 0px 52px;
+            height: 100%;
+        }
+        .atc-box {
+            background: none;
+            cursor: pointer;
+            padding: 3px 12px;
+            transition: all 0.2s ease-in-out 0s;
+            display:block;
+            overflow: hidden;
+        }
+        .atc-img {
+            border-color: white;
+            border-radius: 50%;
+            height: 40px;
+            margin-top: 1px;
+            overflow: hidden;
+            position: absolute;
+        }
+        .atc-img img {
+            max-width: 100%;
+            height: auto;
+            -ms-interpolation-mode: bicubic;
+            display: inline-block;
+            vertical-align: middle;
+            width: 40px;
+        }
+        .atc-desc {
+            padding-left: 50px;
+            padding-top: 4px;
+        }
+        .atc-title {
+            color: #333333;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0em;
+            text-transform: none;
+            padding: 0px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-size-adjust: none;
+        }
+        .atc-categ {
+            color: #707070;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0em;
+            text-transform: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-size-adjust: none;
+            white-space: nowrap;
+        }
+        .atc-title b {
+            color: #ff7467 !important;
+        }
+        .atc-categ span {
+            margin-left:4px;
+            display:inline-block;
+            padding-left:3px;
+            color:#184394;
+        }
+        @media screen and (min-width: 768px) {
+            ul.ui-autocomplete {
+                padding-bottom: 8px;
+                height: auto;
+                border-top: 1px solid #e2e2e2;
+                border-bottom: 1px solid #cecece;
+                max-height: 496px;
+                /* min-width: 532px; */
+            }
+            .atc-box {
+                padding: 4px 25px;
+            }
         }
     </style>
 @endsection
@@ -163,7 +253,7 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->patient_number }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->patient_id }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
@@ -234,15 +324,24 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="col-form-label"> {{__('Patient Number')}} <b>*</b></label>
-                            <div class="input-group">
-                                <input type="text" value="1900123456712" id="patient_number" name="patient_number" class="form-control">
-                                <div class="input-group-append">
-                                    <span class="input-group-text" id="search-icon">
-                                        <i class="fa fa-search"></i>
-                                    </span>
+                        <div class="row mt-4">
+                            <div class="col-lg-8 form-group">
+                                <label class="col-form-label"> {{__('Patient ID')}} <b>*</b></label>
+                                <div class="input-group">
+                                    <input type="text" value="" id="search_patient" class="form-control" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="search-icon">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="hidden" value="{{$doctor->patient_id}}" id="patient_id" name="patient_id" />
                                 </div>
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <img src="" id="sel_patient_img" class="patient_avatar" />
+                                <h3 class="patient_name"><span id="sel_patient_name"></span></h3>
+                                <p class="patient_id">{{__('Patient ID')}}: <span id="sel_patient_id"></span></p>
+                                <p class="patient_id">{{__('Email')}}: <span id="sel_patient_email"></span></p>
                             </div>
                         </div>
                         <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
@@ -329,9 +428,56 @@
 
 @endsection
 @section('js')
+    <script src="{{ url('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script>
     $(document).ready(function () {
+        $("#search_patient").autocomplete({
+            minLength: 1,
+            source: function( request, response ) {
+                $.ajax( {
+                    headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data:{
+                        search_txt: request.term
+                    },
+                    url: base_url + '/patient_search',
+                    dataType: "json",
+                    success: function( data ) {
+                        response( data.data );
+                    }
+                });
+            },
+            focus: function( event, ui ) {
+            //   $( "#search_patient" ).val( ui.item.name );
+            //   $( "#sel_patient_img" ).val( ui.item.name );
+            //   $( "#sel_patient_name" ).val( ui.item.name );
+            //   $( "#sel_patient_id" ).val( ui.item.name );
+            return false;
+            },
+            select: function( event, ui ) {
+                $( "#search_patient" ).val( ui.item.name );
+                $( "#sel_patient_img" ).val( ui.item.img );
+                $( "#sel_patient_name" ).val( ui.item.name );
+                $( "#sel_patient_email" ).val( ui.item.email );
+                $( "#sel_patient_id" ).val( ui.item.patient_id );
+                $( "#patient_id" ).val( ui.item.patient_id );
+                return false;
+            }
+        })
+        .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            var searchInput = $( "#search_patient" ).val();
+            var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
+                return '<b>' + match + '</b>';
+            });
+            return $( "<li>" )
+            .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.patient_id + "</div></div></div>" )
+            .appendTo( ul );
+            
+        };
         $('#start_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,

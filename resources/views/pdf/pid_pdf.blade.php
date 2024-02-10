@@ -33,7 +33,7 @@
         <p style="margin:0;"><span id="detail_hospital_state"></span></p>
         <p style="margin:0;"><span id="detail_hospital_location"></span></p>
         <div style="width:60%; margin-top:30px; margin-left:40%;">
-            <p style="margin:0;">Matricule :<span id="detail_patient_number">{{ $doctor_pid['patient_number'] }}</span></p>
+            <p style="margin:0;">Matricule :<span id="detail_patient_id">{{ $doctor_pid['patient_id'] }}</span></p>
             <p style="margin:0;">Patient : <span id="detail_patient_name">NOM Prénom</span></p>
         </div>
 

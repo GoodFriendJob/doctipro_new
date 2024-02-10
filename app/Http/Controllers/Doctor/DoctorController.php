@@ -391,6 +391,31 @@ class DoctorController extends Controller
         return redirect('/doctor_home')->withStatus(__('Doctor updated successfully..!!'));
     }
 
+    //updated by Polaris
+    public function patient_search(Request $request)
+    {
+        $data = $request->all();
+        $patients = User::whereNotNull('patient_id');
+        if (isset($data['search_txt']) && $data['search_txt'] != '') {
+            $patients = $patients->where(function ($query) use ($data) {
+                $query->where('patient_id', 'like', '%' . $data['search_txt'] . '%')
+                      ->orWhere('name', 'like', '%' . $data['search_txt'] . '%')
+                      ->orWhere('last_name', 'like', '%' . $data['search_txt'] . '%');
+            });
+        } 
+        $patients = $patients->orderBy('name', 'asc')->orderBy('last_name', 'asc')->take(10)->get();
+        $result =[];
+        foreach ($patients as $patient) {
+            $result[] =[
+                'name' => $patient->name.' '.$patient->last_name,
+                'patient_id' => $patient->patient_id,
+                'email' => $patient->email,
+                'img' => $patient->image
+            ];
+        }
+        return response()->json(['success' => true, 'data' => $result]);
+    }
+
     public function changeLanguage()
     {
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
