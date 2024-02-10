@@ -26,9 +26,9 @@ class UserController extends Controller
         abort_if(Gate::denies('patient_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (auth()->user()->hasRole('doctor')) {
             $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-            $users = User::doesntHave('roles')->where('doctor_id', $doctor->id)->get();
+            $users = User::doesntHave('roles')->where('doctor_id', $doctor->id)->whereNotNull('patient_id')->get();
         } else {
-            $users = User::doesntHave('roles')->get();
+            $users = User::doesntHave('roles')->whereNotNull('patient_id')->get();
         }
         return view('superAdmin.patient.patient', compact('users'));
     }
@@ -62,7 +62,10 @@ class UserController extends Controller
                 'dob' => 'bail|required',
                 'gender' => 'bail|required',
                 // 'phone' => 'bail|required|digits_between:6,12',
-                'image' => 'bail|mimes:jpeg,png,jpg|max:1000'
+                'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
+                'address' => 'bail|required',
+                'lat' => 'bail|required',
+                'lng' => 'bail|required'
             ],
             ['image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.']
         );
@@ -133,7 +136,10 @@ class UserController extends Controller
                 'dob' => 'bail|required',
                 'gender' => 'bail|required',
                 'phone' => 'bail|required|digits_between:6,12',
-                'image' => 'bail|mimes:jpeg,png,jpg|max:1000'
+                'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
+                'address' => 'bail|required',
+                'lat' => 'bail|required',
+                'lng' => 'bail|required'
             ],
             ['image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.']
         );
