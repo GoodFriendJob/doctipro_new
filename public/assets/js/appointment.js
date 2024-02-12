@@ -363,25 +363,30 @@ const update = () => {
 };
 
 function shoeStep() {
-  if ($(circles).filter(".progress_active").length == 1) {
-    seeData("#step1");
-  }
   if ($(circles).filter(".progress_active").length == 2) {
     seeData("#step2");
-  }
-  if ($(circles).filter(".progress_active").length == 3)
-  {
-    seeData("#step3");
     $("#payment").addClass("block");
     $("#next").addClass("hidden");
     $("#payment").removeClass("hidden");
-  }
-  else
-  {
+  } else {
+    seeData("#step1");
     $("#payment").removeClass("block");
     $("#payment").addClass("hidden");
     $("#next").removeClass("hidden");
   }
+//   if ($(circles).filter(".progress_active").length == 3)
+//   {
+//     seeData("#step3");
+//     $("#payment").addClass("block");
+//     $("#next").addClass("hidden");
+//     $("#payment").removeClass("hidden");
+//   }
+//   else
+//   {
+//     $("#payment").removeClass("block");
+//     $("#payment").addClass("hidden");
+//     $("#next").removeClass("hidden");
+//   }
 }
 
 function displayHospital() {
