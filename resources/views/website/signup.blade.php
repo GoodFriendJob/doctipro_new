@@ -193,7 +193,7 @@
                         </div>
                         <div class="pt-3">
                             <label for="password" class="font-fira-sans text-black text-sm font-normal">{{__('Create Password')}}</label>
-                            <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
+                            <input type="password" name="password" value="{{ old('password') }}" id="password" class="@error('password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Enter password')}}">
                             @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -202,7 +202,7 @@
                         </div>
                         <div class="pt-3">
                             <label for="confirm_password" class="font-fira-sans text-black text-sm font-normal">{{__('Confirm Password')}}</label>
-                            <input type="password" name="confirm_password" id="confirm_password" class="@error('confirm_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Confirm password')}}">
+                            <input type="password" name="confirm_password" value="{{ old('confirm_password') }}" id="confirm_password" class="@error('confirm_password') is-invalid @enderror w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" placeholder="{{__('Confirm password')}}">
                             @error('confirm_password')
                             <div class="invalid-feedback">
                                 {{ $message }}

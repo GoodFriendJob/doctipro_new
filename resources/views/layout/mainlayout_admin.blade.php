@@ -6,8 +6,8 @@
 </head>
 <body>
     <div id="app">
-        @if (Auth::check())
-        {{-- @if (auth::check() && auth()->user()->hasRole('doctor') || auth::check() && auth()->user()->hasRole('super admin')) --}}
+        {{-- @if (Auth::check()) --}}
+        @if (Auth::check() && auth()->user()->hasRole('doctor') || Auth::check() && auth()->user()->hasRole('super admin'))
         <div class="main-wrapper">
             @if (auth()->user()->verify == 1)
                     @include('layout.partials.navbar_admin')
@@ -18,7 +18,7 @@
                     @php
                         $doctor = App\Models\Doctor::where('user_id',auth()->user()->id)->first();
                     @endphp
-                        @if($doctor->based_on == 'subscription')
+                        @if($doctor && $doctor->based_on == 'subscription')
                             @php
                                 $subscription_status = App\Models\Doctor::where('user_id',auth()->user()->id)->first()->subscription_status;
                             @endphp
