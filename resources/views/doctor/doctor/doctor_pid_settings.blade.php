@@ -455,19 +455,19 @@
                 });
             },
             focus: function( event, ui ) {
-              $( "#search_patient" ).val( ui.item.name );
-              $( "#sel_patient_img" ).val( ui.item.name );
-              $( "#sel_patient_name" ).val( ui.item.name );
-              $( "#sel_patient_id" ).val( ui.item.name );
+            //   $( "#search_patient" ).val( ui.item.name );
+            //   $( "#sel_patient_img" ).attr('src', ui.item.img );
+            //   $( "#sel_patient_name" ).html( ui.item.name );
+            //   $( "#sel_patient_id" ).html( ui.item.name );
             return false;
             },
             select: function( event, ui ) {
                 $( "#search_patient" ).val( ui.item.name );
-                $( "#sel_patient_img" ).val( ui.item.img );
-                $( "#sel_patient_name" ).val( ui.item.name );
-                $( "#sel_patient_email" ).val( ui.item.email );
-                $( "#sel_patient_id" ).val( ui.item.patient_id );
-                $( "#patient_id" ).val( ui.item.patient_id );
+                $( "#sel_patient_img" ).attr('src', ui.item.img );
+                $( "#sel_patient_name" ).html( ui.item.name );
+                $( "#sel_patient_email" ).html( ui.item.email );
+                $( "#sel_patient_id" ).html( ui.item.patient_id );
+                $( "#patient_id" ).html( ui.item.patient_id );
                 return false;
             }
         })

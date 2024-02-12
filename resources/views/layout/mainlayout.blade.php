@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets_admin/css/select2.min.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
@@ -82,7 +82,7 @@
         <script src="{{ url('assets_admin/js/select2.min.js')}}"></script>
         <script type="text/javascript" src="{{ url('assets/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.js"></script>
         <script src="{{ url('assets/js/custom.js') }}"></script>
         <script src="{{ url('js/app.js') }}"></script>
         @yield('js')

@@ -291,5 +291,6 @@
     DocphoneInputField.addEventListener("countrychange", function() {
         $('input[name=phone_code]').val('+' + docphoneInput.getSelectedCountryData().dialCode);
     });
+
 </script>
 @endsection
