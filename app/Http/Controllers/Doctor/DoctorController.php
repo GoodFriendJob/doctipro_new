@@ -307,6 +307,11 @@ class DoctorController extends Controller
     {
         abort_if(Gate::denies('doctor_profile'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
+        if (!$doctor)
+        {
+            exit;
+            // return redirect('/doctor_home')->withStatus(__('User is not existed according to Doctor!'));
+        }
         $doctor->user = User::find($doctor->user_id);
         $countries = Country::get();
         $treatments = Treatments::whereStatus(1)->get();
