@@ -281,7 +281,7 @@ class DoctorController extends Controller
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
         $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
         $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
-        $patient = User::where('patient_id', $doctor_pid->patient_number)->first();
+        $patient = User::where('patient_id', $doctor_pid->patient_id)->first();
         if (empty($patient)) exit;
 
         return view('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
@@ -302,7 +302,7 @@ class DoctorController extends Controller
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
         $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
         $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
-        $patient = User::where('patient_id', $doctor_pid->patient_number)->first();
+        $patient = User::where('patient_id', $doctor_pid->patient_id)->first();
         if (empty($patient)) exit;
 
         $pdf = PDF::loadView('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
