@@ -183,7 +183,7 @@
                     </div>
                     <div class="mt-2 row">
                         <label class="text-base font-normal font-fira-sans pb-2" for="note">{{__('Any Note For Doctor ??')}}</label>
-                        <textarea name="note" type="text" rows="5" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2"></textarea>
+                        <textarea name="note" type="text" rows="5" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2"> </textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mt-5">
                         <label class="text-base font-normal font-fira-sans leading-5 pb-2">{{__('Upload Patient Image & Report')}}</label>
