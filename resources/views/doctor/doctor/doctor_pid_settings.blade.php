@@ -330,7 +330,7 @@
                         <div class="row mt-4">
                             <div class="col-lg-8 form-group">
                                 <label class="col-form-label"> {{__('Patient ID')}} <b>*</b></label>
-                                <div class="input-group">
+                                <div class="input-group mb-4">
                                     <input type="text" value="" id="search_patient" class="form-control" />
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="search-icon">
@@ -340,11 +340,11 @@
                                     <input type="hidden" value="{{$doctor->patient_id}}" id="patient_id" name="patient_id" />
                                 </div>
                             </div>
-                            <div class="col-lg-4 form-group">
-                                <img src="" id="sel_patient_img" class="patient_avatar" />
-                                <h3 class="patient_name"><span id="sel_patient_name"></span></h3>
-                                <p class="patient_id">{{__('Patient ID')}}: <span id="sel_patient_id"></span></p>
-                                <p class="patient_id">{{__('Email')}}: <span id="sel_patient_email"></span></p>
+                            <div class="col-lg-4 form-group text-center" style="margin-top:-30px">
+                                <img src="" id="sel_patient_img" class="patient_avatar" style="width:90px;" />
+                                <h5 class="patient_name"><span id="sel_patient_name"></span></h5>
+                                <p class="m-0">{{__('Patient ID')}}: <span id="sel_patient_id"></span></p>
+                                <p class="m-0">{{__('Email')}}: <span id="sel_patient_email"></span></p>
                             </div>
                         </div>
                         <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
@@ -463,7 +463,7 @@
             },
             select: function( event, ui ) {
                 $( "#search_patient" ).val( ui.item.name );
-                $( "#sel_patient_img" ).attr('src', ui.item.img );
+                $( "#sel_patient_img" ).attr('src', base_url+'/images/upload/'+ui.item.img );
                 $( "#sel_patient_name" ).html( ui.item.name );
                 $( "#sel_patient_email" ).html( ui.item.email );
                 $( "#sel_patient_id" ).html( ui.item.patient_id );
