@@ -343,8 +343,8 @@
                             <div class="col-lg-4 form-group text-center" style="margin-top:-30px">
                                 <img src="" id="sel_patient_img" class="patient_avatar" style="width:90px;" />
                                 <h5 class="patient_name"><span id="sel_patient_name"></span></h5>
-                                <p class="m-0">{{__('Patient ID')}}: <span id="sel_patient_id"></span></p>
-                                <p class="m-0">{{__('Email')}}: <span id="sel_patient_email"></span></p>
+                                <p class="m-0"><span id="sel_patient_id"></span></p>
+                                <p class="m-0"><span id="sel_patient_email"></span></p>
                             </div>
                         </div>
                         <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
@@ -467,7 +467,7 @@
                 $( "#sel_patient_name" ).html( ui.item.name );
                 $( "#sel_patient_email" ).html( ui.item.email );
                 $( "#sel_patient_id" ).html( ui.item.patient_id );
-                $( "#patient_id" ).html( ui.item.patient_id );
+                $( "#patient_id" ).val( ui.item.patient_id );
                 return false;
             }
         })
