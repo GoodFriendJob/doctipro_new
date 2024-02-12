@@ -175,6 +175,7 @@ class DoctorController extends Controller
         $masterYear = array();
         $labelsYear = array();
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
+        if (!$doctor) return redirect('/');
         array_push($masterYear, Appointment::where('doctor_id', $doctor->id)->whereMonth('created_at', Carbon::now(env('timezone')))->count());
         for ($i = 1; $i <= 11; $i++) {
             if ($i >= Carbon::now(env('timezone'))->month) {
@@ -194,6 +195,7 @@ class DoctorController extends Controller
     public function schedule()
     {
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
+        if (!$doctor) return redirect('/');
         $doctor->workingHours = WorkingHour::where('doctor_id', $doctor->id)->get();
         $doctor->firstHours = WorkingHour::where('doctor_id', $doctor->id)->first();
         return view('doctor.doctor.doctor_schedule', compact('doctor'))->withStatus(__('Doctor updated successfully..!!'));;
@@ -205,7 +207,7 @@ class DoctorController extends Controller
             return view('doctor.auth.doctor_login');
         $data = $request->all();
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-
+        if (!$doctor) return redirect('/');
         $h = DoctorPID::where('doctor_id', $doctor->id);
         if (isset($data['date_type'])) {
             if (isset($data['start_date']) && $data['start_date']!='')
@@ -271,8 +273,9 @@ class DoctorController extends Controller
     {
         $doctor_pid = DoctorPID::where('pid_id', $id)->first();
         if (empty($doctor_pid)) exit;
-
         $doctor = Doctor::where('id', $doctor_pid->doctor_id)->first();
+        if (!$doctor) return redirect('doctor_home');
+
         $doctor->user = User::find($doctor->user_id);
         $doctor['start_time'] = Carbon::parse($doctor['start_time'])->format('H:i');
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
@@ -289,9 +292,11 @@ class DoctorController extends Controller
 
         // $doctor = Doctor::where('user_id', auth()->user()->id)->first();
         $doctor_pid = DoctorPID::where('pid_id', $id)->first();
-        if (empty($doctor_pid)) exit;
+        if (empty($doctor_pid)) return redirect('/pid_settings');
 
         $doctor = Doctor::where('id', $doctor_pid->doctor_id)->first();
+        if (!$doctor) return redirect('/doctor_home');
+
         $doctor->user = User::find($doctor->user_id);
         $doctor['start_time'] = Carbon::parse($doctor['start_time'])->format('H:i');
         $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
@@ -308,11 +313,8 @@ class DoctorController extends Controller
     {
         abort_if(Gate::denies('doctor_profile'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-        if (!$doctor)
-        {
-            exit;
-            // return redirect('/doctor_home')->withStatus(__('User is not existed according to Doctor!'));
-        }
+        if (!$doctor) return redirect('/');
+
         $doctor->user = User::find($doctor->user_id);
         $countries = Country::get();
         $treatments = Treatments::whereStatus(1)->get();
