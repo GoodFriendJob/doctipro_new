@@ -166,15 +166,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
-                                    <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                    <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">{{__('Street')}} <b>*</b></label>
-                                    <input type="text" value="{{ old('street') }}" name="street" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                    <input type="text" value="{{ old('street') }}" name="street" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">{{__('number')}} <b>*</b></label>
-                                    <input type="text" value="{{ old('number') }}" name="number" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                    <input type="text" value="{{ old('number') }}" name="number" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
                                 </div>
                             @else
                                 <p>{!! str_replace(', ', '<br>', $patient->address) !!}</p>
