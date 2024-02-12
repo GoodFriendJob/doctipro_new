@@ -65,13 +65,19 @@ class UserController extends Controller
                 'gender' => 'bail|required',
                 // 'phone' => 'bail|required|digits_between:6,12',
                 'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
-                'address' => 'bail|required',
-                'lat' => 'bail|required',
-                'lng' => 'bail|required'
+                // 'address' => 'bail|required',
+                // 'lat' => 'bail|required',
+                // 'lng' => 'bail|required'
+                'country' => 'bail|required',
+                'street' => 'bail|required',
+                'postal_code' => 'bail|required',
+                'number' => 'bail|required'
             ],
             ['image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.']
         );
         $data = $request->all();
+        $data['address'] = $data['number']. ', '.$data['street']. ', '.$data['postal_code']. ', '.$data['country'];
+
         if (auth()->user()->hasRole('doctor')) {
             $data['doctor_id'] = Doctor::where('user_id', auth()->user()->id)->first()->id;
         }
@@ -120,6 +126,13 @@ class UserController extends Controller
         abort_if(Gate::denies('patient_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $countries = Country::get();
         $patient = User::find($id);
+        $sub_address = explode(", ", $patient->address);
+        if (sizeof($sub_address)>3) {
+            $patient['number'] = $sub_address[0];
+            $patient['street'] = $sub_address[1];
+            $patient['postal_code'] = $sub_address[2];
+            $patient['country'] = $sub_address[3];
+        }
         return view('superAdmin.patient.edit_patient', compact('countries', 'patient'));
     }
 
@@ -140,13 +153,18 @@ class UserController extends Controller
                 'gender' => 'bail|required',
                 'phone' => 'bail|required|digits_between:6,12',
                 'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
-                'address' => 'bail|required',
-                'lat' => 'bail|required',
-                'lng' => 'bail|required'
+                // 'address' => 'bail|required',
+                // 'lat' => 'bail|required',
+                // 'lng' => 'bail|required',
+                'country' => 'bail|required',
+                'street' => 'bail|required',
+                'postal_code' => 'bail|required',
+                'number' => 'bail|required'
             ],
             ['image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.']
         );
         $data = $request->all();
+        $data['address'] = $data['number']. ', '.$data['street']. ', '.$data['postal_code']. ', '.$data['country'];
         $user = User::find($id);
         if ($request->hasFile('image')) {
             (new CustomController)->deleteFile($user->image);

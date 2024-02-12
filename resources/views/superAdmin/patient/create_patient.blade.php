@@ -95,7 +95,7 @@
                             <div class="row">
                                 <div class="col-4 form-group">
                                     <label for="phone_number" class="col-form-label"> {{__('Phone Code')}}</label><br>
-                                    <select name="phone_code" class="form-control phone_code_select2">
+                                    <select name="phone_code" class="d-flex form-control phone_code_select2">
                                         @foreach ($countries as $country)
                                             <option value="+{{$country->phonecode}}" {{ old('phone_code', '352') == $country->phonecode ? 'selected' : '' }}>+{{ $country->phonecode }}</option>
                                         @endforeach
@@ -122,17 +122,48 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="pac-card col-md-12 mb-3" id="pac-card">
-                            <label for="col-form-label pac-input">{{__('Location based on latitude/longitude')}} <b>*</b></label>
-                            <div id="pac-container">
-                                <input id="pac-input" type="text" name="address" class="form-control" value="{{ old('address') }}" />
-                                <input type="hidden" name="lat" value="{{ old('lat') }}" id="lat">
-                                <input type="hidden" name="lng" value="{{ old('lng') }}" id="lng">
+                </div>
+                <div class="card">
+                    <div class="card-header text-primary">
+                        {{__('Address')}}
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-3">
+                                <label class="col-form-label"> {{__('Country')}}</label>
+                                <select name="country" class="form-control">
+                                    @foreach ($countries as $country)
+                                        <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div id="map" class="mapClass"></div>
+                            <div class="form-group col-3">
+                                <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
+                                <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="form-control @error('postal_code') is-invalid @enderror">
+                                @error('postal_code')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-3">
+                                <label class="col-form-label">{{__('Street')}} <b>*</b></label>
+                                <input type="text" value="{{ old('street') }}" name="street" class="form-control @error('street') is-invalid @enderror">
+                                @error('street')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-3">
+                                <label class="col-form-label">{{__('number')}} <b>*</b></label>
+                                <input type="text" value="{{ old('number') }}" name="number" class="form-control @error('number') is-invalid @enderror">
+                                @error('number')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,8 +178,6 @@
 @endsection
 
 @section('js')
-<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
-<script src="{{ url('assets_admin/js/hospital_map.js') }}"></script>
 <script>
     $(document).ready(function () {
         $('input[name="patient_id"]').on('input', function(){
