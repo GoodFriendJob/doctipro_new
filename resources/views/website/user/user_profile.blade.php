@@ -44,7 +44,7 @@
                                                         <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Appointment Id') }}</th>
                                                         <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Report Image') }}</th>
                                                         <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Appointment Date') }}</th>
-                                                        <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Amount') }}({{ $currency }})</th>
+                                                        {{-- <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Amount') }}({{ $currency }})</th> --}}
                                                         <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Appointment Status') }}</th>
                                                         <th scope="col" class="text-sm font-semibold px-6 py-4 text-left">{{__('Action') }}</th>
                                                     </tr>
@@ -66,7 +66,7 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-sm px-6 py-4"><span>{{ $appointment->time }}</span></td>
-                                                        <td class="text-sm px-6 py-4">{{ $currency }}{{ $appointment->amount }}</td>
+                                                        {{-- <td class="text-sm px-6 py-4">{{ $currency }}{{ $appointment->amount }}</td> --}}
                                                         <td class="text-sm px-6 py-4">
                                                             @if($appointment->appointment_status == 'pending' || $appointment->appointment_status == 'PENDING')
                                                             <span class="border border-yellow-100 bg-yellow-100 px-3 py-1 text-yellow rounded-full">{{__('Pending')}}</span>
@@ -233,16 +233,16 @@
             </div>
             <div class="relative overflow-y-auto p-4">
                 <div class="border border-white-light p-2">
-                    <h5 class="font-bold text-base font-fira-sans px-2">{{ __('Hospital Details') }}</h5>
+                    <h5 class="font-bold text-base font-fira-sans px-2">{{ __('Doctor Details') }}</h5>
                     <table class="min-w-full">
                         <tr>
                             <td class="text-sm text-gray-600  px-2 py-2 text-left font-fira-sans">{{ __('appointment Id')}}</td>
                             <td class="text-sm font-light px-2 py-2 font-fira-sans appointment_id"></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-sm text-gray-600 px-2 py-2 text-left font-fira-sans">{{ __('Hospital') }}</td>
                             <td class="text-sm font-light px-2 py-2 font-fira-sans hospital"></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="text-sm text-gray-600 px-2 py-2 text-left font-fira-sans">{{ __('Doctor name') }}</td>
                             <td class="text-sm font-light px-2 py-2 font-fira-sans doctor_name"></td>
@@ -269,10 +269,10 @@
                             <td class="w-2/4 text-sm text-gray-600 px-2 py-2 text-left font-fira-sans">{{ __('patient age') }}</td>
                             <td class="w-2/4 text-sm font-light px-2 py-2 font-fira-sans patient_age"></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="w-2/4 text-sm text-gray-600 px-2 py-2 text-left font-fira-sans">{{ __('illness information') }}</td>
                             <td class="w-2/4 text-sm font-light px-2 py-2 font-fira-sans illness_info"></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="w-2/4 text-sm text-gray-600 px-2 py-2 text-left font-fira-sans">{{ __('patient address') }}</td>
                             <td class="w-2/4 text-sm font-light px-2 py-2 font-fira-sans patient_address"></td>
@@ -280,7 +280,7 @@
                     </table>
                 </div>
 
-                <div class="border border-white-light p-2 mt-3">
+                {{-- <div class="border border-white-light p-2 mt-3">
                     <h5 class="font-bold text-base font-fira-sans px-2">{{ __('Payment Details') }}</h5>
                     <table class="min-w-full">
                         <tr>
@@ -300,7 +300,7 @@
                             <td class="w-2/4 text-sm font-light px-2 py-2 font-fira-sans patient_address"></td>
                         </tr>
                     </table>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

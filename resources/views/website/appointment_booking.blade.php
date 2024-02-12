@@ -119,9 +119,14 @@
                 <div class="circle">3</div>
             </div>
             <form id="appointmentForm">
+                @php
+                    $birthdate = Carbon\Carbon::parse(auth()->user()->dob);
+                    $age = $birthdate->age;
+                @endphp
                 <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
                 <input type="hidden" name="currency" value="{{ $setting->currency_code }}">
                 <input type="hidden" name="company_name" value="{{ $setting->business_name }}">
+                <input type="hidden" name="patient_address" value="{{ $patient->address }}">
                 <input type="hidden" name="user_name" value="{{ auth()->user()->name }}">
                 <input type="hidden" name="email" value="{{ auth()->user()->email }}">
                 <input type="hidden" name="phone" value="{{ auth()->user()->phone }}">
@@ -131,6 +136,7 @@
                 <input type="hidden" name="payment_status" value="0">
                 <input type="hidden" name="discount_price">
                 <input type="hidden" name="discount_id">
+                <input type="hidden" name="age" value={{$age}}>
 
                 <div id="step1" class="block p-5">
                     <h1 class="font-fira-sans leading-6 text-xl font-medium pb-6">{{__('Patient Details')}}</h1>

@@ -759,23 +759,32 @@ class WebsiteController extends Controller
         $data = $request->all();
         // return $data;
         $request->validate([
-            'appointment_for' => 'bail|required',
-            'illness_information' => 'bail|required',
-            'patient_name' => 'bail|required',
-            'age' => 'bail|required|numeric',
-            'patient_address' => 'bail|required',
-            'phone_no' => 'bail|required|numeric',
-            'drug_effect' => 'bail|required',
+            // 'appointment_for' => 'bail|required',
+            // 'illness_information' => 'bail|required',
+            // 'patient_name' => 'bail|required',
+            // 'age' => 'bail|required|numeric',
+            // 'patient_address' => 'bail|required',
+            // 'phone_no' => 'bail|required|numeric',
+            // 'drug_effect' => 'bail|required',
             'note' => 'bail|required',
             'date' => 'bail|required',
             'time' => 'bail|required',
-            'hospital_id' => 'bail|required',
-            'time' => 'bail|required|date_format:h:i a'
+            // 'hospital_id' => 'bail|required',
+            // 'time' => 'bail|required|date_format:h:i a'
         ]);
+        //updated by Polaris
+        $patient = User::where('id', auth()->user()->id)->first();
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $data['appointment_for'] = 'my_self';
+        $data['illness_information'] = 'No Set';
+        $data['patient_name'] = $data['user_name'];
+        $data['phone_no'] = $data['phone'];
+        $data['drug_effect'] = " ";
+
         $data['appointment_id'] =  '#' . rand(100000, 999999);
         $data['user_id'] = auth()->user()->id;
         $data['appointment_status'] = 'pending';
-        $data['is_from'] = '0';
+        $data['is_from'] = 0;
         if ($request->hasFile('report_image')) {
             $report = [];
             for ($i = 0; $i < count($data['report_image']); $i++) {

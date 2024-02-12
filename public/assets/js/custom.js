@@ -95,11 +95,12 @@ function show_appointment(appointment_id) {
             else {
                 $('.payment_status').text('payment complete')
             }
+            console.log('--', result.data);
             $('.payment_type').text(result.data.payment_type);
-            $('.illness_info').text(result.data.illness_information);
-            $('.hospital').text(result.data.hospital.name);
+            // $('.illness_info').text(result.data.illness_information);
+            // $('.hospital').text(result.data.hospital.name);
             $('.patient_name').text(result.data.patient_name);
-            $('.patient_address').text(result.data.address.address);
+            $('.patient_address').text(result.data.patient_address);
             $('.patient_age').text(result.data.age);
         },
         error: function (err) {
