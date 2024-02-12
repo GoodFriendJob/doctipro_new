@@ -784,6 +784,8 @@ class WebsiteController extends Controller
         $data['drug_effect'] = " ";
         if (isset($data['postal_code']))
             $data['patient_address'] = $data['number']. ', '.$data['street']. ', '.$data['postal_code']. ', '.$data['country'];
+        if (empty($data['note']))
+            $data['nonte'] = 'No comment';
 
 
         $data['appointment_id'] =  '#' . rand(100000, 999999);
