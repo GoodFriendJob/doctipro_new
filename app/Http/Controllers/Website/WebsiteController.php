@@ -8,6 +8,7 @@ use App\Mail\SendMail;
 use App\Models\Appointment;
 use App\Models\Banner;
 use App\Models\Blog;
+use App\Models\Country;
 use App\Models\Category;
 use App\Models\Doctor;
 use App\Models\DoctorSubscription;
@@ -459,8 +460,9 @@ class WebsiteController extends Controller
         // $doctor->hospital = (new CustomController)->getHospital($id);
         $setting = Setting::first();
         $currency = $setting->currency_symbol;
+        $countries = Country::get();
         // return view('website.appointment_booking', compact('doctor', 'patient_addressess', 'today_timeslots', 'currency', 'setting'));
-        return view('website.appointment_booking', compact('doctor', 'patient', 'today_timeslots', 'currency', 'setting'));
+        return view('website.appointment_booking', compact('doctor', 'patient', 'today_timeslots', 'currency', 'setting', 'countries'));
     }
 
     public function pharmacy(Request $request)
@@ -780,6 +782,9 @@ class WebsiteController extends Controller
         $data['patient_name'] = $data['user_name'];
         $data['phone_no'] = $data['phone'];
         $data['drug_effect'] = " ";
+        if (isset($data['postal_code']))
+            $data['address'] = $data['number']. ', '.$data['street']. ', '.$data['postal_code']. ', '.$data['country'];
+
 
         $data['appointment_id'] =  '#' . rand(100000, 999999);
         $data['user_id'] = auth()->user()->id;

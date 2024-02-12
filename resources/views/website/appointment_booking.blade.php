@@ -143,7 +143,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                         <div class="text-center">
                             <a target="_blank" href="{{ url('user_profile') }}" class="inline-block text-center avatar avatar-sm mr-2">
-                                <img class="rounded-full" src="{{ $patient->fullImage }}" alt="User Image" width="90px" height="90px">
+                                <img class="rounded-full" src="{{ $patient->fullImage }}" alt="User Image" width="120px" height="120px">
                             </a>
                             <br>
                             <a target="_blank" href="{{ url('user_profile') }}">{{$patient->name }} {{$patient->last_name }}</a>
@@ -152,10 +152,33 @@
                             <h3>{{__('Birthday')}} : {{$patient->dob}}</h3>
                             <h3>{{__('Patient ID')}} : {{$patient->patient_id}}</h3>
                             <h3>{{__('Email')}} : {{$patient->email}}</h3>
+                            <h3>{{__('Phone')}} : ({{$patient->phone_code}}) {{$patient->phone}}</h3>
                         </div>
                         <div>
-                            <h3>{{__('Phone')}} : ({{$patient->phone_code}}) {{$patient->phone}}</h3>
-                            <h3>{{__('address')}} : {!! str_replace(', ', '<br>', $patient->address) !!}</h3>
+                            @if (empty($patient->address))
+                                <div class="form-group">
+                                    <label class="col-form-label"> {{__('Country')}}</label>
+                                    <select name="country" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                        @foreach ($countries as $country)
+                                            <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">{{__('Street')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('street') }}" name="street" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">{{__('number')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('number') }}" name="number" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                </div>
+                            @else
+                                <p>{!! str_replace(', ', '<br>', $patient->address) !!}</p>
+                            @endif
                         </div>
                     </div>
                     <div class="mt-2 row">
@@ -289,7 +312,7 @@
                         <input type="hidden" name="lat" id="lat" value="{{ $setting->lat }}">
                         <input type="hidden" name="lang" id="lng" value="{{ $setting->lang }}">
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                        <textarea name="address" class="mt-2 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white-50 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlTextarea1" rows="3" placeholder="Your message"></textarea>
+                        <textarea name="address" class="mt-2 w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white-50 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlTextarea1" rows="3" placeholder="Your message"></textarea>
                         <span class="invalid-div text-red"><span class="address text-sm  text-red-600 font-fira-sans"></span></span>
                     </form>
                 </div>
