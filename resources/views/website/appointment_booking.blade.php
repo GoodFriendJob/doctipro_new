@@ -134,61 +134,28 @@
 
                 <div id="step1" class="block p-5">
                     <h1 class="font-fira-sans leading-6 text-xl font-medium pb-6">{{__('Patient Details')}}</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-                        <div>
-                            <label for="appointment_for" class="text-base font-normal font-fira-sans pb-2">{{__('Appointment For')}}</label>
-                            <select id="appointment_for" aria-placeholder="appointment for" name="appointment_for" class="border border-white-light text-gray text-sm bg-white-50 focus:ring-primary focus:border-primary block w-full p-1.5 mt-2">
-                                <option value="" disabled selected>{{ __('Appointment for') }}</option>
-                                <option value="my_self">{{__('For me')}}</option>
-                                <option value="other">{{__('Other')}}</option>
-                            </select>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                        <div class="text-center">
+                            <a target="_blank" href="{{ url('user_profile') }}" class="inline-block text-center avatar avatar-sm mr-2">
+                                <img class="rounded-full" src="{{ $patient->fullImage }}" alt="User Image" width="90px" height="90px">
+                            </a>
+                            <br>
+                            <a target="_blank" href="{{ url('user_profile') }}">{{$patient->name }} {{$patient->last_name }}</a>
                         </div>
                         <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="illness_information">{{__('Illness Information')}}</label>
-                            <input type="text" name="illness_information" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
+                            <h3>{{__('Birthday')}} : {{$patient->dob}}</h3>
+                            <h3>{{__('Patient ID')}} : {{$patient->patient_id}}</h3>
+                            <h3>{{__('Email')}} : {{$patient->email}}</h3>
+                        </div>
+                        <div>
+                            <h3>{{__('Phone')}} : ({{$patient->phone_code}}) {{$patient->phone}}</h3>
+                            <h3>{{__('address')}} : {!! str_replace(', ', '<br>', $patient->address) !!}</h3>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mt-5">
-                        <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="patient_name">{{__('Patient Name')}}</label>
-                            <input name="patient_name" type="text" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
-                        </div>
-                        <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="patient_age">{{__('Patient Age')}}</label>
-                            <input type="number" min="1" name="age" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
-                        </div>
-                        <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="phone_number">{{__('Phone Number')}}</label>
-                            <input type="number" min="1" name="phone_no" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
-                        </div>
+                    <div class="mt-2 row">
+                        <label class="text-base font-normal font-fira-sans pb-2" for="note">{{__('Any Note For Doctor ??')}}</label>
+                        <textarea name="note" type="text" rows="5" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required></textarea>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-1 md:gap-1 lg:gap-1 mt-5">
-                        <div class="flex justify-between">
-                            <label class="text-base font-normal font-fira-sans leading-5" for="patient_address">{{__('Address')}}</label>
-                            <button type="button" class="inline-block py-2.5 font-medium text-xs leading-tight uppercase rounded text-primary transition duration-150 ease-in-out" data-modal-target="exampleModalCenteredScrollable" data-modal-toggle="exampleModalCenteredScrollable" data-te-ripple-color="light" role="dialog">
-                                {{ __('Add Address') }}
-                            </button>
-                        </div>
-                        <select name="patient_address" id="patient_address" class="select2 w-full border !border-white-light text-gray text-sm bg-white-50 focus:border-primary block p-1.5 mt-2">
-                            <option value="" disabled selected>{{ __('Please select The Address') }}</option>
-                            @foreach ($patient_addressess as $patient_address)
-                            <option value="{{ $patient_address->id }}">{{ $patient_address->address }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mt-5">
-                        <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="drug_effect">{{__('Any Side Effects Of The Drug?')}}</label>
-                            <input name="drug_effect" type="text" id="search-dropdown" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
-                        </div>
-                        <div>
-                            <label class="text-base font-normal font-fira-sans leading-5 pb-2" for="note">{{__('Any Note For Doctor ??')}}</label>
-                            <input name="note" type="text" id="search-dropdown" class="block p-2 w-full text-sm bg-white-50 border font-normal font-fira-sans leading-5 !border-white-light mt-2" required>
-                        </div>
-                    </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mt-5">
                         <label class="text-base font-normal font-fira-sans leading-5 pb-2">{{__('Upload Patient Image & Report')}}</label>
                     </div>
@@ -256,7 +223,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="2xl:w-2/5 p-8 xxsm:w-full">
+                        {{-- <div class="2xl:w-2/5 p-8 xxsm:w-full">
                             <div>
                                 <h4 class="font-fira-sans font-normal text-1xl text-left pb-5">{{ __('Choose Clinic') }}</h4>
                             </div>
@@ -287,7 +254,7 @@
                                 </div>
                             </div>
                             @endforeach
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div id="step3" class="hidden">
@@ -433,12 +400,12 @@
                                 <p class="font-fira-sans font-normal leading-4 text-sm text-gray text-center md:text-md"><i class="fa-solid fa-star text-yellow"></i> {{ $doctor['rate'] }}&nbsp;({{ $doctor['review'] }}{{ __(' reviews') }})</p>
                             </div>
                             <div class="border !border-t-0 border-white-light p-5">
-                                <div>
+                                {{-- <div>
                                     <h5 class="font-fira-sans font-medium text-1xl text-left displayHospitalName">{{ $hospital_name }}</h5>
-                                </div>
+                                </div> --}}
                                 <div class="flex mt-1 items-center">
                                     <i class="fa-solid fa-location-dot mr-3"></i>
-                                    <p class="displayAddress font-fira-sans ">{{ $address }}</p>
+                                    <p class="displayAddress font-fira-sans ">{{ $patient->address }}</p>
                                 </div>
                                 <div class="font-fira-sans mt-4">
                                     {{ __('Appointment Fees : ') }} <span class="text-base font-medium text-primary">{{ $currency }}<span class="appointmentFees">{{ $doctor->appointment_fees }}</span></span>

@@ -318,7 +318,7 @@ next.addEventListener("click", () => {
             if (currentActive > circles.length) currentActive = circles.length;
             update();
             shoeStep();
-            displayHospital();
+            // displayHospital();
         }
     }
     else if (currentActive == 2) {
@@ -921,13 +921,13 @@ function checkFirstFormValidation()
 }
 
 function checkSecondFormValidation() {
-    var hospital_id = $('input[name=hospital_id]').val();
+    // var hospital_id = $('input[name=hospital_id]').val();
     var date = $('input[name=date]').val();
     var time = $('input[name=time]').val();
-    if (hospital_id == '' || hospital_id == undefined || hospital_id == "" || hospital_id == null) {
-        return false;
-    }
-    else if(date == '' || date == undefined || date == "" || date == null)
+    // if (hospital_id == '' || hospital_id == undefined || hospital_id == "" || hospital_id == null) {
+    //     return false;
+    // }
+    if(date == '' || date == undefined || date == "" || date == null)
     {
         return false;
     }

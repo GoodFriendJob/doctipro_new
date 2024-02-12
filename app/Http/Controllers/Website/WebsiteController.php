@@ -453,12 +453,14 @@ class WebsiteController extends Controller
     public function booking($id, $name)
     {
         $doctor = Doctor::with(['category', 'expertise'])->find($id);
-        $patient_addressess = UserAddress::where('user_id', auth()->user()->id)->get();
+        $patient = User::where('id', auth()->user()->id)->first();
+        // $patient_addressess = UserAddress::where('user_id', auth()->user()->id)->get();
         $today_timeslots = (new CustomController)->timeSlot($id, Carbon::today(env('timezone'))->format('Y-m-d'));
-        $doctor->hospital = (new CustomController)->getHospital($id);
+        // $doctor->hospital = (new CustomController)->getHospital($id);
         $setting = Setting::first();
         $currency = $setting->currency_symbol;
-        return view('website.appointment_booking', compact('doctor', 'patient_addressess', 'today_timeslots', 'currency', 'setting'));
+        // return view('website.appointment_booking', compact('doctor', 'patient_addressess', 'today_timeslots', 'currency', 'setting'));
+        return view('website.appointment_booking', compact('doctor', 'patient', 'today_timeslots', 'currency', 'setting'));
     }
 
     public function pharmacy(Request $request)
