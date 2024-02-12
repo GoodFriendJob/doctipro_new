@@ -1401,12 +1401,11 @@ function show_appointment(appointment_id) {
         {
             $('.appointment_id').text(result.data.appointment_id);
             $('.doctor_name').text(result.data.doctor.name);
-            $('.amount').text(result.currency+result.data.amount);
+            // $('.amount').text(result.currency+result.data.amount);
             $('.date').text(result.data.date);
-            $('.hospital').text(result.data.hospital.name);
+            // $('.hospital').text(result.data.hospital.name);
             $('.time').text(result.data.time);
-            $('.drug_effect').text(result.data.drug_effect);
-            $('.doctor_note').text(result.data.note);
+            // $('.drug_effect').text(result.data.drug_effect);
             $('.doctor_note').text(result.data.note);
             if(result.data.payment_status == 0)
             {
@@ -1417,7 +1416,7 @@ function show_appointment(appointment_id) {
                 $('.payment_status').text('payment complete')
             }
             $('.payment_type').text(result.data.payment_type);
-            $('.illness_info').text(result.data.illness_information);
+            // $('.illness_info').text(result.data.illness_information);
             $('.patient_name').text(result.data.patient_name);
             $('.patient_address').text(result.data.patient_address);
             $('.patient_age').text(result.data.age);

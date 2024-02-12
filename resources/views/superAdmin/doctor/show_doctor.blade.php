@@ -54,7 +54,7 @@
                             <th> # </th>
                             <th>{{__('appointment id')}}</th>
                             <th>{{__('Report or patient image')}}</th>
-                            <th>{{__('amount')}}</th>
+                            {{-- <th>{{__('amount')}}</th> --}}
                             @if (!auth()->user()->hasRole('doctor'))
                                 <th>{{__('doctor name')}}</th>
                             @endif
@@ -90,7 +90,7 @@
                                         {{__('Image Not available')}}
                                     @endif
                                 </td>
-                                <td>{{ $currency }}{{ $appointment->amount }}</td>
+                                {{-- <td>{{ $currency }}{{ $appointment->amount }}</td> --}}
                                 @if (!auth()->user()->hasRole('doctor'))
                                     <td>{{ $appointment->doctor['name'] }}</td>
                                 @endif
@@ -192,10 +192,10 @@
                         <td>{{__('patient age')}}</td>
                         <td class="patient_age"></td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>{{__('amount')}}</td>
                         <td class="amount"></td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>{{__('date')}}</td>
                         <td class="date"></td>
@@ -204,7 +204,7 @@
                         <td>{{__('time')}}</td>
                         <td class="time"></td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>{{__('payment status')}}</td>
                         <td class="payment_status"></td>
                     </tr>
@@ -215,7 +215,7 @@
                     <tr>
                         <td>{{__('illness information')}}</td>
                         <td class="illness_info"></td>
-                    </tr>
+                    </tr> --}}
                 </table>
             </div>
             <div class="modal-footer">

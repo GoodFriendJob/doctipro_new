@@ -23,7 +23,7 @@
                                     <th> # </th>
                                     <th>{{__('appointment id')}}</th>
                                     <th>{{__('Report or patient image')}}</th>
-                                    <th>{{__('amount')}}</th>
+                                    {{-- <th>{{__('amount')}}</th> --}}
                                     <th>{{__('doctor name')}}</th>
                                     <th>{{__('payment status')}}</th>
                                     <th>{{__('status')}}</th>
@@ -49,7 +49,7 @@
                                                 {{__('Image Not available')}}
                                             @endif
                                         </td>
-                                        <td>{{ $currency }}{{ $appointment->amount }}</td>
+                                        {{-- <td>{{ $currency }}{{ $appointment->amount }}</td> --}}
                                         <td>{{ $appointment->doctor['name'] }}</td>
                                         <td>
                                             @if ($appointment->payment_status == 1)
@@ -138,7 +138,7 @@
                         <td>{{__('time')}}</td>
                         <td class="time"></td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>{{__('payment status')}}</td>
                         <td class="payment_status"></td>
                     </tr>
@@ -149,7 +149,7 @@
                     <tr>
                         <td>{{__('illness information')}}</td>
                         <td class="illness_info"></td>
-                    </tr>
+                    </tr> --}}
                 </table>
             </div>
             <div class="modal-footer">

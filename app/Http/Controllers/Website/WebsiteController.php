@@ -766,7 +766,7 @@ class WebsiteController extends Controller
             // 'patient_address' => 'bail|required',
             // 'phone_no' => 'bail|required|numeric',
             // 'drug_effect' => 'bail|required',
-            'note' => 'bail|required',
+            // 'note' => 'bail|required',
             'date' => 'bail|required',
             'time' => 'bail|required',
             // 'hospital_id' => 'bail|required',

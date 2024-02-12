@@ -65,7 +65,7 @@
                                 <tr>
                                     <th> # </th>
                                     <th>{{__('appointment id')}}</th>
-                                    <th>{{__('amount')}}</th>
+                                    {{-- <th>{{__('amount')}}</th> --}}
                                     <th>{{__('date')}}</th>
                                     <th>{{__('payment status')}}</th>
                                     <th>{{__('status')}}</th>
@@ -77,7 +77,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $appointment->appointment_id }}</td>
-                                        <td>{{ $currency }}{{ $appointment->amount }}</td>
+                                        {{-- <td>{{ $currency }}{{ $appointment->amount }}</td> --}}
                                         <td>{{ $appointment->date }}<span class="d-block text-info">{{ $appointment->time }}</span></td>
                                         <td>
                                             @if ($appointment->payment_status == 1)
