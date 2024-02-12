@@ -105,11 +105,15 @@ class DoctorController extends Controller
             'verify' => 1,
             'phone' => $data['phone'],
             'phone_code' => $data['phone_code'],
+            'address' => $data['address'],
+            'lat' => $data['lat'],
+            'lng' => $data['lng'],
             'image' => 'default_doctor.jpg'
         ],
         [
             'image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.',
         ]);
+        
         $message1 = 'Dear Doctor your password is : '.$password;
         try
         {
@@ -142,6 +146,7 @@ class DoctorController extends Controller
         if (!isset($data['language'])) $data['language'] = "English";
         if (!isset($data['timeslot'])) $data['timeslot'] = "30";
         if (!isset($data['experience'])) $data['experience'] = "5";
+        if (!isset($data['is_filled'])) $data['is_filled'] = 0;
 
 
         $data['start_time'] = strtolower(Carbon::parse($data['start_time'])->format('h:i a'));
@@ -444,6 +449,9 @@ class DoctorController extends Controller
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'phone_code' => $data['phone_code'],
+                'address' => $data['address'],
+                'lat' => $data['lat'],
+                'lng' => $data['lng'],
                 'image' => isset($data['image']) ? $data['image']:$doctor->image
             ]);
         } catch (\Exception $e) {

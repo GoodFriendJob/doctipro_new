@@ -336,6 +336,7 @@ class DoctorController extends Controller
                 'start_time' => 'bail|required',
                 'end_time' => 'bail|required|after:start_time',
                 'hospital_id' => 'bail|required',
+                'address' => 'bail|required',
                 // 'desc' => 'required',
                 // 'appointment_fees' => 'required|numeric',
                 // 'experience' => 'bail|required|numeric',
@@ -373,22 +374,32 @@ class DoctorController extends Controller
         $data['custom_timeslot'] = $data['custom_timeslot'] == "" ? null : $data['custom_timeslot'];
         if ($data['timeslot'] != 'other')
             $data['custom_timeslot'] = null;
-        if ($request->based_on == 'subscription') {
-            if (!DoctorSubscription::where('doctor_id', $id)->exists()) {
-                $subscription = Subscription::where('name', 'free')->first();
-                if ($subscription) {
-                    $doctor_subscription['doctor_id'] = $doctor->id;
-                    $doctor_subscription['subscription_id'] = $subscription->id;
-                    $doctor_subscription['duration'] = 1;
-                    $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
-                    $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
-                    $doctor_subscription['status'] = 1;
-                    $doctor_subscription['payment_status'] = 1;
-                    DoctorSubscription::create($doctor_subscription);
-                }
+        // if ($request->based_on == 'subscription') {
+        //     if (!DoctorSubscription::where('doctor_id', $id)->exists()) {
+        //         $subscription = Subscription::where('name', 'free')->first();
+        //         if ($subscription) {
+        //             $doctor_subscription['doctor_id'] = $doctor->id;
+        //             $doctor_subscription['subscription_id'] = $subscription->id;
+        //             $doctor_subscription['duration'] = 1;
+        //             $doctor_subscription['start_date'] = Carbon::now(env('timezone'))->format('Y-m-d');
+        //             $doctor_subscription['end_date'] = Carbon::now(env('timezone'))->addMonths(1)->format('Y-m-d');
+        //             $doctor_subscription['status'] = 1;
+        //             $doctor_subscription['payment_status'] = 1;
+        //             DoctorSubscription::create($doctor_subscription);
+        //         }
+        //     }
+        // }
+        $doctor->update($data);
+        if (isset($data['address']) && isset($data['lat']) && isset($data['lng']))
+        {
+            $doctor_user = User::where('doctor_id', $doctor->id)->first();
+            if ($doctor_user) {
+                $doctor_user['address'] = $data['address'];
+                $doctor_user['lat'] = $data['lat'];
+                $doctor_user['lng'] = $data['lng'];
+                $doctor_user->save();
             }
         }
-        $doctor->update($data);
         $this->changeLanguage();
         return redirect('/doctor_home')->withStatus(__('Doctor updated successfully..!!'));
     }

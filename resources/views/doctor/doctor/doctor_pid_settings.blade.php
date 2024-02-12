@@ -253,14 +253,14 @@
                                 <input type="checkbox" style="height:20px;" class="float-left form-control-sm pid_id_check cursor-pointer" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <span class="pt-2">{{ $loop->iteration }}</span>
                             </td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->date_modified }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->medical_code }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->service_place }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->patient_id }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->act_number }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->date_modified }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->medical_code }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->service_place }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->patient_id }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->act_number }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
                             <td>
                                 @if ($history->is_valid)
                                     <i class="fa fa-circle text-success"></i>

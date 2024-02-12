@@ -135,6 +135,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-4">
+                        <div class="pac-card col-md-12 mb-3" id="pac-card">
+                            <label for="col-form-label pac-input">{{__('Location based on latitude/longitude')}} <b>*</b></label>
+                            <div id="pac-container">
+                                <input id="pac-input" type="text" name="address" class="form-control" value="" />
+                                <input type="hidden" name="lat" value="" id="lat">
+                                <input type="hidden" name="lng" value="" id="lng">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div id="map" class="mapClass"></div>
+                        </div>
+                    </div>
                     <div class="text-right p-2">
                         <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                     </div>
@@ -345,3 +358,7 @@
 
 @endsection
 
+@section('js')
+<script src="https://maps.googleapis.com/maps/api/js?key={{App\Models\Setting::first()->map_key}}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
+<script src="{{ url('assets_admin/js/hospital_map.js') }}"></script>
+@endsection

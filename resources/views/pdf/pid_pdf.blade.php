@@ -22,26 +22,29 @@
     <body>
         <h3 style="font-size:26px; margin-bottom:20px; text-align:center; border-bottom:1px solid #111;">PAIEMENT IMMÉDIAT DIRECT</h3>
         <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name">{{ $doctor['name'] }} {{ $doctor['last_name'] }}</span></h3>
-        <p style="margin:0;">Service Imagerie :<span id="detail_service_name">{{ $doctor['category']['name'] }}, </span></p>
-        <p style="margin:0;">
+        <p style="margin:0;">Service Imagerie : <b>{{ $doctor['category']['name'] }}</b></p>
+        <p style="margin:0;">Hôpital : 
             <span id="detail_hospital_name">
             @foreach ($hospitals as $hospital)
                 {{ $hospital['name'] }}, 
             @endforeach
             </span>
         </p>
-        <p style="margin:0;"><span id="detail_hospital_state"></span></p>
-        <p style="margin:0;"><span id="detail_hospital_location"></span></p>
-        <div style="width:60%; margin-top:30px; margin-left:40%;">
-            <p style="margin:0;">Matricule :<span id="detail_patient_id">{{ $doctor_pid['patient_id'] }}</span></p>
-            <p style="margin:0;">Patient : <span id="detail_patient_name">{{ $patient['name'] }} {{ $patient['last_name'] }}</span></p>
+        <p style="margin:0;">Adresse : <span id="doctor_address">{{ $doctor->user['address'] }}</span></p>
+        <p style="margin:0;">Tél : <span id="doctor_phone">{{ $doctor->user['phone_code'] }} {{ $doctor->user['phone'] }}</span></p>
+        <p style="margin:0;">E-mail : <span id="doctor_phone">{{ $doctor->user['email'] }}</span></p>
+        <div style="width:40%; margin-left:60%;">
+            <p style="margin:0;">Patient : <b>{{ $patient['name'] }} {{ $patient['last_name'] }}</b></p>
+            <p style="margin:0">Matricule : 
+                <b>{{ substr($patient['patient_id'], 0, 4).' '.substr($patient['patient_id'], 4, 2).' '.substr($patient['patient_id'], 6, 2).' '.substr($patient['patient_id'], 8, 3).' '.substr($patient['patient_id'], 11) }}</b> 
+                &nbsp; <b>{{ $doctor_pid['medical_code'] }}</b>-CNS
+            </p>
+            <p style="margin:0;">Adresse : <span>{{ $patient['address'] }}</span></p>
         </div>
-
+        
         <h5 class="mt-3" style="text-decoration:underline">Prestations de soins de santé</h5>
-        <p style="margin:0;">N° <span>{{ $patient['lat'] }}</span></p>
-        <p style="margin:0;">du <span>{{ $patient['lng'] }}</span></p>
-        <p style="margin:0;"><span>{{ $doctor_pid['address'] }}</span></p>
-        <p style="margin:0 0 40px;">N° ID {{ $patient['patient_id'] }} </p>
+        <p style="margin:0;">identifiant du émetteur de factures :<b>{{ $doctor_pid['biller_id'] }}</b></p>
+        <p style="margin:0 0 30px;">Date :<b>{{ $doctor_pid['validation_date'] }}</b></p>
         <table>
             <thead>
                 <tr>
