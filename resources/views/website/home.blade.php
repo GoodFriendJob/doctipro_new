@@ -106,24 +106,41 @@
     </div>
 </div>
 
-{{-- Skip Travelling --}}
-<div class="banner-bg w-full relative">
-    @if(!isset($setting->banner_image))
-    <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload/'.$setting->banner_image) }}" alt="">
-    @else
-    <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload_empty/hero.jpg') }}" alt="">
-    @endif
-    <div class="btn-appointment mx-0  mt-3  absolute xxsm:relative xsm:relative sm:absolute">
-        {{-- <a class="btn btn-link text-center mt-0 rounded-none bg-primary text-white font-normal font-fira-sans text-sm py-3.5 px-7" target="_blank" href="{{ $setting->banner_url }}" role="button">{{__('Make Appointment') }}</a> --}}
+<div class="banner-bg w-full p-10 relative">
+    <div class="xlg:mx-20 xxsm:mx-4 xsm:mx-5 pt-20">
+        <div class="!1xl:w-2/4 2xl:w-2/3 md:w-3/4 xxsm:w-full">
+            <h1 class="font-fira-sans text-black font-medium text-6xl leading-snug mb-10">
+                Trouvez votre prestataire de soins <br>et <span class="text-white">prenez rendez-vous.</span></h1>
+            <p class="font-fira-sans font-normal text-lg text-white mb-10">Facile, gratuit et rapide.</p>
+        </div>
+        <div class="w-full">
+            <p class="mb-5 text-white">Trouvez un médecin et des centres spécialisés près de chez vous.</p>
+            <div class="grid gap-6 xxsm:grid-cols-1 xsm:grid-cols-1 msm:grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 w-full">
+                <div class="slider-box p-5">
+                    <h3 class="text-2xl"><i class="fa fa-user-md"></i>&nbsp; Trouvez un médecin</h3>
+                    <p class="pt-5">
+                    À la recherche d'un médecin généraliste ou d'un <br>
+                    spécialiste? Commencez ici.
+                    </p>
+                </div>
+                <div class="slider-box p-5">
+                    <h3 class="text-2xl"><i class="fa fa-user-md"></i>&nbsp; Trouvez un médecin</h3>
+                    <p class="pt-5">
+                    À la recherche d'un médecin généraliste ou d'un <br>
+                    spécialiste? Commencez ici.
+                    </p>
+                </div>
+                <div class="slider-box p-5">
+                    <h3 class="text-2xl"><i class="fa fa-user-md"></i>&nbsp; Trouvez un médecin</h3>
+                    <p class="pt-5">
+                    À la recherche d'un médecin généraliste ou d'un <br>
+                    spécialiste? Commencez ici.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<!-- <div class="w-full bg-cover bg-no-repeat" style="height:1000px;background-image: url({{asset('/assets/image/Banner.png')}})">
-    <div class="xlg:mx-20 xxsm:mx-4 xsm:mx-5 pt-20">
-        <h1 class="font-fira-sans text-black font-normal text-6xl !1xl:w-2/4 2xl:w-1/3 md:w-3/4 xxsm:w-full leading-snug mb-10">Skip Travelling Online <span class="text-blue-600/100">Consultation</span> is the Future</h1>
-        <p class="font-fira-sans font-normal text-lg text-gray mb-10">Private consultation available on Audio & Video Call</p>
-       <a class="btn btn-link text-center mt-0 rounded-none bg-primary px-6 py-3 md:px-3 md:py-3  text-white font-normal font-fira-sans text-sm" target="_blank" href="{{ $setting->banner_url }}" role="button">{{__('Make Appointment') }}</a>
-    </div>
-</div> -->
 <div class="xxsm:mx-5 xl:mx-0 2xl:mx-0">
     {{-- body --}}
 
