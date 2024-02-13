@@ -41,7 +41,9 @@
                         </div>
                         <div class="2xl:px-10 xl:px-10 xlg:px-10 lg:px-10 xmd:px-10 md:px-10 xxsm:px-5 lg:mt-10 md:mt-5 sm:mt-5 msm:mt-6 xsm:mt-6 xxsm:mt-6">
                             @if ($doctor->is_filled)
+                                @if (empty(auth()->user()->doctor_id))
                                 <a href="{{ url('booking/'.$doctor->id.'/'.Str::slug($doctor->name)) }}" data-te-ripple-init data-te-ripple-color="light" class="lg:px-1 lg:w-44 xsm:w-36 md:px-2 text-sm xl:py-2 xlg:py-2 xl:px-4 xlg:px-4 lg:py-2 xmd:py-1 md:py-2 sm:py-2 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make Appointment')}}</a>
+                                @endif
                             @else
                                 {{-- <button disabled class="disabled lg:px-1 lg:w-44 xsm:w-36 md:px-2 text-sm xl:py-2 xlg:py-2 xl:px-4 xlg:px-4 lg:py-2 xmd:py-1 md:py-2 sm:py-2 sm:px-2 msm:py-2 msm:px-3 xsm:px-3 xsm:py-2 xxsm:py-2 xxsm:px-3 text-white bg-primary hover:bg-primary text-center">{{__('Make Appointment')}}</button> --}}
                                 <p class="border text-warning py-1 px-2"><i class="fa fa-warning"></i> {{__('This doctor does not allow to make appointment on doctipro.com yet')}}</p>

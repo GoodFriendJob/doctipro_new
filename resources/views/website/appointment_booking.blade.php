@@ -148,13 +148,20 @@
                             <br>
                             <a target="_blank" href="{{ url('user_profile') }}">{{$patient->name }} {{$patient->last_name }}</a>
                         </div>
-                        <div>
-                            <h3>{{__('Birthday')}} : {{$patient->dob}}</h3>
+                        <div style="margin-top:-30px; margin-bottom:30px;">
+                            @if (empty($patient->patient_id))
+                            <div class="form-group">
+                                <label class="col-form-label">{{__('Patient ID')}} <b>*</b></label>
+                                <input type="text" value="{{ old('patient_id') }}" name="patient_id" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
+                            </div>
+                            @else
                             <h3>{{__('Patient ID')}} : {{$patient->patient_id}}</h3>
+                            @endif
+                            <h3>{{__('Birthday')}} : {{$patient->dob}}</h3>
                             <h3>{{__('Email')}} : {{$patient->email}}</h3>
                             <h3>{{__('Phone')}} : ({{$patient->phone_code}}) {{$patient->phone}}</h3>
                         </div>
-                        <div>
+                        <div style="margin-top:-30px;">
                             @if (empty($patient->address))
                                 <div class="form-group">
                                     <label class="col-form-label">{{__('number')}} <b>*</b></label>

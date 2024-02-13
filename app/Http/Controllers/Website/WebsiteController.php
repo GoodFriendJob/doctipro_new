@@ -776,6 +776,13 @@ class WebsiteController extends Controller
         ]);
         //updated by Polaris
         $patient = User::where('id', auth()->user()->id)->first();
+        if (isset($data['postal_code']))
+            $patient->address = $data['number']. ', '.$data['street']. ', '.$data['state']. ', '.$data['country']. ', '.$data['postal_code'];
+        if (isset($data['patient_id']))
+            $patient->patient_id = $data['patient_id'];
+        if (isset($data['patient_id']) || isset($data['postal_code']))
+            $patient->save();
+
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
         $data['appointment_for'] = 'my_self';
         $data['illness_information'] = 'No Set';

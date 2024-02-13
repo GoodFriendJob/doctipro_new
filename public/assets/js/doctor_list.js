@@ -43,25 +43,25 @@ $(document).ready(function () {
           searchDoctor();
           return false;
         }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        var searchInput = $( "#search_doctor" ).val();
-        var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
-            return '<b>' + match + '</b>';
-        });
-        if (item.type=='doctor') {
-            return $( "<li>" )
-            // .append( "<a class='atc-box' href='"+base_url+item.href+"'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></a>" )
-            .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></div>" )
-            .appendTo( ul );
-        } else {
-            return $( "<li>" )
-            // .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
-            .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>[Expertise]</div></div>" )
-            .appendTo( ul );
-        }
-        
-      };
+    })
+    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    var searchInput = $( "#search_doctor" ).val();
+    var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
+        return '<b>' + match + '</b>';
+    });
+    if (item.type=='doctor') {
+        return $( "<li>" )
+        // .append( "<a class='atc-box' href='"+base_url+item.href+"'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></a>" )
+        .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></div>" )
+        .appendTo( ul );
+    } else {
+        return $( "<li>" )
+        // .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
+        .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>[Expertise]</div></div>" )
+        .appendTo( ul );
+    }
+    
+    };
 
     $('#search_doctor').on('change', function(){
         $("#search_type").val('doctor');
