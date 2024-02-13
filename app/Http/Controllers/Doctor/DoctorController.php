@@ -300,6 +300,24 @@ class DoctorController extends Controller
         return view('pdf.pid_pdf', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
     }
 
+    public function pid_print($id)
+    {
+        $doctor_pid = DoctorPID::where('pid_id', $id)->first();
+        if (empty($doctor_pid)) exit;
+        $doctor = Doctor::where('id', $doctor_pid->doctor_id)->first();
+        if (!$doctor) return redirect('doctor_home');
+
+        $doctor->user = User::find($doctor->user_id);
+        $doctor['start_time'] = Carbon::parse($doctor['start_time'])->format('H:i');
+        $doctor['end_time'] = Carbon::parse($doctor['end_time'])->format('H:i');
+        $doctor['hospital_id'] = explode(',', $doctor->hospital_id);
+        $hospitals = Hospital::whereIn('id', $doctor['hospital_id'])->get();
+        $patient = User::where('patient_id', $doctor_pid->patient_id)->first();
+        if (empty($patient)) exit;
+
+        return view('pdf.pid_print', compact('doctor_pid', 'doctor', 'hospitals', 'patient'));
+    }
+
     public function pid_pdf_download($id)
     {
 

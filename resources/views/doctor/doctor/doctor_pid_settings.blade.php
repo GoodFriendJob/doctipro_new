@@ -239,10 +239,10 @@
                             <th colspan="4"><i class="fa fa-university"></i> {{__('Action')}}</th>
                         </tr>
                         <tr>
-                            <th class="border">{{__('Simulate')}}</th>
-                            <th class="border">{{__('Validate')}}</th>
-                            <th class="border">{{__('Contest')}}</th>
-                            <th class="border"><i class="fa fa-file-pdf"></i></th>
+                            <th class="border"> <i class="fa fa-file-pdf"></i> </th>
+                            <th class="border text-sm">{{__('Simulate')}}</th>
+                            <th class="border text-sm">{{__('Validate')}}</th>
+                            <th class="border text-sm">{{__('Contest')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -266,6 +266,13 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
+                            <td class="text-center">
+                                @if ($history->is_validation)
+                                    <a class="text-primary" target="_blank" href="{{ url('pid_print/'.$history->pid_id) }}"><i class="fa fa-print"></i></a>
+                                    <br>
+                                    <a class="text-danger" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-file-pdf"></i></a>
+                                @endif
+                            </td>
                             <td>
                                 @if ($history->is_valid)
                                     <i class="fa fa-circle text-success"></i>
@@ -298,13 +305,6 @@
                                     <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
                                 @endif
                             @endif
-                            </td>
-                            <td class="text-center">
-                                @if ($history->is_validation)
-                                    <a class="text-success" target="_blank" href="{{ url('pid_detail/'.$history->pid_id) }}"><i class="fa fa fa-eye"></i></a>
-                                    <br>
-                                    <a class="text-danger" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa fa-file-pdf"></i></a>
-                                @endif
                             </td>
                         </tr>
                         @endforeach
