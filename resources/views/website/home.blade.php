@@ -79,6 +79,7 @@
         border-radius: 30px 0 0 30px;
         padding:0 0 0 15px;
         width: calc(100% - 90px);
+        z-index: 9;
     }
     .search-box-btn {
         display: inline-block;
@@ -87,6 +88,7 @@
         border-radius: 0 30px 30px 0;
         padding: 10px 30px 0px 30px;
         width: 80px;
+        z-index: 9;
     }
     .inputgroup {
         position: relative;
@@ -371,7 +373,7 @@
 </div>
 
 <div class="banner-bg w-full p-10 relative">
-    {{-- <img src="{{ url('images/upload_empty/slider_img1.png') }}" class="animate__animated animate__fadeInUp animate__delay-1s banner-img" alt="guide doctor" /> --}}
+    <img src="{{ url('images/upload_empty/slider_img1.png') }}" class="animate__animated animate__fadeInUp animate__delay-1s banner-img" alt="guide doctor" />
     <div class="xlg:mx-20 xxsm:mx-4 xsm:mx-5 pt-20">
         <div class="!1xl:w-2/4 2xl:w-2/3 md:w-3/4 xxsm:w-full">
             <h1 class="font-fira-sans text-black font-medium text-6xl leading-snug mb-10">
