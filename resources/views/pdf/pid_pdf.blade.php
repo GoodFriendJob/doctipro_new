@@ -1,9 +1,6 @@
 <html>
     <head>
         <style>
-            body {
-                margin:40px 90px;
-            }
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -22,7 +19,7 @@
         }
         </style>
     </head>
-    <body>
+    <body style="margin:30px 90px;">
         <h3 style="font-size:26px; margin-bottom:20px; text-align:center; border-bottom:1px solid #111;">PAIEMENT IMMÉDIAT DIRECT</h3>
         <h3 style="margin:0;font-size: 18px;">Dr <span id="detail_doctor_name">{{ $doctor['name'] }} {{ $doctor['last_name'] }}</span></h3>
         <p style="margin:0;">Service Imagerie : <b>{{ $doctor['category']['name'] }}</b></p>
