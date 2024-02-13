@@ -141,25 +141,8 @@
         </div>
     </div>
 </div>
+
 <div class="xxsm:mx-5 xl:mx-0 2xl:mx-0">
-    {{-- body --}}
-
-    <div class="xl:w-3/4 mx-auto relative 2xl:-mt-[180px] 1xl:-mt-[160px] !xl:-mt-[205px] xlg:-mt-[110px] lg:-mt-[130px] md:-mt-[75px] xxmd:-mt-[95px] xmd:-mt-[85px] sm:-mt-[65px] xsm:mt-10 xxsm:mt-10 mb-20">
-        <div class="grid xxsm:grid-cols-1 xsm:grid-cols-1 msm:grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 2xl:h-96 1xl:h-full xlg:h-full lg:h-72 xxmd:h-[250px] xxmd:w-full md:h-full md:w-full sm:h-full sm:w-full msm:h-full msm:w-full !xsm:w-full !xsm:h-full xxsm:w-full xxsm:h-full ">
-            @foreach ($banners as $banner)
-            <div class="mx-auto pt-20 pb-20 h-full w-full 1xl:h-96 1xl:w-full xl:h-full xxsm:h-96 xxsm:w-80 xsm:h-80 xsm:w-80 msm:h-80 msm:w-full sm:h-full sm:w-full md:h-full md:w-full align-items-center {{ $loop->iteration % 2 == 0 ? 'bg-primary text-white' : 'bg-white-50 text-black' }} shadow-2xl my-auto">
-                <img class="lg:h-16 lg:w-16 xxmd:h-12 xxmd:w-12 md:h-10 md:w-10 sm:h-10 sm:w-10 xsm:h-14 xsm:w-14 xxsm:h-10 xxsm:w-10 mx-auto
-            bg-cover object-cover mb-5" src="{{asset($banner->fullImage)}}" alt="" />
-                <h4 class="{{ $loop->iteration % 2 == 0 ? 'text-white' : 'text-black' }} text-center md:text-xl font-medium 1xl:mt-2 lg:mt-1 md:mt-2 xsm:mt-2 leading-8 font-fira-sans sm:text-xs xsm:text-lg xxsm:text-xs mb-5">
-                    {{$banner->name}}
-                </h4>
-                <p class="font-fira-sans font-normal text-sm text-center mx-5">Lorem ipsum dolor sit amet, elit. Euismod habitasse pulvinar faucibus eget.Lorem ipsum dolor sit amet, elit. Euismod habitasse pulvinar faucibus eget</p>
-            </div>
-            @endforeach
-        </div>
-    </div>
-
-
     <div class="mt-20 xl:w-3/4 mx-auto mb-20">
         <h2 class="font-medium text-center 2xl:text-4xl xl:text-4xl xlg:text-4xl lg:text-4xl xmd:text-4xl md:text-4xl msm:text-4xl sm:text-4xl xsm:text-4xl xxsm:text-2xl leading-10 font-fira-sans text-black">
             {{__('How it works')}}
