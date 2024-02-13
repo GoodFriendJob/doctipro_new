@@ -50,6 +50,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 class WebsiteController extends Controller
 {
@@ -375,7 +377,25 @@ class WebsiteController extends Controller
         $reviews = Review::where('doctor_id', $id)->with('user')->get();
         $today_timeslots = (new CustomController)->timeSlot($id, Carbon::today(env('timezone'))->format('Y-m-d'));
         $tomorrow_timeslots = (new CustomController)->timeSlot($id, Carbon::tomorrow()->format('Y-m-d'));
-        $today_date[] = Carbon::now(env('timezone'))->format('M d, Y');
+
+        $translator = new Translator('fr_FR');
+        $translator->addLoader('array', new ArrayLoader());
+        $translator->addResource('array', [
+            'January'   => 'Janvier',
+            'February'  => 'Février',
+            'March'     => 'Mars',
+            'April'     => 'Avril',
+            'May'       => 'Mai',
+            'June'      => 'Juin',
+            'July'      => 'Juillet',
+            'August'    => 'Août',
+            'September' => 'Septembre',
+            'October'   => 'Octobre',
+            'November'  => 'Novembre',
+            'December'  => 'Décembre',
+        ], 'fr_FR');
+        Carbon::setLocale('fr');
+        $today_date[] = Carbon::now(env('timezone'))->formatLocalized('%B %d, %Y');
         $tmp = WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first();
         $today = 0;
         if ($tmp)
