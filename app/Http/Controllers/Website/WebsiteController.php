@@ -783,7 +783,7 @@ class WebsiteController extends Controller
         $data['phone_no'] = $data['phone'];
         $data['drug_effect'] = " ";
         if (isset($data['postal_code']))
-            $data['patient_address'] = $data['number']. ', '.$data['street']. ', '.$data['postal_code']. ', '.$data['country'];
+            $data['patient_address'] = $data['number']. ', '.$data['street']. ', '.$data['state']. ', '.$data['country']. ', '.$data['postal_code'];
         if (empty($data['note']))
             $data['note'] = 'No comment';
 

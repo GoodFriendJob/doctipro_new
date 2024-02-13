@@ -91,9 +91,9 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="form-group col-7">
+                        <div class="form-group col-md-7">
                             <div class="row">
-                                <div class="col-4 form-group">
+                                <div class="col-sm-4 form-group">
                                     <label for="phone_number" class="col-form-label"> {{__('Phone Code')}}</label><br>
                                     <select name="phone_code" class="d-flex form-control phone_code_select2">
                                         @foreach ($countries as $country)
@@ -101,7 +101,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-8 form-group">
+                                <div class="col-sm-8 form-group">
                                     <label for="phone_number" class="col-form-label"> {{__('Phone Number')}}</label>
                                     <input type="number" min="1" value="{{ old('phone') }}" name="phone" class="form-control @error('phone') is-invalid @enderror">
                                     @error('phone')
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-5">
+                        <div class="form-group col-md-5">
                             <label class="col-form-label">{{__('Email')}} <b>*</b></label>
                             <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') is-invalid @enderror">
                             @error('email')
@@ -129,24 +129,16 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-3">
-                                <label class="col-form-label"> {{__('Country')}}</label>
-                                <select name="country" class="form-control">
-                                    @foreach ($countries as $country)
-                                        <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
-                                <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="form-control @error('postal_code') is-invalid @enderror">
-                                @error('postal_code')
+                            <div class="form-group col-md-4">
+                                <label class="col-form-label">{{__('number')}} <b>*</b></label>
+                                <input type="text" value="{{ old('number') }}" name="number" class="form-control @error('number') is-invalid @enderror">
+                                @error('number')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-4">
                                 <label class="col-form-label">{{__('Street')}} <b>*</b></label>
                                 <input type="text" value="{{ old('street') }}" name="street" class="form-control @error('street') is-invalid @enderror">
                                 @error('street')
@@ -155,14 +147,31 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group col-3">
-                                <label class="col-form-label">{{__('number')}} <b>*</b></label>
-                                <input type="text" value="{{ old('number') }}" name="number" class="form-control @error('number') is-invalid @enderror">
-                                @error('number')
+                            <div class="form-group col-md-4">
+                                <label class="col-form-label">{{__('State')}} <b>*</b></label>
+                                <input type="text" value="{{ old('state') }}" name="state" class="form-control @error('state') is-invalid @enderror">
+                                @error('state')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
+                                <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="form-control @error('postal_code') is-invalid @enderror">
+                                @error('postal_code')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label"> {{__('Country')}}</label>
+                                <select name="country" class="form-control">
+                                    @foreach ($countries as $country)
+                                        <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

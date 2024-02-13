@@ -7,7 +7,7 @@
                         @if(!isset($setting->companyWhite))
                         <img src="{{ $setting->companyWhite }}" width="150px" height="40px" alt="Logo">
                         @else
-                        <img src="{{url('/images/upload_empty/logo_white.png')}}" class="h-6 mr-3 sm:h-9" alt="Doctro Logo" />
+                        <img src="{{url('/images/upload_empty/footer_logo.png')}}" class="h-24 mr-3 md:h-28 2xl:h-28" alt="Doctro Logo" />
                         @endif
                     </a>
                     {{-- <div class="flex pt-5">
@@ -48,16 +48,15 @@
                 </div>
             </div>
         </div>
-        <div class="border-t border-gray pb-5 xxsm:mx-5 xl:mx-0 2xl:mx-0">
+    </div>
+</div>
+<div class="bg-white w-full">
+    <div class="xl:w-3/4 mx-auto">
+        <div class="xxsm:mx-5 xl:mx-0 2xl:mx-0">
             <div class="xxsm:pt-5 justify-between flex sm:flex-row xxsm:flex-col">
-                <p class="text-black text-base font-normal leading-5 font-fira-sans mb-5">{{__('Copyright')}} &copy; {{ Carbon\Carbon::now(env('timezone'))->year }} {{ $setting->business_name }}{{__(', All rights reserved')}} </p>
                 <div class="flex flex-row">
-                    <div>
-                        <a href="{{ url('about-us') }}" class="text-black text-sm font-normal leading-5 font-fira-sans mr-[80px]">{{__('About us')}}</a>
-                    </div>
-                    <div>
-                        <a href="{{ url('privacy-policy') }}" class="text-black text-sm font-normal leading-5 font-fira-sans mr-12">{{__('Privacy Policy')}}</a>
-                    </div>
+                    {{-- <p class="text-black text-base font-normal leading-5 font-fira-sans mb-5">{{__('Copyright')}} &copy; {{ Carbon\Carbon::now(env('timezone'))->year }} {{ $setting->business_name }}{{__(', All rights reserved')}} </p> --}}
+                    Les informations fournies sur le site ou l'application mobile de DOCTIPRO, y compris celles présentées ici, ont un caractère purement informatif et général. Elles ne constituent pas des conseils médicaux, un diagnostic, ou un traitement. Pour des préoccupations médicales spécifiques ou des conseils concernant votre santé, veuillez consulter directement votre professionnel de la santé.
                 </div>
             </div>
         </div>

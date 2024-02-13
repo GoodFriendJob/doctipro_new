@@ -157,24 +157,28 @@
                         <div>
                             @if (empty($patient->address))
                                 <div class="form-group">
-                                    <label class="col-form-label"> {{__('Country')}}</label>
-                                    <select name="country" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
-                                        @foreach ($countries as $country)
-                                            <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
-                                    <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
+                                    <label class="col-form-label">{{__('number')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('number') }}" name="number" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">{{__('Street')}} <b>*</b></label>
                                     <input type="text" value="{{ old('street') }}" name="street" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">{{__('number')}} <b>*</b></label>
-                                    <input type="text" value="{{ old('number') }}" name="number" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
+                                    <label class="col-form-label">{{__('State')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('state') }}" name="state" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">{{__('Postal Code')}} <b>*</b></label>
+                                    <input type="text" value="{{ old('postal_code') }}" name="postal_code" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label"> {{__('Country')}}</label>
+                                    <select name="country" class="w-full text-sm font-fira-sans text-gray block p-2 z-20 border border-white-light">
+                                        @foreach ($countries as $country)
+                                            <option value="{{$country->nicename}}" {{ old('country', 'Luxembourg') == $country->nicename ? 'selected' : '' }}>{{ $country->nicename }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             @else
                                 <p>{!! str_replace(', ', '<br>', $patient->address) !!}</p>

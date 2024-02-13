@@ -107,7 +107,7 @@
 </div>
 
 {{-- Skip Travelling --}}
-<div class="site-hero w-full relative">
+<div class="banner-bg w-full relative">
     @if(!isset($setting->banner_image))
     <img class="w-full object-cover bg-cover msm:block" src="{{ url('images/upload/'.$setting->banner_image) }}" alt="">
     @else
@@ -142,8 +142,70 @@
         </div>
     </div>
 
-    {{-- our doctor--}}
+
     <div class="mt-20 xl:w-3/4 mx-auto mb-20">
+        <h2 class="font-medium text-center 2xl:text-4xl xl:text-4xl xlg:text-4xl lg:text-4xl xmd:text-4xl md:text-4xl msm:text-4xl sm:text-4xl xsm:text-4xl xxsm:text-2xl leading-10 font-fira-sans text-black">
+            {{__('How it works')}}
+        </h2>
+        <div class="justify-between flex sm:flex-row xxsm:flex-col 2xl:mt-28 mb-8 xxsm:mt-10 lg:mt-20">
+            <img src="{{ url('images/upload_empty/bg_man3.jpg') }}" class="comment-bg" alt="guide doctor" />
+            <div class="grid grid-rows-2 comment-group">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xlg:grid-cols-3 lg:grid-cols-3">
+                    <div class="comment-box comment-box-1">
+                        <h2>
+                            <span class="rounded-mark">1</span>
+                        </h2>
+                        <h5 class="font-fira-sans text-black font-bold text-2xl md:text-md pt-5">
+                            Trouvez un médecin près de chez vous.
+                        </h5>
+                        <p class="font-normal text-lg md:text-md pt-5">
+                            Doctipro simplifie la découverte de médecins dans votre région. Grâce à une fonction de recherche conviviale, il vous suffit d'entrer votre emplacement ou vos préférences pour accéder à une liste de médecins qualifiés à proximité.
+                        </p>
+                    </div>
+                    <div class="comment-box comment-box-2">
+                        <h2>
+                            <span class="rounded-mark">2</span>
+                        </h2>
+                        <h5 class="font-fira-sans text-black font-bold text-2xl md:text-md pt-5">
+                            Réservez facilement un RDV en personne ou en ligne.
+                        </h5>
+                        <p class="font-normal text-lg md:text-md pt-5">
+                            Que vous préfériez une consultation traditionnelle en personne ou la commodité d'une vidéo consultation, Doctipro répond à vos besoins. Parcourez les créneaux horaires disponibles et sélectionnez le type de rendez-vous qui vous convient le mieux.
+                        </p>
+                    </div>
+                    <div class="comment-box comment-box-3">
+                        <h2>
+                            <span class="rounded-mark">3</span>
+                        </h2>
+                        <h5 class="font-fira-sans text-black font-bold text-2xl md:text-md pt-5">
+                            Ajoutez vos informations et voilà!
+                        </h5>
+                        <p class="font-normal text-lg md:text-md pt-5">
+                            Après avoir choisi votre médecin préféré et le type de rendez-vous souhaité, ajoutez vos informations en toute sécurité. En quelques clics, votre rendez-vous est confirmé, et vous êtes prêt.
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="{{ url('show-doctors') }}" class="font-bold mt-10 call-action-btn">{{__('Find an appointment')}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-10 w-full mb-10 bg-light-gray">
+        <div class="xl:w-3/4 mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xlg:grid-cols-2 lg:grid-cols-2">
+                <div class="sm:flex-row xxsm:flex-col text-center">
+                    <img src="{{ url('images/upload_empty/company_mark1.png') }}" class="inline-block" alt="sponsored company" />
+                </div>
+                <div class="sm:flex-row xxsm:flex-col text-center 2xl:mt-28 mb-8 xxsm:mt-10 lg:mt-20">
+                    <img src="{{ url('images/upload_empty/company_mark2.png') }}" class="inline-block" alt="sponsored company" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- our doctor--}}
+    {{-- <div class="mt-20 xl:w-3/4 mx-auto mb-20">
         <div class="justify-between flex sm:flex-row xxsm:flex-col 2xl:mt-28 mb-8 xxsm:mt-10 lg:mt-40">
             <div class="sm:py-3 md:py-0 msm:py-3 xsm:py-3 xxsm:py-3">
                 <h2 class="font-medium 2xl:text-4xl xl:text-4xl xlg:text-4xl lg:text-4xl xmd:text-4xl md:text-4xl msm:text-4xl sm:text-4xl xsm:text-4xl xxsm:text-2xl leading-10 font-fira-sans text-black">
@@ -183,50 +245,7 @@
         </div>
         @endif
 
-    </div>
-
-    <!-- {{-- our doctor--}}
-    <div class="xsm:mx-5 xxsm:mx-5 justify-between flex sm:flex-row xxsm:flex-col 2xl:mt-28 mb-8 xxsm:mt-10">
-        <div class="sm:py-3 md:py-0 msm:py-3 xsm:py-3 xxsm:py-3">
-            <h2 class="font-medium 2xl:text-4xl xl:text-4xl xlg:text-4xl lg:text-4xl xmd:text-4xl md:text-4xl msm:text-4xl sm:text-4xl xsm:text-4xl xxsm:text-2xl leading-10 font-fira-sans text-black">
-                {{__('Our Doctors')}}
-            </h2>
-        </div>
-        @if(count($doctors)>0)
-        <div class="sm:py-3 md:py-0 msm:py-3 xsm:py-3 xxsm:py-3">
-            <a href="{{ url('show-doctors') }}" class="lg:px-4 text-sm font-normal font-fira-sans leading-4 lg:py-2 md:text-sm xmd:py-2 xmd:px-3 md:px-3 md:py-2 sm:py-2 sm:px-3 msm:px-3 msm:py-2 xsm:px-3 xsm:py-2 xxsm:px-3 xxsm:py-2 text-primary border border-primary text-center">{{__('View
-            All Doctors')}}</a>
-        </div>
-        @else
-        @endif
-    </div>
-
-    <div class="xsm:mx-5 xxsm:mx-5">
-        @if(count($doctors)>0)
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xlg:grid-cols-4 lg:grid-cols-3">
-            @foreach ($doctors as $doctor)
-            <a href="{{ url('doctor-profile/'.$doctor['id'].'/'.Str::slug($doctor['name'])) }}">
-                <div class="border border-white-light p-10 1xl:h-[350px] xxmd:h-[300px] xmd:h-[300px] msm:h-[300px]">
-                    <img class="2xl:w-28 2xl:h-28 xlg:h-24 xlg:w-24 xl:h-24 xl:w-24 lg:h-24 lg:w-24 xxmd:w-24 xxmd:h-24 md:h-20 md:w-20 sm:h-20 sm:w-20 xsm:h-16 xsm:w-16 msm:h-24
-                msm:w-24 xxsm:h-14 xxsm:w-14 1xl:mt-8 msm:mt-2 xsm:mt-0 xxsm:mt-0 border border-primary rounded-full p-0.5 m-auto mt-12 object-cover bg-cover" src="{{ url($doctor->fullImage) }}" alt="" />
-                    <h5 class="font-fira-sans font-normal text-lg leading-6 text-black text-center md:text-md pt-5">
-                        {{-- {{ $doctor->name }} --}}
-                    </h5>
-                    <p class="font-normal leading-4 text-sm text-primary text-center font-fira-sans md:text-md py-2">
-                        {{-- {{$doctor['category']['name'] }} --}}
-                    </p>
-                    <p class="font-normal leading-4 text-sm text-gray text-center md:text-md"><i class="fa-solid fa-star text-yellow"></i> {{ $doctor['rate'] }} ({{$doctor['review'] }} {{
-                 __('reviews') }})</p>
-                </div>
-            </a>
-            @endforeach
-        </div>
-        @else
-        <div class="flex justify-center mt-44 font-fira-sans font-normal text-base text-gray">
-            {{__('No Data Avalaible')}}
-        </div>
-        @endif
-    </div> -->
+    </div> --}}
 
     {{-- Browse by Specialities--}}
     <div class="p-5 w-full mb-10" style="background-color: aliceblue;">
