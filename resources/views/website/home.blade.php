@@ -373,7 +373,7 @@
 </div>
 
 <div class="banner-bg w-full p-10 relative">
-    <img src="{{ url('images/upload_empty/slider_img1.png') }}" class="animate__animated animate__fadeInUp animate__delay-1s banner-img" alt="guide doctor" />
+    <img src="{{ url('images/upload_empty/slider_img1.png') }}" id="guide_doctor" class="animate__animated animate__fadeInUp animate__delay-1s banner-img" alt="guide doctor" />
     <div class="xlg:mx-20 xxsm:mx-4 xsm:mx-5 pt-20">
         <div class="!1xl:w-2/4 2xl:w-2/3 md:w-3/4 xxsm:w-full">
             <h1 class="font-fira-sans text-black font-medium text-6xl leading-snug mb-10">
@@ -958,24 +958,31 @@
             }
         })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        var searchInput = $( "#search_doctor" ).val();
-        var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
-            return '<b>' + match + '</b>';
-        });
-        if (item.type=='doctor') {
-            return $( "<li>" )
-            // .append( "<a class='atc-box' href='"+base_url+item.href+"'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></a>" )
-            .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></div>" )
-            .appendTo( ul );
-        } else {
-            return $( "<li>" )
-            // .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
-            .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>[Expertise]</div></div>" )
-            .appendTo( ul );
-        }
-        
+            var searchInput = $( "#search_doctor" ).val();
+            var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
+                return '<b>' + match + '</b>';
+            });
+            if (item.type=='doctor') {
+                return $( "<li>" )
+                // .append( "<a class='atc-box' href='"+base_url+item.href+"'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></a>" )
+                .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div></div>" )
+                .appendTo( ul );
+            } else {
+                return $( "<li>" )
+                // .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.category + "</div></div>" )
+                .append( "<div class='atc-box'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>[Expertise]</div></div>" )
+                .appendTo( ul );
+            }
         };
+        // Call the function to start the animation
+        repeatAnimation();
     });
-
+    function repeatAnimation() {
+        var element = document.getElementById('guide_doctor');
+        element.classList.remove('animate__fadeInUp'); // Remove animation class to reset animation
+        void element.offsetWidth; // Trigger reflow to restart animation
+        element.classList.add('animate__fadeInUp'); // Add animation class to start animation again
+        setTimeout(repeatAnimation, 10000); // Repeat after 5 seconds (adjust as needed)
+    }
 </script>
 @endsection
