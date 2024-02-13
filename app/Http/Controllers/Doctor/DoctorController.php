@@ -218,8 +218,8 @@ class DoctorController extends Controller
         $histories = $h->get();
         foreach ($histories as $history)
         {
-            $is_simulation = !empty($history->ccss_token);
-            $is_validation = !empty($history->paye);
+            $is_simulation = empty($history->ccss_token) ? 0:1;
+            $is_validation = empty($history->paye) ? 0:1;
             $is_contestation = !empty($history->contestation_id);
             $guichet_date = Carbon::parse($history->guichet_date);
             // $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(16);
@@ -239,6 +239,19 @@ class DoctorController extends Controller
             $history['is_contestation'] = $is_contestation;
             $history['is_expired'] = $is_expired;
             $history['is_valid'] = $is_valid;
+
+            $history['patient_img'] = 'images/upload/default_doctor.jpg';
+            $history['patient_name'] = 'No set';
+            $history['patient_email'] = '';
+            if (!empty($history->patient_id))
+            {
+                $patient = User::where('patient_id', $history->patient_id)->first();
+                if ($patient) {
+                    $history['patient_img'] = $patient->fullImage;
+                    $history['patient_name'] = $patient->name. ' '. $patient->lastname;
+                    $history['patient_email'] = $patient->email;
+                }
+            }
         }
         return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
     }

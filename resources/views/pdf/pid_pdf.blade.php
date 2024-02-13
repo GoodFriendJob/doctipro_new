@@ -1,6 +1,9 @@
 <html>
     <head>
         <style>
+            body {
+                margin:40px 90px;
+            }
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;

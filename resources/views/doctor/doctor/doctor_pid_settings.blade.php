@@ -211,7 +211,6 @@
                             <button class="btn btn-outline-primary" type="button" id="start_date_btn"><i class="fa fa-calendar"></i></button>
                         </div>
                     </div>
-                    <div class="col-sm-1 form-group text-center mb-0"><h1 class="mt-4"> ~ </h1></div>
                     <div class="col-sm-3 form-group mb-0">
                         <label class="col-form-label"> {{__('End Date')}}</label>
                         <div class="d-flex input-group date" id='end_date'>
@@ -219,7 +218,7 @@
                             <button class="btn btn-outline-primary" type="button" id="end_date_btn"><i class="fa fa-calendar"></i></button>
                         </div>
                     </div>
-                    <div class="col-sm-2 form-group text-right mb-0">
+                    <div class="col-sm-3 form-group text-right mb-0">
                         <input type="submit" value="{{__('Search')}}" class="mt-4 btn btn-lg btn-primary">
                     </div>
                 </div>
@@ -230,9 +229,9 @@
                         <tr>
                             <th rowspan="2" width='40'>{{__('ID')}}</th>
                             <th rowspan="2" width='50'><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
+                            <th rowspan="2" width='150'><i class="fa fa-user"></i><br>{{__('Patient')}}</th>
                             <th rowspan="2"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
-                            <th rowspan="2"><i class="fa fa-user"></i><br>{{__('Patient Number')}}</th>
                             <th rowspan="2"><i class="fa fa-code"></i><br>{{__('Act Number')}}</th>
                             <th rowspan="2"><i class="fa fa-university"></i><br>{{__('Part Statutaire')}}</th>
                             <th rowspan="2"><i class="fa fa-clipboard"></i><br>{{__('Recouv rement')}}</th>
@@ -254,9 +253,15 @@
                                 <span class="pt-2">{{ $loop->iteration }}</span>
                             </td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->date_modified }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">
+                                <img src="{{$history->patient_img}}" style="display:inline-block; width:32px; margin-bottom:3px;" />
+                                {{$history->patient_name}}<br>
+                                <i class="fa fa-id-card"></i> {{$history->patient_id}}<br>
+                                {{-- <nobr><i class="fa fa-envelope"></i> {{$history->patient_email}}</nobr> --}}
+                                
+                            </td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->service_place }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->patient_id }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->act_number }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
@@ -294,9 +299,11 @@
                                 @endif
                             @endif
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @if ($history->is_validation)
-                                    <a class="text-primary" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa-2x fa-file-pdf"></i> {{__('Ticket')}}</a>
+                                    <a class="text-success" target="_blank" href="{{ url('pid_detail/'.$history->pid_id) }}"><i class="fa fa fa-eye"></i></a>
+                                    <br>
+                                    <a class="text-danger" href="{{ url('pid_pdf_download/'.$history->pid_id) }}"><i class="fa fa fa-file-pdf"></i></a>
                                 @endif
                             </td>
                         </tr>
@@ -510,6 +517,9 @@
         });
         $('#end_date_btn').click(function (e) {
             e.preventDefault();
+            $('#end_date input').datepicker('showWidget');
+        });
+        $('#status').click(function (e) {
             $('#end_date input').datepicker('showWidget');
         });
     });

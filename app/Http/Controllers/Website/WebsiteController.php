@@ -395,11 +395,12 @@ class WebsiteController extends Controller
             'December'  => 'Décembre',
         ], 'fr_FR');
         Carbon::setLocale('fr');
-        $today_date[] = Carbon::now(env('timezone'))->formatLocalized('%B %d, %Y');
-        $tmp = WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first();
+
         $today = 0;
-        if ($tmp)
-        {
+        $today_date = [];
+        $tmp = WorkingHour::where([['doctor_id', $id], ['day_index', Carbon::now(env('timezone'))->format('l')]])->first();
+        if ($tmp) {
+            $today_date[] =  Carbon::now(env('timezone'))->translatedFormat('d F Y');
             $today_date[] =  $tmp->period_list;
             $today = $tmp->status;
         } else {
