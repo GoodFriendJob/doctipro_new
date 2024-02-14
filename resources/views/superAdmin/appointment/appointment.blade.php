@@ -75,11 +75,11 @@
                                     <th>{{__('doctor name')}}</th>
                                 @endif
                                 <th>{{__('date')}}</th>
-                                <th>{{__('payment status')}}</th>
-                                <th>{{__('status')}}</th>
+                                {{-- <th>{{__('payment status')}}</th> --}}
+                                {{-- <th>{{__('status')}}</th>
                                 @if (auth()->user()->hasRole('doctor'))
                                     <th>{{__('change status')}}</th>
-                                @endif
+                                @endif --}}
                                 <th>{{__('view appointment')}}</th>
                                 @if (auth()->user()->hasRole('doctor'))
                                     <th>{{__('Add prescription')}}</th>
@@ -114,14 +114,14 @@
                                         <td>{{ $appointment->doctor['name'] }}</td>
                                     @endif
                                     <td>{{ $appointment->date }}<span class="d-block text-info">{{ $appointment->time }}</span></td>
-                                    <td>
+                                    {{-- <td>
                                         @if ($appointment->payment_status == 1)
                                             <span class="btn btn-sm btn-sm btn-success">{{__('Paid')}}</span>
                                         @else
                                             <span class="btn btn-sm btn-sm btn-danger">{{__('Remaining')}}</span>
                                         @endif
-                                    </td>
-                                    <td>
+                                    </td> --}}
+                                    {{-- <td>
                                         @if($appointment->appointment_status == 'pending' || $appointment->appointment_status == 'PENDING')
                                             <span class="badge badge-pill bg-warning-light">{{__('Pending')}}</span>
                                         @endif
@@ -134,8 +134,8 @@
                                         @if($appointment->appointment_status == 'completed' || $appointment->appointment_status == 'COMPLETED' || $appointment->appointment_status == 'complete')
                                             <span class="badge badge-pill bg-default-light">{{__('Completed')}}</span>
                                         @endif
-                                    </td>
-                                    @if (auth()->user()->hasRole('doctor'))
+                                    </td> --}}
+                                    {{-- @if (auth()->user()->hasRole('doctor'))
                                     <td class="d-flex w-100">
                                         @if ($appointment->appointment_status == 'approve' ||  $appointment->appointment_status == 'complete')
                                             <a href="{{ url('completeAppointment/'.$appointment->id) }}" class="btn btn-sm bg-info-light {{ $appointment->appointment_status == 'complete' ? 'disabled' : '' }}">
@@ -150,7 +150,7 @@
                                             </a>
                                         @endif
                                     </td>
-                                    @endif
+                                    @endif --}}
                                     @if(auth()->user()->hasRole('doctor') && $appointment->is_from == 1)
                                         <td>
                                             <a href="#edit_specialities_details" onclick="show_appointment({{$appointment->id}})" data-toggle="modal" class="text-info">

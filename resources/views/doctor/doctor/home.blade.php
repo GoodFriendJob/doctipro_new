@@ -67,9 +67,9 @@
                                     <th>{{__('appointment id')}}</th>
                                     {{-- <th>{{__('amount')}}</th> --}}
                                     <th>{{__('date')}}</th>
-                                    <th>{{__('payment status')}}</th>
-                                    <th>{{__('status')}}</th>
-                                    <th>{{__('change status')}}</th>
+                                    {{-- <th>{{__('payment status')}}</th> --}}
+                                    {{-- <th>{{__('status')}}</th> --}}
+                                    {{-- <th>{{__('change status')}}</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,14 +79,14 @@
                                         <td>{{ $appointment->appointment_id }}</td>
                                         {{-- <td>{{ $currency }}{{ $appointment->amount }}</td> --}}
                                         <td>{{ $appointment->date }}<span class="d-block text-info">{{ $appointment->time }}</span></td>
-                                        <td>
+                                        {{-- <td>
                                             @if ($appointment->payment_status == 1)
                                                 <span class="btn btn-sm bg-success-light">{{__('Paid')}}</span>
                                             @else
                                                 <span class="btn btn-sm bg-danger-light">{{__('Remaining')}}</span>
                                             @endif
-                                        </td>
-                                        <td>
+                                        </td> --}}
+                                        {{-- <td>
                                             @if($appointment->appointment_status == 'pending' || $appointment->appointment_status == 'PENDING')
                                                 <span class="badge badge-pill bg-warning-light">{{__('Pending')}}</span>
                                             @endif
@@ -99,8 +99,8 @@
                                             @if($appointment->appointment_status == 'completed' || $appointment->appointment_status == 'COMPLETED' || $appointment->appointment_status == 'complete' || $appointment->appointment_status == 'Complete')
                                                 <span class="badge badge-pill bg-default-light">{{__('Completed')}}</span>
                                             @endif
-                                        </td>
-                                        <td>
+                                        </td> --}}
+                                        {{-- <td>
                                             @if ($appointment->appointment_status == 'approved' || $appointment->appointment_status == 'APPROVED' || $appointment->appointment_status == 'Approve' || $appointment->appointment_status == 'Approved' || $appointment->appointment_status == 'approve' || $appointment->appointment_status == 'completed' || $appointment->appointment_status == 'complete' || $appointment->appointment_status == 'Complete')
                                                 <a href="{{ url('completeAppointment/'.$appointment->id) }}" class="btn btn-sm bg-info-light {{ $appointment->appointment_status == 'completed' || $appointment->appointment_status == 'complete'  ? 'disabled' : '' }}">
                                                     <i class="fas fa-check"></i> {{__('Completed')}}
@@ -113,7 +113,7 @@
                                                     <i class="fas fa-times"></i>{{__('Cancel')}}
                                                 </a>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
