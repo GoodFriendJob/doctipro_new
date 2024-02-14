@@ -229,18 +229,18 @@ class DoctorController extends Controller
             // $h = $h->where("guichet_date", '>=', $expire_day);
             $h = $h->where(function ($query) use ($expire_day) {
                 $query->where("guichet_date", '>=', $expire_day)
-                      ->orWhere("paye", ">", "0");
+                      ->whereNotNull("paye");
             });
         }
         if ($hide_invalidate) {
-            $h = $h->whereNotNull("paye")->where("paye", "!=", "0");
+            $h = $h->whereNotNull("paye")->where("paye", "!=", "");
         }
 
         $histories = $h->get();
         foreach ($histories as $history)
         {
             $is_simulation = empty($history->ccss_token) ? 0:1;
-            $is_validation = empty($history->paye) ? 0:1;
+            $is_validation = !empty($history->paye) && $history->paye!='' ? 1:0;
             $is_contestation = !empty($history->contestation_id);
             $guichet_date = Carbon::parse($history->guichet_date);
             // $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(16);
