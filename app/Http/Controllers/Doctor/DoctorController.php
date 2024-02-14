@@ -224,7 +224,7 @@ class DoctorController extends Controller
             if (isset($data['end_date']) && $data['end_date']!='')
                 $h = $h->where($data['date_type'], '<=', $data['end_date'].' 23.59.59');
         }        
-        if ($hide_expired==1) {
+        if ($hide_expired) {
             $expire_day = Carbon::now(env('timezone'))->subHours(17)->format('Y-m-d h:i:s');
             // $h = $h->where("guichet_date", '>=', $expire_day);
             $h = $h->where(function ($query) use ($expire_day) {
@@ -232,8 +232,8 @@ class DoctorController extends Controller
                       ->orWhereNotNull("paye");
             });
         }
-        if ($hide_invalidate==1) {
-            $h = $h->whereNotNull("paye");
+        if ($hide_invalidate) {
+            $h = $h->where("paye", "!=", "");
         }
 
         $histories = $h->get();
