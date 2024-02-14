@@ -3,6 +3,11 @@
 <link rel="stylesheet" href="{{ url('assets/plugins/jquery-ui/jquery-ui.min.css') }}" />
 <link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
     <style>
+        .pid-search-form {
+            border: 1px dashed #f2f2f2;
+            background: #eee;
+            padding: 10px 30px;
+        }
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -192,7 +197,8 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ url('pid_settings') }}" method="get" class="form">
+            <form action="{{ url('pid_settings') }}" method="get" class="form pid-search-form">
+                {{-- @csrf --}}
                 <div class="row">
                     <div class="col-sm-3 form-group mb-0">
                         <label class="col-form-label"> {{__('Date Type')}}</label>
@@ -220,6 +226,26 @@
                     </div>
                     <div class="col-sm-3 form-group text-right mb-0">
                         <input type="submit" value="{{__('Search')}}" class="mt-4 btn btn-lg btn-primary">
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-sm-4 form-group mb-0">
+                        <div class="form-group">
+                            <label class="col-form-label">{{__('Hide Invalidated')}}</label>
+                            <label class="cursor-pointer">
+                                <input type="checkbox" id="hide_invalidate" value="1" name="hide_invalidate" {{ $hide_invalidate == 1 ? 'checked' : "" }} class="custom-switch-input">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group mb-0">
+                        <div class="form-group">
+                            <label class="col-form-label">{{__('Hide Expired')}}</label>
+                            <label class="cursor-pointer">
+                                <input type="checkbox" id="hide_expired" value="1" name="hide_expired" {{ $hide_expired == 1 ? 'checked' : "" }} class="custom-switch-input">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -336,7 +362,7 @@
                     <div class="modal-body">
                         <div class="row mt-4">
                             <div class="col-lg-8 form-group">
-                                <label class="col-form-label"> {{__('Patient ID')}} <b>*</b></label>
+                                <label class="col-form-label"> {{__('Select Patient')}} <b>*</b></label>
                                 <div class="input-group mb-4">
                                     <input type="text" value="" id="search_patient" class="form-control" />
                                     <div class="input-group-append">
@@ -521,6 +547,12 @@
         });
         $('#status').click(function (e) {
             $('#end_date input').datepicker('showWidget');
+        });
+        $('#hide_invalidate').click(function (e) {
+            $('.pid-search-form').trigger('submit');
+        });
+        $('#hide_expired').click(function (e) {
+            $('.pid-search-form').trigger('submit');
         });
     });
     </script>

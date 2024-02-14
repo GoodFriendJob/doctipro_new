@@ -205,7 +205,16 @@ class DoctorController extends Controller
     {
         if (empty(auth()->user()->id))
             return view('doctor.auth.doctor_login');
+
+        $hide_invalidate = 0;
+        $hide_expired = 0;
+
         $data = $request->all();
+        if (isset($data['hide_expired']))
+            $hide_expired = $data['hide_expired'];
+        if (isset($data['hide_invalidate']))
+            $hide_invalidate = $data['hide_invalidate'];
+
         $doctor = Doctor::where('user_id', auth()->user()->id)->first();
         if (!$doctor) return redirect('/');
         $h = DoctorPID::where('doctor_id', $doctor->id);
@@ -215,6 +224,18 @@ class DoctorController extends Controller
             if (isset($data['end_date']) && $data['end_date']!='')
                 $h = $h->where($data['date_type'], '<=', $data['end_date'].' 23.59.59');
         }        
+        if ($hide_expired) {
+            $expire_day = Carbon::now(env('timezone'))->subHours(17)->format('Y-m-d h:i:s');
+            // $h = $h->where("guichet_date", '>=', $expire_day);
+            $h = $h->where(function ($query) use ($expire_day) {
+                $query->where("guichet_date", '>=', $expire_day)
+                      ->orWhereNotNull("paye");
+            });
+        }
+        if ($hide_invalidate) {
+            $h = $h->whereNotNull("paye");
+        }
+
         $histories = $h->get();
         foreach ($histories as $history)
         {
@@ -253,7 +274,7 @@ class DoctorController extends Controller
                 }
             }
         }
-        return view('doctor.doctor.doctor_pid_settings', compact('doctor', 'histories', 'data'));
+        return view('doctor.doctor.doctor_pid_settings', compact('hide_invalidate', 'hide_expired', 'doctor', 'histories', 'data'));
     }
 
     public function pid_excel_export(Request $request)
