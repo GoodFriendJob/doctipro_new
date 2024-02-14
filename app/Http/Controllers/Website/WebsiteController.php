@@ -378,6 +378,7 @@ class WebsiteController extends Controller
         $today_timeslots = (new CustomController)->timeSlot($id, Carbon::today(env('timezone'))->format('Y-m-d'));
         $tomorrow_timeslots = (new CustomController)->timeSlot($id, Carbon::tomorrow()->format('Y-m-d'));
 
+        //updated by Polaris
         $translator = new Translator('fr_FR');
         $translator->addLoader('array', new ArrayLoader());
         $translator->addResource('array', [
@@ -395,6 +396,9 @@ class WebsiteController extends Controller
             'December'  => 'Décembre',
         ], 'fr_FR');
         Carbon::setLocale('fr');
+
+        $today_day = Carbon::now(env('timezone'))->translatedFormat('d F Y');
+        $tomorrow_day = Carbon::now(env('timezone'))->addDay()->translatedFormat('d F Y');
 
         $today = 0;
         $today_date = [];
@@ -415,7 +419,7 @@ class WebsiteController extends Controller
         if ($request->ajax()) {
             return response(['success' => true, 'data' => $doctor]);
         }
-        return view('website.doctor_detail', compact('today', 'doctor', 'currency', 'reviews', 'today_timeslots', 'today_date', 'tomorrow_timeslots', 'rating_one_pr', 'rating_two_pr', 'rating_three_pr', 'rating_four_pr', 'rating_five_pr'));
+        return view('website.doctor_detail', compact('today_day', 'tomorrow_day', 'today', 'doctor', 'currency', 'reviews', 'today_timeslots', 'today_date', 'tomorrow_timeslots', 'rating_one_pr', 'rating_two_pr', 'rating_three_pr', 'rating_four_pr', 'rating_five_pr'));
     }
 
     public function test_report(Request $request)

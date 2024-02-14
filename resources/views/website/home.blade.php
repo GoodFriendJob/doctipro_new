@@ -872,8 +872,10 @@
     // Function to check if an element is in the viewport
     function isInViewport(element) {
         var rect = element.getBoundingClientRect();
+        // console.log('rect.top', rect.top);
+        // console.log('rect.bottom', rect.bottom);
         return (
-            rect.top <100
+            rect.top <200 || rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
         );
     }
 
@@ -883,7 +885,7 @@
         if (isInViewport(element)) {
             element.classList.add('animate__fadeInLeft');
             document.querySelector('.comment-group').classList.add('animate__bounceIn');
-        }
+        } 
     }
     function change_search_option(v) {
         $('#search_option').val(v)
@@ -901,12 +903,12 @@
             $('#search_lng').val(lng);
         });
     }
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll();
 
     $(document).ready(function () {
         // Attach scroll event listener to trigger animation
-        window.addEventListener('scroll', animateOnScroll);
         // Initial check to see if the element is already in the viewport on page load
-        animateOnScroll();
         $('#search_date').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
