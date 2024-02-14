@@ -289,9 +289,9 @@
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->medical_code }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->service_place }}</td>
                             <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->act_number }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire ? '€ '.$history->part_statutaire: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement ? '€ '.$history->recouvrement: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})"><nobr class="text-danger">{{ $history->paye ? '€ '.$history->paye: '-' }}</nobr></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire!='' ? '€ '.$history->part_statutaire: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement!='' ? '€ '.$history->recouvrement: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})"><nobr class="text-danger">{{ $history->paye!='' ? '€ '.$history->paye: '-' }}</nobr></td>
                             <td class="text-center">
                                 @if ($history->is_validation)
                                     <a class="text-primary" target="_blank" href="{{ url('pid_print/'.$history->pid_id) }}"><i class="fa fa-print"></i></a>
