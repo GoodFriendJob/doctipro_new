@@ -56,7 +56,7 @@ class DoctorController extends Controller
             if ($doctor->hasRole('doctor')) {
                 if ($doctor->verify == 1) {
                     $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-                    if ($doctor->status == 1) {
+                    if ($doctor && $doctor->status == 1) {
                         if ($doctor->based_on == 'subscription') {
                             $subscription = DoctorSubscription::with(['subscription:id,total_appointment'])->where([['doctor_id', $doctor->id], ['status', 1]])->first();
                             if ($subscription) {
