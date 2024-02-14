@@ -229,11 +229,11 @@ class DoctorController extends Controller
             // $h = $h->where("guichet_date", '>=', $expire_day);
             $h = $h->where(function ($query) use ($expire_day) {
                 $query->where("guichet_date", '>=', $expire_day)
-                      ->orWhereNotNull("paye");
+                      ->orWhere("paye", ">", "0");
             });
         }
         if ($hide_invalidate) {
-            $h = $h->where("paye", "!=", "");
+            $h = $h->whereNotNull("paye")->where("paye", "!=", "0");
         }
 
         $histories = $h->get();
