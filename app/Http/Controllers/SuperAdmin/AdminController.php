@@ -57,7 +57,7 @@ class AdminController extends Controller
                 return redirect('home');
             } else {
                 if ($user->status == 1) {
-                    return redirect('profile');
+                    return redirect('/');
                 } else {
                     Auth::logout();
                     return redirect()->back()->withErrors('Block By Admin. Please Contact support.');

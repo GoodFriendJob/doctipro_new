@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Cache;
 
 class LoginController extends Controller
 {
@@ -44,26 +45,32 @@ class LoginController extends Controller
         if (Auth::check()) {
             if (auth()->user()->hasRole('super admin')){
                 Auth::logout();
+                Cache::forget('user_' . auth()->id());
                 return redirect('/login');
             }
             else if (auth()->user()->hasRole('pharmacy'))
             {
                 Auth::logout();
+                Cache::forget('user_' . auth()->id());
                 return redirect('/pharmacy_login');
             }
             else if (auth()->user()->hasRole('doctor')){
                 Auth::logout();
+                Cache::forget('user_' . auth()->id());
                 return redirect('/doctor/doctor_login');
             }
             else if (auth()->user()->hasRole('laboratory')){
                 Auth::logout();
+                Cache::forget('user_' . auth()->id());
                 return redirect('/pathologist_login');
             }
             else{
                 Auth::logout();
+                Cache::forget('user_' . auth()->id());
                 return redirect('/');
             }
         }
+        Cache::forget('user_' . auth()->id());
         return redirect('/');
     }
 }
