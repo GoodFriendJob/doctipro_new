@@ -37,7 +37,6 @@
             <p style="margin:0;">Patient : <b>{{ $patient['name'] }} {{ $patient['last_name'] }}</b></p>
             <p style="margin:0">Matricule : 
                 <b>{{ substr($patient['patient_id'], 0, 4).' '.substr($patient['patient_id'], 4, 2).' '.substr($patient['patient_id'], 6, 2).' '.substr($patient['patient_id'], 8, 3).' '.substr($patient['patient_id'], 11) }}</b> 
-                &nbsp; <b>{{ $doctor_pid['medical_code'] }}</b>-CNS
             </p>
             <p style="margin:0;">Adresse : <span>{{ $patient['address'] }}</span></p>
         </div>
