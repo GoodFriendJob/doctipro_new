@@ -240,7 +240,7 @@ class DoctorController extends Controller
         foreach ($histories as $history)
         {
             $is_simulation = empty($history->ccss_token) ? 0:1;
-            $is_validation = !empty($history->paye) && $history->paye!='' ? 1:0;
+            $is_validation = $history->paye!='' ? 1:0;
             $is_contestation = !empty($history->contestation_id);
             $guichet_date = Carbon::parse($history->guichet_date);
             // $expiredDate = $guichet_date->copy()->addMinutes(30)->addHours(16);
