@@ -977,14 +977,14 @@
             }
         };
         // Call the function to start the animation
-        repeatAnimation();
+        // repeatAnimation();
     });
-    function repeatAnimation() {
-        var element = document.getElementById('guide_doctor');
-        element.classList.remove('animate__fadeInUp'); // Remove animation class to reset animation
-        void element.offsetWidth; // Trigger reflow to restart animation
-        element.classList.add('animate__fadeInUp'); // Add animation class to start animation again
-        setTimeout(repeatAnimation, 10000); // Repeat after 5 seconds (adjust as needed)
-    }
+    // function repeatAnimation() {
+    //     var element = document.getElementById('guide_doctor');
+    //     element.classList.remove('animate__fadeInUp'); // Remove animation class to reset animation
+    //     void element.offsetWidth; // Trigger reflow to restart animation
+    //     element.classList.add('animate__fadeInUp'); // Add animation class to start animation again
+    //     setTimeout(repeatAnimation, 10000); // Repeat after 5 seconds (adjust as needed)
+    // }
 </script>
 @endsection
