@@ -387,16 +387,17 @@
                             <div class="col-lg-4 form-group">
                                 <label class="col-form-label"> {{__('Place of Service')}} <b>*</b></label>
                                 <div class="d-flex">
-                                    <input type="text" value="01" id="service_place" name="service_place" class="form-control">
+                                    <input type="text" value="01" id="service_place" name="service_place" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-lg-4 form-group">
                                 <label class="col-form-label"> {{__('Medical Code')}} <b>*</b></label>
-                                <select id="medical_code" name="medical_code" class="form-control">
+                                <input type="text" value="C1" id="medical_code" name="medical_code" class="form-control" />
+                                {{-- <select id="medical_code" name="medical_code" class="form-control">
                                     <option value="C1">C1</option>
                                     <option value="C41">C41</option>
                                     <option value="C43">C43</option>
-                                </select>
+                                </select> --}}
                             </div>
                             <div class="col-lg-4 form-group">
                                 <label class="col-form-label"> {{__('Act Number')}} <b>*</b></label>
