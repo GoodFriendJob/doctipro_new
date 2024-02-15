@@ -959,7 +959,7 @@ echo json_encode($res); exit;
     $FaultCode = $xpath->query('//Faultcode');
 
     $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">'
-     . $FaultCode.'</div>'; 
+     . $FaultCode[0]->nodeValue.'</div>'; 
 
     echo json_encode($res); exit;
   } else {
