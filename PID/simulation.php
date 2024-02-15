@@ -977,15 +977,42 @@ if ($nodes->length > 0) {
   $id_response_simulation = $nodes->item(0)->nodeValue;
 }
 
+$query = '//cns:totalPartStatutaire';
+$nodes = $xpath->query($query);
+$totalPartStatutaire = '';
+if ($nodes->length > 0) {
+  $totalPartStatutaire = $nodes->item(0)->nodeValue;
+}
+
+$query = '//cns:totalParticipationPersonelle';
+$nodes = $xpath->query($query);
+$totalParticipationPersonelle = '';
+if ($nodes->length > 0) {
+  $totalParticipationPersonelle = $nodes->item(0)->nodeValue;
+}
+
+$query = '//cns:sommeTotale';
+$nodes = $xpath->query($query);
+$sommeTotale = '';
+if ($nodes->length > 0) {
+  $sommeTotale = $nodes->item(0)->nodeValue;
+}
+
 $req2 = $OPC->prepare(" UPDATE doctor_pid SET date_modified=NOW(), 
 ccss_token=:ccss_token, wsu_id=:wsu_id, 
 id_memoire_honoraire=:id_memoire_honoraire, 
 id_externe_prestation=:id_externe_prestation, 
+totalPartStatutaire=:totalPartStatutaire, 
+totalParticipationPersonelle=:totalParticipationPersonelle, 
+sommeTotale=:sommeTotale, 
 id_response_simulation=:id_response_simulation, 
 id_response_date=NOW() WHERE pid_id = :lastInsertId");
 
 $req2->execute([
   'id_memoire_honoraire' => $varIdMemoireHonoraire,
+  'totalPartStatutaire' => $totalPartStatutaire,
+  'totalParticipationPersonelle' => $totalParticipationPersonelle,
+  'sommeTotale' => $sommeTotale,
   'id_response_simulation' => $id_response_simulation,
   'id_externe_prestation' => $varIdentifiantExternePrestation,
   "ccss_token" => $CCss,

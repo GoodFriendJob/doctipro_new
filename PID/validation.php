@@ -225,7 +225,9 @@ if (curl_errno($ch))
 	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	if ($httpCode == 500) {
-		$res['message'] = '<h3>Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+		// $res['message'] = '<h3>Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+    $r = preg_replace('/<!--(.*)-->/i', '', $response);
+		$res['message'] = '<h3>Soap Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
 		echo json_encode($res); 
 		exit;
 	} else {
@@ -237,11 +239,13 @@ $dom = new DOMDocument();
 $dom->loadXML($response);
 $xpath = new DOMXPath($dom);
 $xpath->registerNamespace('cns', 'http://www.secu.lu/ciss/cns');
-
 // Récupération des éléments contenant les valeurs spécifiques
 $montantPartStatutaire = $xpath->query('//cns:montantPartStatutaire');
 $montantRecouvrement = $xpath->query('//cns:montantRecouvrement');
 $montantPaye = $xpath->query('//cns:montantPaye');
+
+$xpath->registerNamespace('ns6', 'http://www.secu.lu/ciss/cns/commonTypes');
+$motif = $xpath->query('//ns6:motif');
 
 try {
 	$req2 = $OPC->prepare(" UPDATE doctor_pid 

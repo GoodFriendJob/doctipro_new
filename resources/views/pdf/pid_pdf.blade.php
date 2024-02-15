@@ -64,27 +64,16 @@
                     <td>{{ $doctor_pid['medical_code'] }}</td>
                     <td>Consultation</td>
                     <td>1</td>
-                    <td>{{ $doctor_pid['part_statutaire'] }}</td>
+                    <td>{{ $doctor_pid['totalPartStatutaire'] }}</td>
                     <td>€</td>
-                    <td>{{ $doctor_pid['recouvrement'] }}</td>
-                    <td>€</td>
-                </tr>
-                <tr>
-                    <td>{{ $doctor_pid['medical_code'] }}</td>
-                    <td>Consultation</td>
-                    <td>1</td>
-                    <td>{{ $doctor_pid['recouvrement'] }}</td>
-                    <td>€</td>
-                    <td>{{ $doctor_pid['recouvrement'] }}</td>
+                    <td>{{ $doctor_pid['totalParticipationPersonelle'] }}</td>
                     <td>€</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td><b>Total:<b></td>
                     <td></td>
-                    <td>{{ $doctor_pid['paye'] }}</td>
-                    <td>€</td>
-                    <td>{{ $doctor_pid['recouvrement'] }}</td>
+                    <td colspan="3">{{ $doctor_pid['sommeTotale'] }}</td>
                     <td>€</td>
                 </tr>
             </tbody>
