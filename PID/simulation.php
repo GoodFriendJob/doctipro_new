@@ -727,7 +727,9 @@ if (curl_errno($ch))
       if ($lastInsertId > 0 ) {
         file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseCNS.xml', $response);
       }
-      $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+      // $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+      $r = preg_replace('/<!--(.*)-->/i', '', $response);
+      $res['message'] = '<h3>RequestCNS Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
       echo json_encode($res); exit;
     } else {
       // array_push($res['soap']['request'], $a);
@@ -742,7 +744,7 @@ try {
     'lastInsertId' => $lastInsertId
   ]);
 } catch (\Exception $e) {
-  $res['message'] = "Error: " . $e->getMessage(); 
+  $res['message'] = "Technical Error: " . $e->getMessage(); 
   echo json_encode($res); exit;
 }
 
@@ -941,7 +943,7 @@ file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestBusiness.
 $response = curl_exec($ch);
 if (curl_errno($ch))
 {
-$res['message'] = "Erreur Bussiness cURL : " . curl_error($ch); 
+$res['message'] = "Technical Erreur - Bussiness cURL : " . curl_error($ch); 
 echo json_encode($res); exit;
 } else {
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
