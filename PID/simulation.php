@@ -71,7 +71,7 @@ $res = array(
       'response' => []
   )
 );
-$dom = new DOMDocument();
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -380,12 +380,9 @@ if (curl_errno($ch))
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseGuichet.xml', $response);
     }
-    $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
-
-    $dom->loadXML($response);
-    $xpath = new DOMXPath($dom);
-    $FaultCode = $xpath->query('//Faultcode');
-    
+    // $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+    $r = preg_replace('/<!--(.*)-->/i', '', $response);
+    $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
 
     echo json_encode($res); exit;
   } else {
@@ -418,7 +415,7 @@ try {
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
   file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseGuichet.xml', $response);
 } catch (\Exception $e) {
-  $res['message'] = "Error: " . $e->getMessage(); 
+  $res['message'] = "Technical Error: " . $e->getMessage(); 
   echo json_encode($res); exit;
 }
 	
@@ -722,7 +719,7 @@ $response = curl_exec($ch);
 
 if (curl_errno($ch))
 {
-  $res['message'] = "Error cURL : ".curl_error($ch); 
+  $res['message'] = "Technical Error - cURL : ".curl_error($ch); 
   echo json_encode($res); exit;
 } else {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -952,15 +949,9 @@ echo json_encode($res); exit;
     if ($lastInsertId > 0 ) {
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
     }
-    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
-    
-    $dom->loadXML($response);
-    $xpath = new DOMXPath($dom);
-    $FaultCode = $xpath->query('//Faultcode');
-
-    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">'
-     . $FaultCode[0]->nodeValue.'</div>'; 
-
+    // $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+    $r = preg_replace('/<!--(.*)-->/i', '', $response);
+    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
     echo json_encode($res); exit;
   } else {
     // array_push($res['soap']['request'], $a);
