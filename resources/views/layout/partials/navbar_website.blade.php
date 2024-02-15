@@ -108,7 +108,7 @@
                         <a href="{{url('/home')}}" class="{{ $activePage == 'home' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
                     </li>
                     @endif
-                    @if (auth::check() && auth()->user()->hasRole('doctor'))
+                    @if (auth::check() && auth()->user()->hasRole('doctor') && !empty(auth()->user()->doctor_id))
                     <li>
                         <a href="{{url('/doctor_home')}}" class="{{ $activePage == 'doctor_home' ? 'text-primary' : 'text-black' }} font-fira-sans block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0" aria-current="page">{{ __('Admin Panel') }}</a>
                     </li>
