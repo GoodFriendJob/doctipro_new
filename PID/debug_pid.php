@@ -3,14 +3,13 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-$psEHealthID = '2854201475';
-if (isset($_POST['pshealthid'])) $psEHealthID = $_POST['pshealthid'];
-
 $pid = 1;
 if (isset($_POST['pid'])) $pid = $_POST['pid'];
 
 $pid_step = 1;
 if (isset($_POST['pid_step'])) $pid_step = $_POST['pid_step'];
+
+$psEHealthID = '';
 
 $res = array(
     'status' => 0, 'message' => 'Error is happened',
@@ -33,6 +32,7 @@ $row = [];
 while($result=$stmt->fetch(PDO::FETCH_ASSOC)){
     //select column by key and use
     $row = $result;
+    $psEHealthID = $row['pshealthid'];
 } 
 $message = '';
 if ($pid_step==1) {

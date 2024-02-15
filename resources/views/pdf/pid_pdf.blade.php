@@ -79,7 +79,7 @@
             </tbody>
         </table>
         <div style="paddin-right:30px; text-align:right; font-size:18px; margin-top:10px">
-            <h5 style="margin:0;">Montant total dû : {{ $doctor_pid['recouvrement'] }} €</h5>            
+            <h5 style="margin:0;">Montant total dû : {{ $doctor_pid['sommeTotale'] }} €</h5>            
             <h5 style="margin:0;">Montant total payé par l’AMM* : {{ $doctor_pid['paye'] }} €</h5> 
         </div>           
         <div style="margin-top:40px;">

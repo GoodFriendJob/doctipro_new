@@ -244,14 +244,19 @@ $montantPartStatutaire = $xpath->query('//cns:montantPartStatutaire');
 $montantRecouvrement = $xpath->query('//cns:montantRecouvrement');
 $montantPaye = $xpath->query('//cns:montantPaye');
 
+$motif = '';
 $xpath->registerNamespace('ns6', 'http://www.secu.lu/ciss/cns/commonTypes');
-$motif = $xpath->query('//ns6:motif');
+$nodes = $xpath->query('//ns6:motif');
+if ($nodes->length > 0) {
+  $motif = $nodes->item(0)->nodeValue;
+}
 
 try {
 	$req2 = $OPC->prepare(" UPDATE doctor_pid 
 		SET part_statutaire=:part_statutaire, 
 			recouvrement=:recouvrement, 
 			paye=:paye,
+			motif=:motif,
 			validation_date = NOW() 
 		WHERE pid_id = :pid");
 
@@ -259,7 +264,8 @@ try {
 		'pid' => $pid,
 		'part_statutaire' => $montantPartStatutaire[0]->nodeValue,
 		'recouvrement' => $montantRecouvrement[0]->nodeValue,
-		'paye' => $montantPaye[0]->nodeValue
+		'paye' => $montantPaye[0]->nodeValue,
+		'motif' => $motif
 	]);
 
 	file_put_contents('logs/'. $psEHealthID . '_' . $pid.'_ResponseBusinessValidate.xml', $response);

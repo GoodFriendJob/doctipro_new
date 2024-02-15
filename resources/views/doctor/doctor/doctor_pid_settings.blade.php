@@ -316,6 +316,8 @@
                                     <i class="fa fa-circle text-success"></i>
                                 @elseif ($history->is_contestation)
                                     <b> - </b>
+                                @elseif ($history->motif!='')
+                                    <i class="fa fa-exclamation-triangle text-danger"></i><span class="text-danger">{{$history->motif}}</span>
                                 @else
                                     <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
                                 @endif
@@ -456,7 +458,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
+                    {{-- <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a> --}}
                 </div>
             </div>
         </div>

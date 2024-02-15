@@ -282,11 +282,11 @@
                     <input type="hidden" name="detail_pid" id="detail_pid" value="" />
                     <div class="col-sm-2 text-center">
                         <div class="pid-steps">
-                            <p class="mb-0"><a href="javascript:show_pid_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
+                            <p class="mb-0"><a href="javascript:show_debug_step(1)" class="pid_step_btn pid_step_btn1">{{__('Simulation')}}</a></p>
                             <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
-                            <p class="mb-0"><a href="javascript:show_pid_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validate')}}</a></p>
+                            <p class="mb-0"><a href="javascript:show_debug_step(2)" class="pid_step_btn pid_step_btn2">{{__('Validate')}}</a></p>
                             <p class="mb-0"><i class="fa fa-arrow-down fa-2x text-gray"></i></p>
-                            <p class="mb-0"><a href="javascript:show_pid_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
+                            <p class="mb-0"><a href="javascript:show_debug_step(3)" class="pid_step_btn pid_step_btn3">{{__('Contestation')}}</a></p>
                         </div>
                     </div>
                     <div class="col-sm-10">
@@ -312,7 +312,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                    <a class="btn btn-outline-danger" href="javascript:open_detail_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
+                    <a class="btn btn-outline-danger" href="javascript:open_debug_dlg()"><i class="fa fa-binoculars"></i> {{__('Debug')}}</a>
                 </div>
             </div>
         </div>

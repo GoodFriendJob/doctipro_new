@@ -881,9 +881,8 @@ function show_pid_step(pid_step, show=0) {
     $.ajax({
         type: "POST",
         dataType: 'json',
-        url: base_url + '/PID/info.php',
+        url: base_url + '/PID/pid_detail.php',
         data: {
-            psEHealthID: $('#psEHealthID').val(),
             pid: $('#detail_pid').val(),
             pid_step: pid_step
         },
@@ -918,10 +917,56 @@ function open_detail_dlg()
     }, 300)
 }
 
+function show_debug_step(pid_step, show=0) {
+    $('#pid_xml').html('<div class="ajax-loading"><svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><path id="pulsar" stroke="rgb(57 108 240)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path></svg></div>');
+    $('.pid_step_btn').removeClass('active');
+    $('.pid_step_btn'+pid_step).addClass('active');
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: base_url + '/PID/debug_pid.php',
+        data: {
+            pid: $('#detail_pid').val(),
+            pid_step: pid_step
+        },
+        success: function (result)
+        {
+            if (result.status == 1) {
+                // console.log('====', result);
+                // console.log('===== message: =====', result.message);
+                $('#pid_xml').html(result.message);
+            } else {
+                $('#pid_xml').html('');
+            }
+            if (show==1) $('#detail_pid_dlg').modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.error('Error:', textStatus, errorThrown);
+            $('#pid_xml').html('');
+            Swal.fire(
+                'Server Error',
+                textStatus + "<br>" + errorThrown,
+                'warnning'
+            )
+            if (show==1) $('#detail_pid_dlg').modal('show');
+        }
+    });
+}
+function open_debug_dlg()
+{
+    $('#view_pid_dlg').modal('hide');
+    setTimeout(()=>{
+        show_debug_step(1, 1);
+    }, 300)
+}
+
 function open_view_dlg(pid, is_validation=false)
 {
-    if (!is_validation) return;
     $('#detail_pid').val(pid);
+    if (!is_validation) {
+        open_detail_dlg();
+        return;
+    }
     $('#view_pid_body').html('<div class="ajax-loading"><svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><path id="pulsar" stroke="rgb(57 108 240)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path></svg></div>');
     $('#view_pid_dlg').modal('show');
     $.ajax({
