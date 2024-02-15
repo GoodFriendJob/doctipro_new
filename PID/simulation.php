@@ -953,17 +953,13 @@ echo json_encode($res); exit;
     }
     // $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     // $r = preg_replace('/<!--(.*)-->/i', '', $response);
-    $doc_res = new DOMDocument();
-    $doc_res->loadXML($response);
-    $xpath = new DOMXPath($doc_res);
-    $nodes = $xpath->query('./faultstring');
+    preg_match('/<faultstring>(.*?)<\/faultstring>/', $response, $matches);
+
     $faultstring = '';
-    if ($nodes->length > 0) {
-      $faultstring = $nodes->item(0)->nodeValue;
-    }
-
-
-    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
+    if (isset($matches[1])) {
+        $faultstring = $matches[1];
+    } 
+    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $response.'</div>'; 
     if ($faultstring!='')
       $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $faultstring.'</div>'; 
     echo json_encode($res); exit;
