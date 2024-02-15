@@ -9,7 +9,9 @@
     body[dir='rtl'] .btn-appointment {
         margin-right: 10px;
     }
-
+    .animate__animated.animate__shakeX {
+    --animate-duration: 9s;
+    }
     .imagePopup {
         width: 100%;
         max-width: 70vw;
@@ -444,7 +446,7 @@
             {{__('How it works')}}
         </h2>
         <div class="justify-between flex sm:flex-row xxsm:flex-col 2xl:mt-0 mb-0 xxsm:mt-10 lg:mt-0">
-            <img src="{{ url('images/upload_empty/bg_man3.jpg') }}" class="animated-element animate__animated comment-bg" alt="guide doctor" />
+            <img src="{{ url('images/upload_empty/bg_man3.jpg') }}" class="animated-element animate__animated animate__infinite comment-bg" alt="guide doctor" />
             <div class="grid grid-rows-2 comment-group animate__animated pt-14">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xlg:grid-cols-3 lg:grid-cols-3">
                     <div class="comment-box comment-box-1">
@@ -883,7 +885,7 @@
     function animateOnScroll() {
         var element = document.querySelector('.animated-element');
         if (isInViewport(element)) {
-            element.classList.add('animate__fadeInLeft');
+            element.classList.add('animate__shakeX');
             document.querySelector('.comment-group').classList.add('animate__bounceIn');
         } 
     }
