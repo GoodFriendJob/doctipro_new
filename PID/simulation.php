@@ -952,9 +952,9 @@ echo json_encode($res); exit;
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
     }
     // $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
-    $r = preg_replace('/<!--(.*)-->/i', '', $response);
+    // $r = preg_replace('/<!--(.*)-->/i', '', $response);
     $doc_res = new DOMDocument();
-    $doc_res->loadXML($r);
+    $doc_res->loadXML($response);
     $xpath = new DOMXPath($doc_res);
     $nodes = $xpath->query('./faultstring');
     $faultstring = '';
