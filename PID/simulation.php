@@ -953,7 +953,19 @@ echo json_encode($res); exit;
     }
     // $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
     $r = preg_replace('/<!--(.*)-->/i', '', $response);
+    $doc_res = new DOMDocument();
+    $doc_res->loadXML($r);
+    $xpath = new DOMXPath($doc_res);
+    $nodes = $xpath->query($query);
+    $faultstring = '';
+    if ($nodes->length > 0) {
+      $faultstring = $nodes->item(0)->nodeValue;
+    }
+
+
     $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $r.'</div>'; 
+    if ($faultstring!='')
+      $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . $faultstring.'</div>'; 
     echo json_encode($res); exit;
   } else {
     // array_push($res['soap']['request'], $a);
