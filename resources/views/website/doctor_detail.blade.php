@@ -134,7 +134,7 @@
                         <div class="flex flex-wrap">
                             @if (count($today_timeslots) > 0)
                             @foreach ($today_timeslots as $today_timeslot)
-                            <a href="javascript:void(0)" class="border border-gray-light text-center 2xl:text-sm sm:text-sm msm:text-sm font-fira-sans font-normal xl:text-xs xlg:text-xs text-black m-1 w-20 h-9 pt-2">{{
+                            <a href="{{ url('booking/'.$doctor->id.'/'.Str::slug($doctor->name)).'?slot_time='.$today_timeslot['start_time'] }}" class="action-btn border border-gray-light text-center 2xl:text-sm sm:text-sm msm:text-sm font-fira-sans font-normal xl:text-xs xlg:text-xs text-black m-1 w-20 h-9 pt-2">{{
                             $today_timeslot['start_time'] }}</a>
                             @endforeach
                             @else
@@ -150,7 +150,7 @@
                     <div class="flex flex-wrap h-48 overflow-hidden	overflow-y-scroll mt-5">
                         <div class="flex flex-wrap">
                             @foreach ($tomorrow_timeslots as $tomorrow_timeslot)
-                            <a href="javascript:void(0)" class="border border-gray-light text-center 2xl:text-sm sm:text-sm msm:text-sm font-fira-sans font-normal xl:text-xs xlg:text-xs text-black m-1 w-20 h-9 pt-2">{{
+                            <a href="{{ url('booking/'.$doctor->id.'/'.Str::slug($doctor->name)) }}" class="action-btn border border-gray-light text-center 2xl:text-sm sm:text-sm msm:text-sm font-fira-sans font-normal xl:text-xs xlg:text-xs text-black m-1 w-20 h-9 pt-2">{{
                             $tomorrow_timeslot['start_time'] }}</a>
                             @endforeach
                         </div>

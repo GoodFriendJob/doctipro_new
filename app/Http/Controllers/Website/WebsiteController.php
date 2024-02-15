@@ -476,8 +476,9 @@ class WebsiteController extends Controller
         return response(['success' => true]);
     }
 
-    public function booking($id, $name)
+    public function booking($id, $name, Request $request)
     {
+        $data = $request->all();
         $doctor = Doctor::with(['category', 'expertise'])->find($id);
         $patient = User::where('id', auth()->user()->id)->first();
         // $patient_addressess = UserAddress::where('user_id', auth()->user()->id)->get();
@@ -486,8 +487,12 @@ class WebsiteController extends Controller
         $setting = Setting::first();
         $currency = $setting->currency_symbol;
         $countries = Country::get();
-        // return view('website.appointment_booking', compact('doctor', 'patient_addressess', 'today_timeslots', 'currency', 'setting'));
-        return view('website.appointment_booking', compact('doctor', 'patient', 'today_timeslots', 'currency', 'setting', 'countries'));
+
+        $slot_time = '';
+        $slot_date = '';
+        if (isset($data['slot_time'])) $slot_time = $data['slot_time'];
+        if (isset($data['slot_date'])) $slot_date = $data['slot_date'];
+        return view('website.appointment_booking', compact('slot_time', 'slot_date', 'doctor', 'patient', 'today_timeslots', 'currency', 'setting', 'countries'));
     }
 
     public function pharmacy(Request $request)

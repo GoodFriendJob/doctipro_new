@@ -71,9 +71,9 @@
     }
 
     /** home page **/
-    .animated-element, .comment-group{
+    /* .animated-element, .comment-group{
         opacity: 0;
-    }
+    } */
     .search-box-fields {
         background: #377ef7;
         border-radius: 30px 0 0 30px;
