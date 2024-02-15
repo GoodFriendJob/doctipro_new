@@ -20,11 +20,11 @@
                 <div class="my-10">
                     <h1 class="text-primary font-medium text-lg leading-5 font-fira-sans xxsm:pt-5 sm:pt-0">{{__('For Patients')}}</h1>
                     <ul class="2xl:pt-10 xxsm:pt-5">
-                        <li><a href="{{url('/about')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Qui sommes-nous ?</a></li>
+                        <li><a href="{{url('/about-us')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Qui sommes-nous ?</a></li>
                         <li><a href="{{url('/our-offers')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Notre vision et nos valeurs</a></li>
                         <li><a href="{{url('/our_blogs')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Blog</a></li>
-                        <li><a href="{{url('/join-us')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Rejoindre notre équipe</a></li>
-                        <li><a href="{{url('/contact')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Nous contacter</a></li>
+                        <li><a href="{{url('/privacy-policy')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Rejoindre notre équipe</a></li>
+                        {{-- <li><a href="{{url('/contact')}}" class="text-black text-sm font-normal leading-4 font-fira-sans pt-10">Nous contacter</a></li> --}}
                     </li>
                 </div>
                 <div class="my-10">
