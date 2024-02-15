@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdmin\BlogController;
 use App\Http\Controllers\SuperAdmin\CategoryController;
 use App\Http\Controllers\SuperAdmin\CustomController;
 use App\Http\Controllers\SuperAdmin\DoctorController;
+use App\Http\Controllers\SuperAdmin\DoctorPIDController;
 use App\Http\Controllers\SuperAdmin\ExpertiseController;
 use App\Http\Controllers\SuperAdmin\HospitalController;
 use App\Http\Controllers\SuperAdmin\HospitalGalleryController;
@@ -203,7 +204,8 @@ Route::group(['middleware' => ['XssSanitizer']], function ()
         Route::resource('doctor',DoctorController::class)->except([
             'show'
         ]);
-
+        //Doctor PID list
+        Route::get('doctor_pid',[DoctorPIDController::class,'show']);
         // Hospital Gallery
         Route::get('/hospitalGallery/{hospital_id}',[HospitalGalleryController::class,'index']);
         Route::resource('hospitalGallery',HospitalGalleryController::class)->except([

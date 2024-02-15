@@ -145,6 +145,15 @@
             </li>
             @endcan
 
+            @can('superadmin_setting')
+            <li class="{{ $activePage == 'doctor_pid' ? 'active' : '' }}">
+                <a href="{{ url('doctor_pid') }}">
+                    <i class="fa fa-id-card"></i>
+                    <span>{{__('Doctor PID')}}</span>
+                </a>
+            </li>
+            @endcan
+
             {{-- @can('medicine_category_access')
             <li class="border"></li>
             <li class="{{ $activePage == 'medicineCategory' ? 'active' : '' }}">

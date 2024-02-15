@@ -1,4 +1,4 @@
-@extends('layout.mainlayout_admin',['activePage' => 'pid_settings'])
+@extends('layout.mainlayout_admin',['activePage' => 'doctor_pid'])
 @section('css')
 <link rel="stylesheet" href="{{ url('assets/plugins/jquery-ui/jquery-ui.min.css') }}" />
 <link rel="stylesheet" href="{{ url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
@@ -117,87 +117,17 @@
         }
     </style>
 @endsection
-@section('title',__('pid settings'))
+@section('title',__('Doctor PID'))
 @section('content')
-@php
-    $is_p12_exist = false;
-    if (!empty($doctor->pshealthid_p12)) {
-        if (File::exists(env('p12_path') .'/'. $doctor->pshealthid_p12))
-            $is_p12_exist = true;
-    }
-    $is_pid_active = true;
-    if (empty($doctor->pshealthid) || empty($doctor->biller_id) || empty($doctor->pshealthid_p12_pass) || $is_p12_exist==false)
-        $is_pid_active = false;
-@endphp
 <section class="section">
     @include('layout.breadcrumb',[
-        'title' => __('pid settings'),
+        'title' => __('Doctor PID'),
+        'url' => url('doctor_pid'),
+        'urlTitle' =>  __('Doctor PID'),
     ])
     <div class="card">
         <div class="card-body pt-0">
-            @if (!$is_pid_active)
-            <div class="row">
-                <div class="col text-center alert-warning p-2 mb-2 text-danger">
-                    @if ($is_p12_exist==false)
-                    {{__(".p12 file is not existed.")}}
-                    @else
-                    {{__("PsHealth ID | Password | Biller ID are not set.")}}
-                    @endif
-                    <br>
-                    {{__("Please reach out to the site administrator for assistance with this matter.")}}
-                </div>
-            </div>
-            @endif
-            <div class="row">
-                @if ($is_pid_active)
-                <div class="col-md-3 pb-2">
-                    <a class="edit-link btn btn-primary" data-toggle="modal" href="#request_pid_dlg">
-                        <i class="fa fa-calendar-plus mr-1"></i> {{__('Request A Simulation')}}
-                    </a>
-                </div>
-                @endif
-                <div class="col-md-3 form-group">
-                    <p><i class="fa fa-user-md"></i>&nbsp; {{__('PsHealth ID')}} : 
-                        @if (!empty($doctor->pshealthid))
-                        <span class="border text-primary py-1 px-2">{{ $doctor->pshealthid }}<span>
-                        @else
-                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
-                        @endif
-                    </p>
-                </div>
-                <div class="col-md-3 form-group">
-                    <p><i class="fa fa-credit-card"></i>&nbsp; {{__('Biller ID')}} : 
-                        @if (!empty($doctor->biller_id))
-                        <span class="border text-primary py-1 px-2">{{ $doctor->biller_id }}<span>
-                        @else
-                        <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
-                        @endif
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <div class="row">
-                        <div class="col-6 form-group">
-                            <p><i class="fa fa-key"></i>&nbsp; {{__('P12 Key')}} : 
-                                @if ($is_p12_exist)
-                                <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
-                                @else
-                                <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
-                                @endif
-                            </p>
-                        </div>
-                        <div class="col-6 form-group">
-                            <p><i class="fa fa-unlock"></i>&nbsp; {{__('Pasword')}} : 
-                                @if (!empty($doctor->pshealthid_p12_pass))
-                                <span class="border text-primary py-1 px-2">{{__('Set')}}<span>
-                                @else
-                                <span class="border text-warning py-1 px-2">{{__('Not Set')}}<span>
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form action="{{ url('pid_settings') }}" method="get" class="form pid-search-form">
+            <form action="{{ url('doctor_pid') }}" method="get" class="form pid-search-form">
                 {{-- @csrf --}}
                 <div class="row">
                     <div class="col-sm-3 form-group mb-0">
@@ -255,7 +185,8 @@
                         <tr>
                             <th rowspan="2" width='40'>{{__('ID')}}</th>
                             <th rowspan="2" width='50'><i class="fa fa-calendar"></i><br>{{__('Request Date')}}</th>
-                            <th rowspan="2" width='150'><i class="fa fa-user"></i><br>{{__('Patient')}}</th>
+                            <th rowspan="2" width='150'><i class="fa fa-user"></i><br>{{__('Doctor')}}</th>
+                            <th rowspan="2"><i class="fa fa-user"></i><br>{{__('Patient ID')}}</th>
                             <th rowspan="2"><i class="fa fa-medkit"></i><br>{{__('Medial Code')}}</th>
                             <th rowspan="2"><i class="fa fa-h-square"></i><br>{{__('Service Place')}}</th>
                             <th rowspan="2"><i class="fa fa-code"></i><br>{{__('Act Number')}}</th>
@@ -278,20 +209,22 @@
                                 <input type="checkbox" style="height:20px;" class="float-left form-control-sm pid_id_check cursor-pointer" id="pid_id_{{ $history->pid_id }}" value="{{ $history->pid_id }}" /> &nbsp;
                                 <span class="pt-2">{{ $loop->iteration }}</span>
                             </td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->date_modified }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">
-                                <img src="{{$history->patient_img}}" class="avatar avatar-sm mr-2" style="display:inline-block; margin-bottom:3px;" />
-                                {{$history->patient_name}}<br>
-                                <i class="fa fa-id-card"></i> {{$history->patient_id}}<br>
-                                {{-- <nobr><i class="fa fa-envelope"></i> {{$history->patient_email}}</nobr> --}}
-                                
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">
+                                {{ $history->date_modified }}
                             </td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->medical_code }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->service_place }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->act_number }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->part_statutaire!='' ? '€ '.$history->part_statutaire: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})">{{ $history->recouvrement!='' ? '€ '.$history->recouvrement: '-' }}</td>
-                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, {{$history->is_validation}})"><nobr class="text-danger">{{ $history->paye!='' ? '€ '.$history->paye: '-' }}</nobr></td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">
+                                <img src="{{url('images/upload/'.$history->doctor_img)}}" class="avatar avatar-sm mr-2 inline-block" />
+                                 {{$history->doctor_name}}
+                            </td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">
+                                {{$history->patient_id}}
+                            </td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">{{ $history->medical_code }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">{{ $history->service_place }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">{{ $history->act_number }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">{{ $history->part_statutaire!='' ? '€ '.$history->part_statutaire: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)">{{ $history->recouvrement!='' ? '€ '.$history->recouvrement: '-' }}</td>
+                            <td onclick="javascript:open_view_dlg({{$history->pid_id}}, true)"><nobr class="text-danger">{{ $history->paye!='' ? '€ '.$history->paye: '-' }}</nobr></td>
                             <td class="text-center">
                                 @if ($history->is_validation)
                                     <a class="text-primary" target="_blank" href="{{ url('pid_print/'.$history->pid_id) }}"><i class="fa fa-print"></i></a>
@@ -304,33 +237,25 @@
                                     <i class="fa fa-circle text-success"></i>
                                 @elseif($history->is_expired)
                                     <i class="fa fa-bell text-warning"></i> <span class="text-warning">{{__('Expired')}}</span><br>
-                                    {{-- <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a> --}}
                                 @else
                                     <i class="fa fa-exclamation-triangle text-danger"></i><span class="text-danger">{{__('Auth Fail')}}</span><br>
-                                    {{-- <a class="btn btn-sm btn-outline-primary" href="javascript:call_pid_simulate({{$history->pid_id}})">{{__('Simulate')}}</a> --}}
                                 @endif
                             </td>
                             <td>
                             @if ($history->is_valid)
                                 @if ($history->is_validation)
                                     <i class="fa fa-circle text-success"></i>
-                                @elseif ($history->is_contestation)
-                                    <b> - </b>
                                 @else
-                                    <a class="btn btn-sm btn-outline-success" href="javascript:call_pid_validate({{$history->pid_id}})">{{__('Validate')}}</a>
+                                    <b> - </b>
                                 @endif
                             @endif
                             </td>
                             <td>
-                            @if ($history->is_valid)
                                 @if ($history->is_contestation)
                                     <i class="fa fa-circle text-success"></i>
-                                @elseif ($history->is_validation)
-                                    <b> - </b>
                                 @else
-                                    <a class="btn btn-sm btn-outline-danger" href="javascript:call_pid_contest({{$history->pid_id}})">{{__('Contenst')}}</a>
+                                    <b> - </b>
                                 @endif
-                            @endif
                             </td>
                         </tr>
                         @endforeach
@@ -343,75 +268,6 @@
         </div>
     </div>
 </section>
-    <div class="modal fade" id="request_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="request_pid_dlg" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form method="post" class="myform" onsubmit="return false">
-                    <input type="hidden" name="pid" id="pid" value="0" />
-                    <input type="hidden" name="doctor_id" value={{$doctor->id}} />
-                    <input type="hidden" name="psEHealthID" id="psEHealthID" value={{$doctor->pshealthid}} />
-                    <input type="hidden" name="pshealthid_p12" value={{$doctor->pshealthid_p12}} />
-                    <input type="hidden" name="pshealthid_p12_pass" value={{$doctor->pshealthid_p12_pass}} />
-                    <input type="hidden" name="biller_id" value={{$doctor->biller_id}} />
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-calendar-plus mr-1"></i> {{__('New Simulation')}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-4">
-                            <div class="col-lg-8 form-group">
-                                <label class="col-form-label"> {{__('Select Patient')}} <b>*</b></label>
-                                <div class="input-group mb-4">
-                                    <input type="text" value="" id="search_patient" class="form-control" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="search-icon">
-                                            <i class="fa fa-search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="hidden" value="{{$doctor->patient_id}}" id="patient_id" name="patient_id" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4 form-group text-center" style="margin-top:-30px">
-                                <img src="" id="sel_patient_img" class="patient_avatar" style="width:90px;" />
-                                <h5 class="patient_name"><span id="sel_patient_name"></span></h5>
-                                <p class="m-0"><span id="sel_patient_id"></span></p>
-                                <p class="m-0"><span id="sel_patient_email"></span></p>
-                            </div>
-                        </div>
-                        <div class="text-center alert-success py-1 mb-2" style="font-weight:bold;color:#0abf3a;">{{__("Please fill up the following details to enhance the patient's experience.")}}</div>
-                        <div class="row mt-4">
-                            <div class="col-lg-4 form-group">
-                                <label class="col-form-label"> {{__('Place of Service')}} <b>*</b></label>
-                                <div class="d-flex">
-                                    <input type="text" value="01" id="service_place" name="service_place" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 form-group">
-                                <label class="col-form-label"> {{__('Medical Code')}} <b>*</b></label>
-                                <select id="medical_code" name="medical_code" class="form-control">
-                                    <option value="C1">C1</option>
-                                    <option value="C41">C41</option>
-                                    <option value="C43">C43</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4 form-group">
-                                <label class="col-form-label"> {{__('Act Number')}} <b>*</b></label>
-                                <div class="d-flex">
-                                    <input type="number" min="1" value="1" id="act_number" name="act_number" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                        <a class="btn btn-danger text-white" href="javascript:call_pid_simulate(0)"><i class="fa fa-handshake"></i> {{__('Simulation')}}</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <div class="modal fade" id="detail_pid_dlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -468,52 +324,6 @@
     <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script>
     $(document).ready(function () {
-        $("#search_patient").autocomplete({
-            minLength: 1,
-            source: function( request, response ) {
-                $.ajax( {
-                    headers:
-                    {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    data:{
-                        search_txt: request.term
-                    },
-                    url: base_url + '/patient_search',
-                    dataType: "json",
-                    success: function( data ) {
-                        response( data.data );
-                    }
-                });
-            },
-            focus: function( event, ui ) {
-            //   $( "#search_patient" ).val( ui.item.name );
-            //   $( "#sel_patient_img" ).attr('src', ui.item.img );
-            //   $( "#sel_patient_name" ).html( ui.item.name );
-            //   $( "#sel_patient_id" ).html( ui.item.name );
-            return false;
-            },
-            select: function( event, ui ) {
-                $( "#search_patient" ).val( ui.item.name );
-                $( "#sel_patient_img" ).attr('src', base_url+'/images/upload/'+ui.item.img );
-                $( "#sel_patient_name" ).html( ui.item.name );
-                $( "#sel_patient_email" ).html( ui.item.email );
-                $( "#sel_patient_id" ).html( ui.item.patient_id );
-                $( "#patient_id" ).val( ui.item.patient_id );
-                return false;
-            }
-        })
-        .autocomplete( "instance" )._renderItem = function( ul, item ) {
-            var searchInput = $( "#search_patient" ).val();
-            var emphasizedText = item.name.replace(new RegExp(searchInput, 'gi'), function(match) {
-                return '<b>' + match + '</b>';
-            });
-            return $( "<li>" )
-            .append( "<div class='atc-box'><div class='atc-img'><img src='"+base_url+'/images/upload/'+item.img+"'/></div><div class='atc-desc'><div class='atc-title'>" + emphasizedText + "</div><div class='atc-categ'>" + item.patient_id + "</div></div></div>" )
-            .appendTo( ul );
-            
-        };
         $('#start_date input').datepicker({
             format: "yyyy-mm-dd",
             maxViewMode: 3,
