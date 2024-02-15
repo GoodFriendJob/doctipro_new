@@ -369,7 +369,8 @@ if (curl_errno($ch))
   if ($lastInsertId > 0 ) {
     file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
   }
-  $res['message'] = 'Erreur cURL : ' . curl_error($ch);
+  // $res['message'] = 'Erreur cURL : ' . curl_error($ch);
+  $res['message'] = 'Technical problem - Erreur cURL ';
   echo json_encode($res); exit;
 
 } else {
@@ -380,6 +381,12 @@ if (curl_errno($ch))
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseGuichet.xml', $response);
     }
     $res['message'] = '<h3>RequestGuichet Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+
+    $dom->loadXML($response);
+    $xpath = new DOMXPath($dom);
+    $FaultCode = $xpath->query('//Faultcode');
+    
+
     echo json_encode($res); exit;
   } else {
     // array_push($res['soap']['request'], $doc->saveXML());
@@ -946,6 +953,14 @@ echo json_encode($res); exit;
       file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_ResponseBusiness.xml', $response);
     }
     $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">' . beautify_xml($response).'</div>'; 
+    
+    $dom->loadXML($response);
+    $xpath = new DOMXPath($dom);
+    $FaultCode = $xpath->query('//Faultcode');
+
+    $res['message'] = '<h3>RequestBusiness Erreur 500</h3><div class="pid-error">'
+     . $FaultCode.'</div>'; 
+
     echo json_encode($res); exit;
   } else {
     // array_push($res['soap']['request'], $a);
