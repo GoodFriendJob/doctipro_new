@@ -370,7 +370,7 @@ if (curl_errno($ch))
     file_put_contents('logs/'. $psEHealthID . '_' . $lastInsertId.'_RequestGuichet.xml', $doc->saveXML());
   }
   // $res['message'] = 'Erreur cURL : ' . curl_error($ch);
-  $res['message'] = 'Technical problem - Erreur cURL ';
+  $res['message'] = 'Technical problem - Erreur cURL '. curl_error($ch);
   echo json_encode($res); exit;
 
 } else {
