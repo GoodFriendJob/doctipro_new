@@ -956,7 +956,7 @@ echo json_encode($res); exit;
     $doc_res = new DOMDocument();
     $doc_res->loadXML($r);
     $xpath = new DOMXPath($doc_res);
-    $nodes = $xpath->query($query);
+    $nodes = $xpath->query('./faultstring');
     $faultstring = '';
     if ($nodes->length > 0) {
       $faultstring = $nodes->item(0)->nodeValue;
